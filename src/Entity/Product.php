@@ -53,7 +53,7 @@ class Product
     {
         return $this->id;
     }
-    
+
     /**
      * @return mixed
      */
