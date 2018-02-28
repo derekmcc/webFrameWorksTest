@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
@@ -28,7 +29,7 @@ class Category
     {
         return $this->id;
     }
-    
+
     /**
      * @return mixed
      */
@@ -43,6 +44,15 @@ class Category
     public function setName($name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="category")
+     */
+    private $products;
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
     }
 
 
