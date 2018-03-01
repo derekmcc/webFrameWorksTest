@@ -15,6 +15,7 @@
                 <th>Image</th>
                 <th>Ingredients</th>
                 <th>Price</th>
+                <th>Category</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -28,6 +29,7 @@
                 <td>{{ product.image }}</td>
                 <td>{{ product.ingredients }}</td>
                 <td>{{ product.price }}</td>
+                <td>{{ product.category.name }}</td>
                 <td>
                     <a href="{{ path('product_show', {'id': product.id}) }}">show</a>
                     <a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>

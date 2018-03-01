@@ -6,6 +6,7 @@ use App\Entity\Product;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ProductType extends AbstractType
 {
@@ -18,6 +19,12 @@ class ProductType extends AbstractType
         ->add('image')
         ->add('ingredients')
         ->add('price')
+        ->add('category', EntityType::class, [
+            // list objects from this class
+            'class' => 'App:Category',
+            // use the 'Category.name' property as the visible option string
+            'choice_label' => 'name',
+        ]);
         ;
     }
 
