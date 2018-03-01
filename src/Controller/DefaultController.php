@@ -9,10 +9,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/default", name="default")
+     * @Route("/", name="homepage")
      */
     public function index()
     {
-        return new Response("Home Page");
+        $template = 'default/homepage.html.twig';
+        $args = [];
+        return $this->render($template, $args);
     }
 }
