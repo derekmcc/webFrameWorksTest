@@ -59,9 +59,9 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        if ($product == null)
+        if ($product)
         {
-            return $this->redirectToRoute('404_index', ['id' => $product->getId()]);
+            return $this->render('error/404.html.twig');
         }
         return $this->render('product/show.html.twig', [
             'product' => $product,
