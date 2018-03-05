@@ -44,7 +44,7 @@ class CategoryController extends Controller
             $em->persist($category);
             $em->flush();
 
-            return $this->redirectToRoute('category_edit', ['id' => $category->getId()]);
+            return $this->redirectToRoute('category_index', ['id' => $category->getId()]);
         }
 
         return $this->render('category/new.html.twig', [

@@ -44,7 +44,7 @@ class ProductController extends Controller
             $em->persist($product);
             $em->flush();
 
-            return $this->redirectToRoute('product_edit', ['id' => $product->getId()]);
+            return $this->redirectToRoute('product_index', ['id' => $product->getId()]);
         }
 
         return $this->render('product/new.html.twig', [
@@ -59,6 +59,10 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        if ($product == null)
+        {
+            return $this->redirectToRoute('404_index', ['id' => $product->getId()]);
+        }
         return $this->render('product/show.html.twig', [
             'product' => $product,
         ]);
