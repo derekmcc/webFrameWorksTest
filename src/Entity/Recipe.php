@@ -150,6 +150,4 @@ class Recipe
     {
         $this->price = $price;
     }
-
-
 }
