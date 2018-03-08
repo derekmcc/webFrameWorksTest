@@ -19,6 +19,7 @@ class ReviewType extends AbstractType
         ->add('price')
         ->add('stars')
         ->add('image')
+        ->add('products')
         ;
     }
 

@@ -39,7 +39,13 @@
             <th>Image</th>
             <td>{{ review.image }}</td>
         </tr>
-
+        <tr>
+            <th>Reviews For Product</th>
+            <td> {% for product in review.products %} {{ product.id }} :: {{ product.description }}
+                    <br>
+                {% else %} (no products for this category) {% endfor %}
+            </td>
+        </tr>
     </table>
 
     <a href="{{ path('review_index') }}">back to list</a>

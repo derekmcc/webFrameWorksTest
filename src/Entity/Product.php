@@ -179,4 +179,9 @@ class Product
     {
         $this->review = $review;
     }
+
+    public function __toString()
+    {
+        return $this->id . ': ' . $this->getDescription();
+    }
 }

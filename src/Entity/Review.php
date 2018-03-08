@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Form\FormBuilderInterface;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ReviewRepository")
@@ -180,4 +182,15 @@ class Review
     {
         $this->products = new ArrayCollection();
     }
+
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder ->add('author') ->add('products') ;
+    }
+
 }
