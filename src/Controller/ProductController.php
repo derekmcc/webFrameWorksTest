@@ -59,10 +59,6 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        if ($product)
-        {
-            return $this->render('error/404.html.twig');
-        }
         return $this->render('product/show.html.twig', [
             'product' => $product,
         ]);

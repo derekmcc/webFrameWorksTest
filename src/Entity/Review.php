@@ -172,5 +172,12 @@ class Review
         $this->image = $image;
     }
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="review")
+     */
+    private $products;
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
 }
