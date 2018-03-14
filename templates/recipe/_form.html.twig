@@ -11,7 +11,7 @@
         {% for review in form.vars.value.reviews %}
             <li>
                 <a href="{{ url('review_show', {'id':review.id}) }}">
-                    {{ review.id }} :: {{ review.title }}
+                    {{ review.id }} :: {{ review.author }}
                 </a>
             </li>
         {% else %}

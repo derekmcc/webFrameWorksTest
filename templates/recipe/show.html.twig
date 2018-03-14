@@ -13,9 +13,13 @@
         </tr>
         <tr>
             <th>Products for this Category</th>
-            <td> {% for review in recipe.reviews %} {{ review.id }} :: {{ review.title }}
-                    <br>
-                {% else %} (no products for this category) {% endfor %}
+            <td>{% for review in recipe.reviews %}
+                <a href="{{ url('review_show', {'id':review.id}) }}">
+                    {{ review.id }} :: {{ review.author }}
+                </a>
+        {% else %}
+                (no products for this category)
+            {% endfor %}
             </td>
         </tr>
     </table>

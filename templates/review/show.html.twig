@@ -41,7 +41,7 @@
         </tr>
         <tr>
             <th>Reviews For Product</th>
-            <td> {% for recipe in review.recipes %} {{ recipe.id }} :: {{ recipe.description }}
+            <td> {% for recipe in review.recipes %} {{ recipe.id }} :: {{ recipe.title }}
                     <br>
                 {% else %} (no reviews for this recipe) {% endfor %}
             </td>
