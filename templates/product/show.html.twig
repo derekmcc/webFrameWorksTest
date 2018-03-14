@@ -35,7 +35,13 @@
             <th>Price</th>
             <td>{{ product.price }}</td>
         </tr>
-
+        <tr>
+            <th>Products for this Category</th>
+            <td> {% for categor in product.category %} {{ category.id }} :: {{ category.name }}
+                    <br>
+                {% else %} (no products for this category) {% endfor %}
+            </td>
+        </tr>
     </table>
 
     <a href="{{ path('product_index') }}">back to list</a>

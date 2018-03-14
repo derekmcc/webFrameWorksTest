@@ -164,24 +164,4 @@ class Product
     {
         $this->category = $category;
     }
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Review", inversedBy="products")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $review;
-
-    public function getReview(): ?Review
-    {
-        return $this->review;
-    }
-    public function setReview(Review $review = null)
-    {
-        $this->review = $review;
-    }
-
-    public function __toString()
-    {
-        return $this->id . ': ' . $this->getDescription();
-    }
 }

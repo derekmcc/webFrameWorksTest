@@ -1,34 +1,4 @@
 {{ form_start(form) }}
-     {{ form_row(form.author) }}
-{# author field  - default rendering #}
-        {{ form_row(form.author) }}
-        {{ form_row(form.date) }}
-        {{ form_row(form.summary) }}
-        {{ form_row(form.retailers) }}
-        {{ form_row(form.price) }}
-        {{ form_row(form.stars) }}
-        {{ form_row(form.image) }}
-        {# products field #}
-<div>
-    Reviews for this Product:
-    <ul>
-        {% for product in form.vars.value.products %}
-            <li>
-                <a href="{{ url('product_show', {'id':product.id}) }}">
-                    {{ product.id }} :: {{ product.description }}
-                </a>
-            </li>
-        {% else %}
-            <li>
-                (no products for this category)
-            </li>
-        {% endfor %}
-    </ul>
-</div>
-
-{# hide select rendering of products in a comment #}
-<!--
-        {{ form_widget(form.products) }}
-        -->
+    {{ form_widget(form) }}
 <button>{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

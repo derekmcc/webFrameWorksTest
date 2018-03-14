@@ -26,13 +26,6 @@ class ProductType extends AbstractType
             // use the 'Category.name' property as the visible option string
             'choice_label' => 'name',
         ])
-        ->add('review',
-            EntityType::class, [
-                // list objects from this class
-                'class' => 'App:Review',
-                // use the 'Category.name' property as the visible option string
-                'choice_label' => 'summary',
-        ])
         ;
     }
 

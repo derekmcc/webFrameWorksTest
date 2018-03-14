@@ -175,22 +175,23 @@ class Review
     }
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="review")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="reviews")
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $products;
-    public function __construct()
+    private $recipes;
+
+    public function getRecipes(): ?Recipe
     {
-        $this->products = new ArrayCollection();
+        return $this->recipes;
+    }
+    public function setRecipes(Recipe $recipe = null)
+    {
+        $this->recipes = $recipe;
     }
 
-    public function getProducts()
+    public function __toString()
     {
-        return $this->products;
-    }
-
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder ->add('author') ->add('products') ;
+        return $this->id . ': ' . $this->getSummary();
     }
 
 }

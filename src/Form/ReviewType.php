@@ -6,6 +6,7 @@ use App\Entity\Review;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ReviewType extends AbstractType
 {
@@ -19,7 +20,13 @@ class ReviewType extends AbstractType
         ->add('price')
         ->add('stars')
         ->add('image')
-        ->add('products')
+        ->add('recipes',
+            EntityType::class, [
+                // list objects from this class
+                'class' => 'App:Recipe',
+                // use the 'Category.name' property as the visible option string
+                'choice_label' => 'title',
+            ])
         ;
     }
 
