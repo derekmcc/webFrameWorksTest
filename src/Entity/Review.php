@@ -179,7 +179,6 @@ class Review
      * @ORM\JoinColumn(nullable=true)
      */
     private $recipes;
-
     public function getRecipes(): ?Recipe
     {
         return $this->recipes;
@@ -193,5 +192,4 @@ class Review
     {
         return $this->id . ': ' . $this->getSummary();
     }
-
 }
