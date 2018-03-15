@@ -11,7 +11,17 @@
             <th>Id</th>
             <td>{{ recipe.id }}</td>
         </tr>
-
+        <tr>
+            <th>Products for this Category</th>
+            <td>{% for review in recipe.reviews %}
+                <a href="{{ url('review_show', {'id':review.id}) }}">
+                    {{ review.id }} :: {{ review.author }}
+                </a>
+        {% else %}
+                (no products for this category)
+            {% endfor %}
+            </td>
+        </tr>
     </table>
 
     <a href="{{ path('recipe_index') }}">back to list</a>

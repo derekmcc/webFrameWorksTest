@@ -3,7 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Form\FormBuilderInterface;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RecipeRepository")
  */
@@ -151,5 +152,22 @@ class Recipe
         $this->price = $price;
     }
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="recipes")
+     */
+    private $reviews;
+    public function __construct()
+    {
+        $this->reviews = new ArrayCollection();
+    }
 
+    public function getReviews()
+    {
+        return $this->reviews;
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder ->add('title') ->add('reviews') ;
+    }
 }

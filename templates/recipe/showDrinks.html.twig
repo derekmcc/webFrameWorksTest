@@ -15,7 +15,7 @@
             <th>Image</th>
             <th>Ingredients</th>
             <th>Price</th>
-            <th>actions</th>
+            <th>Reviews</th>
         </tr>
         </thead>
         <tbody>
@@ -29,9 +29,13 @@
                 <td>{{ recipe.ingredients }}</td>
                 <td>{{ recipe.price }}</td>
                 <td>
-                    <a href="{{ path('recipe_show', {'id': recipe.id}) }}">show</a>
-                    <a href="{{ path('recipe_edit', {'id': recipe.id}) }}">edit</a>
-                </td>
+                {% for review in recipe.reviews %}
+                    <a href="{{ url('review_show', {'id':review.id}) }}">
+                        {{ review.id }} :: {{ review.author }}
+                    </a>
+                {% else %}
+                    (no products for this category)
+                {% endfor %}</td>
             </tr>
         {% else %}
             <tr>
@@ -40,6 +44,5 @@
         {% endfor %}
         </tbody>
     </table>
-    <a href="{{ path('recipe_new') }}">Create new</a>
 
 {% endblock %}

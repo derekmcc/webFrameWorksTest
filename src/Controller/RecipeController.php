@@ -30,6 +30,19 @@ class RecipeController extends Controller
     }
 
     /**
+     * @Route("/showRecipe", name="showRecipe")
+     *
+     * @return Response
+     */
+    public function showRecipe()
+    {
+        $recipes = $this->getDoctrine()
+            ->getRepository(Recipe::class)
+            ->findAll();
+
+        return $this->render('recipe/showDrinks.html.twig', ['recipes' => $recipes]);
+    }
+    /**
      * @Route("/new", name="new")
      * @Method({"GET", "POST"})
      */

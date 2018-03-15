@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Product;
-use App\Form\ProductType;
+use App\Entity\Review;
+use App\Form\ReviewType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -11,9 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @Route("/product", name="product_")
+ * @Route("/review", name="review_")
  */
-class ProductController extends Controller
+class ReviewController extends Controller
 {
     /**
      * @Route("/", name="index")
@@ -22,11 +22,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = $this->getDoctrine()
-            ->getRepository(Product::class)
+        $reviews = $this->getDoctrine()
+            ->getRepository(Review::class)
             ->findAll();
 
-        return $this->render('product/index.html.twig', ['products' => $products]);
+        return $this->render('review/index.html.twig', ['reviews' => $reviews]);
     }
 
     /**
@@ -35,20 +35,20 @@ class ProductController extends Controller
      */
     public function new(Request $request)
     {
-        $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
+        $review = new Review();
+        $form = $this->createForm(ReviewType::class, $review);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($product);
+            $em->persist($review);
             $em->flush();
 
-            return $this->redirectToRoute('product_index', ['id' => $product->getId()]);
+            return $this->redirectToRoute('review_edit', ['id' => $review->getId()]);
         }
 
-        return $this->render('product/new.html.twig', [
-            'product' => $product,
+        return $this->render('review/new.html.twig', [
+            'review' => $review,
             'form' => $form->createView(),
         ]);
     }
@@ -57,10 +57,10 @@ class ProductController extends Controller
      * @Route("/{id}", name="show")
      * @Method("GET")
      */
-    public function show(Product $product)
+    public function show(Review $review)
     {
-        return $this->render('product/show.html.twig', [
-            'product' => $product,
+        return $this->render('review/show.html.twig', [
+            'review' => $review,
         ]);
     }
 
@@ -68,19 +68,19 @@ class ProductController extends Controller
      * @Route("/{id}/edit", name="edit")
      * @Method({"GET", "POST"})
      */
-    public function edit(Request $request, Product $product)
+    public function edit(Request $request, Review $review)
     {
-        $form = $this->createForm(ProductType::class, $product);
+        $form = $this->createForm(ReviewType::class, $review);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('product_edit', ['id' => $product->getId()]);
+            return $this->redirectToRoute('review_edit', ['id' => $review->getId()]);
         }
 
-        return $this->render('product/edit.html.twig', [
-            'product' => $product,
+        return $this->render('review/edit.html.twig', [
+            'review' => $review,
             'form' => $form->createView(),
         ]);
     }
@@ -89,16 +89,16 @@ class ProductController extends Controller
      * @Route("/{id}", name="delete")
      * @Method("DELETE")
      */
-    public function delete(Request $request, Product $product)
+    public function delete(Request $request, Review $review)
     {
-        if (!$this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
-            return $this->redirectToRoute('product_index');
+        if (!$this->isCsrfTokenValid('delete'.$review->getId(), $request->request->get('_token'))) {
+            return $this->redirectToRoute('review_index');
         }
 
         $em = $this->getDoctrine()->getManager();
-        $em->remove($product);
+        $em->remove($review);
         $em->flush();
 
-        return $this->redirectToRoute('product_index');
+        return $this->redirectToRoute('review_index');
     }
 }
