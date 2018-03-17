@@ -8,9 +8,28 @@
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
             <link rel="stylesheet" href="/css/font-awesome.css">
             <link rel="stylesheet" href="/css/style.css">
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css" integrity="sha384-v2Tw72dyUXeU3y4aM2Y0tBJQkGfplr39mxZqlTBDUZAb9BGoC40+rdFCG0m10lXk" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css" integrity="sha384-q3jl8XQu1OpdLgGFvNRnPdj5VIlCvgsDQTQB6owSOHWlAurxul7f+JpUOVdAiJ5P" crossorigin="anonymous">
         {% endblock %}
+        <style>
+            header {
+                text-align: right;
+                border-bottom: 0.1rem solid black;
+                padding: 1rem;
+            }
+        </style>
     </head>
     <body>
+    <header>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            Username:
+            <strong>{{ app.user.username }}</strong>
+            <br>
+            <a href="{{ url('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        {% else %}
+            <a href="{{ url('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a>
+        {% endif %}
+    </header>
     <nav class="navbar navbar-expand-lg navbar-light navbar-bg mb-5">
         <a style="margin-left: 75px;" class="navbar-brand space-brand" href="/">Rum Reviews</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
@@ -39,6 +58,11 @@
                         <a class="nav-link" href="{{ url('review_index') }}">Reviews</a>
                     </div>
                 </li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('admin') }}">Admin</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </nav>
