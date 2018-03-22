@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Service\FileUploader;
 
 /**
  * @Route("/recipe", name="recipe_")
@@ -46,18 +47,22 @@ class RecipeController extends Controller
      * @Route("/new", name="new")
      * @Method({"GET", "POST"})
      */
-    public function new(Request $request)
+    public function new(Request $request, FileUploader $fileUploader)
     {
         $recipe = new Recipe();
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $recipe->getImage();
+            $fileName = $fileUploader->upload($file);
+            $recipe ->setImage($fileName);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($recipe);
             $em->flush();
 
-            return $this->redirectToRoute('recipe_edit', ['id' => $recipe->getId()]);
+            return $this->redirectToRoute('recipe_showRecipe', ['id' => $recipe->getId()]);
         }
 
         return $this->render('recipe/new.html.twig', [

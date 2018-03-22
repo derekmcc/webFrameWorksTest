@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RecipeRepository")
  */
@@ -34,6 +36,9 @@ class Recipe
 
     /**
      * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message="Please, upload the image as a jpg")
+     * @Assert\File(mimeTypes={ "image/jpeg" })
      */
     private $image;
 
@@ -168,6 +173,9 @@ class Recipe
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder ->add('title') ->add('reviews') ;
+        $builder
+            ->add('title') ->add('reviews')
+            ->add('image', FileType::class, array('label' => 'Image (JPEG file)'))
+            ->add('file', FileType::class, array('data_class' => null));
     }
 }
