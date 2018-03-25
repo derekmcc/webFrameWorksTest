@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Controller;
-
 use App\Entity\Recipe;
 use App\Form\RecipeType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -9,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use App\Service\FileUploader;
 /**
  * @Route("/recipe", name="recipe_")
  */
@@ -25,10 +23,8 @@ class RecipeController extends Controller
         $recipes = $this->getDoctrine()
             ->getRepository(Recipe::class)
             ->findAll();
-
         return $this->render('recipe/index.html.twig', ['recipes' => $recipes]);
     }
-
     /**
      * @Route("/showRecipe", name="showRecipe")
      *
@@ -39,33 +35,34 @@ class RecipeController extends Controller
         $recipes = $this->getDoctrine()
             ->getRepository(Recipe::class)
             ->findAll();
-
         return $this->render('recipe/showDrinks.html.twig', ['recipes' => $recipes]);
     }
     /**
      * @Route("/new", name="new")
      * @Method({"GET", "POST"})
      */
-    public function new(Request $request)
+    public function new(Request $request, FileUploader $fileUploader)
     {
         $recipe = new Recipe();
+        $recipe->setAuthor($this->getUser());
+
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $recipe->getImage();
+            $fileName = $fileUploader->upload($file);
+            $recipe ->setImage($fileName);
             $em = $this->getDoctrine()->getManager();
             $em->persist($recipe);
             $em->flush();
-
-            return $this->redirectToRoute('recipe_edit', ['id' => $recipe->getId()]);
+            return $this->redirectToRoute('recipe_showRecipe', ['id' => $recipe->getId()]);
         }
-
         return $this->render('recipe/new.html.twig', [
             'recipe' => $recipe,
             'form' => $form->createView(),
         ]);
     }
-
     /**
      * @Route("/{id}", name="show")
      * @Method("GET")
@@ -76,7 +73,6 @@ class RecipeController extends Controller
             'recipe' => $recipe,
         ]);
     }
-
     /**
      * @Route("/{id}/edit", name="edit")
      * @Method({"GET", "POST"})
@@ -85,19 +81,15 @@ class RecipeController extends Controller
     {
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
             return $this->redirectToRoute('recipe_edit', ['id' => $recipe->getId()]);
         }
-
         return $this->render('recipe/edit.html.twig', [
             'recipe' => $recipe,
             'form' => $form->createView(),
         ]);
     }
-
     /**
      * @Route("/{id}", name="delete")
      * @Method("DELETE")
@@ -107,11 +99,9 @@ class RecipeController extends Controller
         if (!$this->isCsrfTokenValid('delete'.$recipe->getId(), $request->request->get('_token'))) {
             return $this->redirectToRoute('recipe_index');
         }
-
         $em = $this->getDoctrine()->getManager();
         $em->remove($recipe);
         $em->flush();
-
         return $this->redirectToRoute('recipe_index');
     }
 }

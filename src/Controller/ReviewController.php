@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @Route("/review", name="review_")
@@ -36,6 +37,9 @@ class ReviewController extends Controller
     public function new(Request $request)
     {
         $review = new Review();
+        $review->setAuthor($this->getUser());
+
+        $review->setDate(new \DateTime('now '));
         $form = $this->createForm(ReviewType::class, $review);
         $form->handleRequest($request);
 

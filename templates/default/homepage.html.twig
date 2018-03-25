@@ -21,8 +21,10 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-
     <script>
         $('.carousel').carousel()
     </script>
+    {% if is_granted('ROLE_ADMIN') %}
+        <h1>Is Admin</h1>
+    {% endif %}
 {% endblock %}

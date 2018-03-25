@@ -6,6 +6,7 @@ use App\Entity\Recipe;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class RecipeType extends AbstractType
 {
@@ -15,10 +16,11 @@ class RecipeType extends AbstractType
             ->add('title')
             ->add('summary')
             ->add('description')
-            ->add('image')
+            ->add('image', FileType::class, array('data_class' => null))
             ->add('ingredients')
             ->add('price')
             ->add('reviews')
+            ->add('public')
         ;
     }
 

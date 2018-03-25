@@ -5,13 +5,14 @@
         {{ form_row(form.title) }}
 
         {# products field #}
+        {{ form_row(form.image) }}
 <div>
     Products for this Category:
     <ul>
         {% for review in form.vars.value.reviews %}
             <li>
                 <a href="{{ url('review_show', {'id':review.id}) }}">
-                    {{ review.id }} :: {{ review.author }}
+                    {{ review.id }} :: {{ review.author.username }}
                 </a>
             </li>
         {% else %}
@@ -24,7 +25,7 @@
 
 {# hide select rendering of products in a comment #}
 <!--
-        {{ form_widget(form.reviews) }}
+    {{ form_widget(form.reviews) }}
         -->
 
 <button>{{ button_label|default('Save') }}</button>
