@@ -1,11 +1,10 @@
 <?php
-
 namespace App\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RecipeRepository")
@@ -18,22 +17,18 @@ class Recipe
      * @ORM\Column(type="integer")
      */
     private $id;
-
     /**
      * @ORM\Column(type="string")
      */
     private $title;
-
     /**
      * @ORM\Column(type="string")
      */
     private $summary;
-
     /**
      * @ORM\Column(type="string")
      */
     private $description;
-
     /**
      * @ORM\Column(type="string")
      *
@@ -41,17 +36,41 @@ class Recipe
      * @Assert\File(mimeTypes={ "image/jpeg" })
      */
     private $image;
-
     /**
      * @ORM\Column(type="string")
      */
     private $ingredients;
-
     /**
      * @ORM\Column(type="float")
      */
     private $price;
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $public;
 
+    /**
+     * @return mixed
+     */
+    public function getPublic()
+    {
+        return $this->public;
+    }
+
+    /**
+     * @param mixed $public
+     */
+    public function setPublic($public): void
+    {
+        $this->public = $public;
+    }
     /**
      * @return mixed
      */
@@ -59,8 +78,6 @@ class Recipe
     {
         return $this->id;
     }
-
-
     /**
      * @return mixed
      */
@@ -68,7 +85,6 @@ class Recipe
     {
         return $this->title;
     }
-
     /**
      * @param mixed $title
      */
@@ -76,7 +92,6 @@ class Recipe
     {
         $this->title = $title;
     }
-
     /**
      * @return mixed
      */
@@ -84,7 +99,6 @@ class Recipe
     {
         return $this->summary;
     }
-
     /**
      * @param mixed $summary
      */
@@ -92,7 +106,6 @@ class Recipe
     {
         $this->summary = $summary;
     }
-
     /**
      * @return mixed
      */
@@ -100,7 +113,6 @@ class Recipe
     {
         return $this->description;
     }
-
     /**
      * @param mixed $description
      */
@@ -108,7 +120,6 @@ class Recipe
     {
         $this->description = $description;
     }
-
     /**
      * @return mixed
      */
@@ -116,7 +127,6 @@ class Recipe
     {
         return $this->image;
     }
-
     /**
      * @param mixed $image
      */
@@ -124,7 +134,6 @@ class Recipe
     {
         $this->image = $image;
     }
-
     /**
      * @return mixed
      */
@@ -132,7 +141,6 @@ class Recipe
     {
         return $this->ingredients;
     }
-
     /**
      * @param mixed $ingredients
      */
@@ -140,7 +148,6 @@ class Recipe
     {
         $this->ingredients = $ingredients;
     }
-
     /**
      * @return mixed
      */
@@ -148,7 +155,6 @@ class Recipe
     {
         return $this->price;
     }
-
     /**
      * @param mixed $price
      */
@@ -156,7 +162,21 @@ class Recipe
     {
         $this->price = $price;
     }
+    /**
+     * @return mixed
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
 
+    /**
+     * @param mixed $author
+     */
+    public function setAuthor($author): void
+    {
+        $this->author = $author;
+    }
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="recipes")
      */
@@ -164,13 +184,12 @@ class Recipe
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
-    }
 
+    }
     public function getReviews()
     {
         return $this->reviews;
     }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

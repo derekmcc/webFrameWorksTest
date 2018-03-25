@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Author</th>
                 <th>Date</th>
                 <th>Summary</th>
                 <th>Retailers</th>
@@ -22,7 +23,8 @@
         {% for review in reviews %}
             <tr>
                 <td>{{ review.id }}</td>
-                <td>{{ review.date ? review.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ review.author }}</td>
+                <td>{{ review.date }}</td>
                 <td>{{ review.summary }}</td>
                 <td>{{ review.retailers }}</td>
                 <td>{{ review.price }}</td>
@@ -35,7 +37,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="8">no records found</td>
+                <td colspan="9">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

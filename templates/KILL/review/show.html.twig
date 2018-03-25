@@ -12,8 +12,12 @@
             <td>{{ review.id }}</td>
         </tr>
         <tr>
+            <th>Author</th>
+            <td>{{ review.author }}</td>
+        </tr>
+        <tr>
             <th>Date</th>
-            <td>{{ review.date ? review.date|date('Y-m-d H:i:s') : '' }}</td>
+            <td>{{ review.date }}</td>
         </tr>
         <tr>
             <th>Summary</th>
@@ -36,8 +40,11 @@
             <td>{{ review.image }}</td>
         </tr>
         <tr>
-            <th>Author</th>
-            <td>{{ review.author.username }}</td>
+            <th>Reviews For Product</th>
+            <td> {% for recipe in review.recipes %} {{ recipe.id }} :: {{ recipe.title }}
+                    <br>
+                {% else %} (no reviews for this recipe) {% endfor %}
+            </td>
         </tr>
     </table>
 
