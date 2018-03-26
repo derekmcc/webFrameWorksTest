@@ -194,7 +194,7 @@ class Recipe
     {
         $builder
             ->add('title') ->add('reviews')
-            ->add('image', FileType::class, array('label' => 'Image (JPEG file)'))
-            ->add('file', FileType::class, array('data_class' => null));
+            ->add('image', FileType::class, array('data_class' => null));
+          //  ->add('file', FileType::class, array('data_class' => null));
     }
 }

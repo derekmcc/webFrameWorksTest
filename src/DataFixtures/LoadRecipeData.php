@@ -7,8 +7,9 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class LoadRecipeData extends Fixture
+class LoadRecipeData extends Fixture implements DependentFixtureInterface
 {
     /**
      * @var UserPasswordEncoderInterface
@@ -22,7 +23,7 @@ class LoadRecipeData extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        $user = $this->createUser('Jane', 'Doe');
+       // $this->loadUsers($manager);
 
         $r1 = new Recipe();
         $r1->setTitle("Bacardi");
@@ -32,7 +33,7 @@ class LoadRecipeData extends Fixture
         $r1->setIngredients("Alcohol");
         $r1->setPrice(24.99);
         $r1->setPublic(true);
-        $r1->setAuthor($user);
+        $r1->setAuthor($this->getReference($this->getReference(LoadUsers::USER_REFERENCE)));
 
         $r2 = new Recipe();
         $r2->setTitle("Bacardi 2");
@@ -42,7 +43,7 @@ class LoadRecipeData extends Fixture
         $r2->setIngredients("Alcohol");
         $r2->setPrice(24.99);
         $r2->setPublic(true);
-        $r1->setAuthor($user);
+        $r2->setAuthor($this->getReference($this->getReference(LoadUsers::USER_REFERENCE)));
 
         $r3 = new Recipe();
         $r3->setTitle("Bacardi");
@@ -52,34 +53,48 @@ class LoadRecipeData extends Fixture
         $r3->setIngredients("Alcohol");
         $r3->setPrice(24.99);
         $r3->setPublic(true);
-        $r1->setAuthor($user);
+        $r3->setAuthor($this->getReference($this->getReference(LoadUsers::USER_REFERENCE)));
 
-        $manager->persist($user);
+       // $manager->persist($user);
         $manager->persist($r1);
         $manager->persist($r2);
         $manager->persist($r3);
 
         $manager->flush();
+
     }
 
-    /**
-     * @param $username
-     * @param $plainPassword
-     * @param array $roles // default to ROLE_USER if no ROLE supplied
-     *
-     * @return User
-     */
-    private function createUser($username, $plainPassword, $roles = ['ROLE_USER']):User
+    public function getDependencies()
     {
-        $user = new User();
-        $user->setUsername($username);
-        $user->setRoles($roles);
+        return array(
+            LoadUsers::class,
+        );
+    }
 
-        // password - and encoding
-        $encodedPassword = $this->encodePassword($user, $plainPassword);
-        $user->setPassword($encodedPassword);
+    private function loadUsers(ObjectManager $manager)
+    {
+        foreach ($this->getUserData() as [ $username, $password, $roles]) {
+            $user = new User();
+            $user->setUsername($username);
+            $user->setPassword($this->encodePassword($user, $password));
+            $user->setRoles($roles);
 
-        return $user;
+            $manager->persist($user);
+            $this->addReference($user->getId(), $user);
+           // $this->setReference($user->getId(), $user);
+        }
+
+        $manager->flush();
+    }
+
+    private function getUserData(): array
+    {
+        return [
+            // $userData = [ $username, $password, $roles];
+            ['jane_admin', 'pass', ['ROLE_ADMIN']],
+            ['tom_admin', 'pass', ['ROLE_ADMIN']],
+            ['john_user', 'pass', ['ROLE_USER']],
+        ];
     }
 
     private function encodePassword($user, $plainPassword):string
