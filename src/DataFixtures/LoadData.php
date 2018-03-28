@@ -73,7 +73,7 @@ class LoadData extends Fixture
             $recipe->setAuthor($author);
             $recipe->setIngredients($ingredients);
             $recipe->setPrice($price);
-            $recipe->setPublic($public);
+            $recipe->setIsPublic($public);
 
             $manager->persist($recipe);
 /*
@@ -110,10 +110,10 @@ class LoadData extends Fixture
     private function getRecipeData()
     {
         return [
-            ['test','test','fsdfsafs','dsafs',$this->getReference('derek', 'john_user'),'gsdfg',4.99,true],
-            ['test','test','fsdfsafs','dsafs',$this->getReference('derek', 'john_user'),'gsdfg',4.99,true],
-            ['test','test','fsdfsafs','dsafs',$this->getReference('derek', 'john_user'),'gsdfg',4.99,true],
-            ['test','test','fsdfsafs','dsafs',$this->getReference('derek', 'john_user'),'gsdfg',4.99,true],
+            ['test1','test','fsdfsafs','dsafs',$this->getReference('derek', 'john_user'),'gsdfg','10-15',true],
+            ['test2','test','fsdfsafs','dsafs',$this->getReference('derek', 'john_user'),'gsdfg','20-25',true],
+            ['test3','test','fsdfsafs','dsafs',$this->getReference('derek', 'john_user'),'gsdfg','10-15',true],
+            ['test4','test','fsdfsafs','dsafs',$this->getReference('derek', 'john_user'),'gsdfg','40-45',true],
 
         ];
     }

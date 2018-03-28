@@ -6,6 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\Recipe;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ReviewRepository")
@@ -33,7 +36,7 @@ class Review
      * @ORM\Column(type="datetime")
      * @Assert\DateTime
      */
-    private $date;
+    private $publishedAt;
 
     /**
      * @ORM\Column(type="string")
@@ -56,14 +59,25 @@ class Review
     private $stars;
 
     /**
-     * @ORM\Column(type="string")
+     * @Assert\Image(
+     *     minWidth = 200,
+     *     maxWidth = 800,
+     *     minHeight = 200,
+     *     maxHeight = 800
+     * )
      */
     private $image;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="reviews")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $recipe;
+
+    /**
      * @return mixed
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -71,7 +85,7 @@ class Review
     /**
      * @return mixed
      */
-    public function getAuthor()
+    public function getAuthor(): User
     {
         return $this->author;
     }
@@ -79,7 +93,7 @@ class Review
     /**
      * @param mixed $author
      */
-    public function setAuthor($author): void
+    public function setAuthor(User $author): void
     {
         $this->author = $author;
     }
@@ -87,23 +101,23 @@ class Review
     /**
      * @return mixed
      */
-    public function getDate()
+    public function getPublishedAt(): \DateTime
     {
-        return $this->date;
+        return $this->publishedAt;
     }
 
     /**
-     * @param mixed $date
+     * @param mixed $publishedAt
      */
-    public function setDate($date): void
+    public function setPublishedAt(\DateTime $publishedAt): void
     {
-        $this->date = $date;
+        $this->publishedAt = $publishedAt;
     }
 
     /**
      * @return mixed
      */
-    public function getSummary()
+    public function getSummary(): ?string
     {
         return $this->summary;
     }
@@ -119,7 +133,7 @@ class Review
     /**
      * @return mixed
      */
-    public function getRetailers()
+    public function getRetailers(): ?string
     {
         return $this->retailers;
     }
@@ -173,29 +187,30 @@ class Review
     }
 
     /**
-     * @param mixed $image
+     * @param File|null $file
      */
-    public function setImage($image): void
+    public function setImage(File $file = null): void
     {
-        $this->image = $image;
+        $this->image = $file;
     }
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="reviews")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $recipes;
-    public function getRecipes(): ?Recipe
+    public function getRecipe()
     {
-        return $this->recipes;
+        return $this->recipe;
     }
-    public function setRecipes(Recipe $recipe = null)
+    public function setRecipe($recipe = null)
     {
-        $this->recipes = $recipe;
+        $this->recipe = $recipe;
     }
 
     public function __toString()
     {
         return $this->id . ': ' . $this->getSummary();
     }
+
+    public function __construct()
+    {
+        $this->publishedAt = new \DateTime();
+    }
+
 }

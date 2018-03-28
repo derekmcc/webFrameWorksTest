@@ -24,7 +24,7 @@ class LoadRecipeData extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
        // $this->loadUsers($manager);
-
+/*
         $r1 = new Recipe();
         $r1->setTitle("Bacardi");
         $r1->setSummary("Test Summary");
@@ -32,7 +32,7 @@ class LoadRecipeData extends Fixture implements DependentFixtureInterface
         $r1->setImage("images/test.png");
         $r1->setIngredients("Alcohol");
         $r1->setPrice(24.99);
-        $r1->setPublic(true);
+        $r1->setIsPublic(true);
         $r1->setAuthor($this->getReference($this->getReference(LoadUsers::USER_REFERENCE)));
 
         $r2 = new Recipe();
@@ -42,7 +42,7 @@ class LoadRecipeData extends Fixture implements DependentFixtureInterface
         $r2->setImage("images/test.png");
         $r2->setIngredients("Alcohol");
         $r2->setPrice(24.99);
-        $r2->setPublic(true);
+        $r2->setIsPublic(true);
         $r2->setAuthor($this->getReference($this->getReference(LoadUsers::USER_REFERENCE)));
 
         $r3 = new Recipe();
@@ -52,7 +52,7 @@ class LoadRecipeData extends Fixture implements DependentFixtureInterface
         $r3->setImage("images/test.png");
         $r3->setIngredients("Alcohol");
         $r3->setPrice(24.99);
-        $r3->setPublic(true);
+        $r3->setIsPublic(true);
         $r3->setAuthor($this->getReference($this->getReference(LoadUsers::USER_REFERENCE)));
 
        // $manager->persist($user);
@@ -61,7 +61,7 @@ class LoadRecipeData extends Fixture implements DependentFixtureInterface
         $manager->persist($r3);
 
         $manager->flush();
-
+*/
     }
 
     public function getDependencies()

@@ -40,7 +40,7 @@ class ImageUploadListener
 
     private function uploadFile($entity)
     {
-        // upload only works for Product entities
+        // upload only works for Recipe entities
         if (!$entity instanceof Recipe) {
             return;
         }

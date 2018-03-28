@@ -7,7 +7,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class ReviewType extends AbstractType
 {
@@ -17,13 +18,26 @@ class ReviewType extends AbstractType
             ->add('summary')
             ->add('retailers')
             ->add('price')
-            ->add('stars')
-            ->add('image')
-           ->add('recipes',
+            ->add('stars', ChoiceType::class, array(
+                'choices' => array(
+                    '0' => 0,
+                    '0.5' => 0.5,
+                    '1' => 1,
+                    '1.5' => 1.5,
+                    '2' => 2,
+                    '2.5' => 2.5,
+                    '3' => 3,
+                    '3.5' => 3.5,
+                    '4' => 4,
+                    '4.5' => 4.5,
+                    '5' => 5,
+                ),
+            ))
+           // ->add('image', FileType::class, array('data_class' => null))
+            ->add('recipe',
                EntityType::class, [
                    // list objects from this class
                    'class' => 'App:Recipe',
-                   // use the 'Category.name' property as the visible option string
                    'choice_label' => 'title',
                ])
         ;

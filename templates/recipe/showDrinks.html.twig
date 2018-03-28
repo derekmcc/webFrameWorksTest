@@ -30,9 +30,11 @@
                 <td>{{ recipe.price }}</td>
                 <td>
                 {% for review in recipe.reviews %}
+                    {% if (is_granted('ROLE_ADMIN')) or (recipe.isPublic == false) %}
                     <a href="{{ url('review_show', {'id':review.id}) }}">
                         {{ review.id }} :: {{ review.author.username }}
                     </a>
+                    {% endif %}
                 {% else %}
                     (no reviews for this drink)
                 {% endfor %}</td>

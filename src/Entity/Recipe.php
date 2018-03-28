@@ -6,6 +6,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RecipeRepository")
  */
@@ -41,7 +42,7 @@ class Recipe
      */
     private $ingredients;
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="string")
      */
     private $price;
     /**
@@ -54,34 +55,47 @@ class Recipe
     /**
      * @ORM\Column(type="boolean")
      */
-    private $public;
+    private $isPublic;
+
+    /**
+     * @var Review[]|ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="Review",
+     *      mappedBy="recipe",
+     *      orphanRemoval=true,
+     *      cascade={"persist"}
+     * )
+     * @ORM\OrderBy({"publishedAt": "DESC"})
+     */
+    private $reviews;
 
     /**
      * @return mixed
      */
-    public function getPublic()
+    public function getIsPublic()
     {
-        return $this->public;
+        return $this->isPublic;
     }
 
     /**
-     * @param mixed $public
+     * @param mixed $isPublic
      */
-    public function setPublic($public): void
+    public function setIsPublic($isPublic): void
     {
-        $this->public = $public;
+        $this->isPublic = $isPublic;
     }
     /**
      * @return mixed
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
     /**
      * @return mixed
      */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -95,7 +109,7 @@ class Recipe
     /**
      * @return mixed
      */
-    public function getSummary()
+    public function getSummary(): ?string
     {
         return $this->summary;
     }
@@ -109,7 +123,7 @@ class Recipe
     /**
      * @return mixed
      */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -137,7 +151,7 @@ class Recipe
     /**
      * @return mixed
      */
-    public function getIngredients()
+    public function getIngredients(): ?string
     {
         return $this->ingredients;
     }
@@ -151,7 +165,7 @@ class Recipe
     /**
      * @return mixed
      */
-    public function getPrice()
+    public function getPrice(): ?string
     {
         return $this->price;
     }
@@ -165,7 +179,7 @@ class Recipe
     /**
      * @return mixed
      */
-    public function getAuthor()
+    public function getAuthor(): User
     {
         return $this->author;
     }
@@ -177,24 +191,36 @@ class Recipe
     {
         $this->author = $author;
     }
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Review", mappedBy="recipes")
-     */
-    private $reviews;
+
     public function __construct()
     {
-        $this->reviews = new ArrayCollection();
+       // $this->reviews = new ArrayCollection();
 
     }
+
     public function getReviews()
     {
         return $this->reviews;
     }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('title') ->add('reviews')
             ->add('image', FileType::class, array('data_class' => null));
-          //  ->add('file', FileType::class, array('data_class' => null));
+    }
+
+    public function addReview(Review $review): void
+    {
+        $review->setRecipe($this);
+        if (!$this->reviews->contains($review)) {
+            $this->reviews->add($review);
+        }
+    }
+
+    public function removeReview(Review $review): void
+    {
+        $review->setRecipe(null);
+        $this->reviews->removeElement($review);
     }
 }
