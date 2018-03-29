@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use App\Service\FileUploader;
 
 /**
  * @Route("/review", name="review_")
@@ -33,8 +35,9 @@ class ReviewController extends Controller
     /**
      * @Route("/new", name="new")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_USER')")
      */
-    public function new(Request $request)
+    public function new(Request $request, FileUploader $fileUploader)
     {
         $review = new Review();
         $review->setAuthor($this->getUser());
@@ -44,6 +47,11 @@ class ReviewController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $img = $form['image2']->getData();
+            if($img){
+                $fileLocation = $fileUploader->upload($img);
+                $review->setImage($fileLocation);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($review);
             $em->flush();
@@ -71,13 +79,19 @@ class ReviewController extends Controller
     /**
      * @Route("/{id}/edit", name="edit")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_USER')")
      */
-    public function edit(Request $request, Review $review)
+    public function edit(Request $request, Review $review, FileUploader $fileUploader)
     {
         $form = $this->createForm(ReviewType::class, $review);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $img = $form['image2']->getData();
+            if($img){
+                $fileLocation = $fileUploader->upload($img);
+                $review->setImage($fileLocation);
+            }
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('review_edit', ['id' => $review->getId()]);
@@ -92,6 +106,7 @@ class ReviewController extends Controller
     /**
      * @Route("/{id}", name="delete")
      * @Method("DELETE")
+     * @Security("has_role('ROLE_USER')")
      */
     public function delete(Request $request, Review $review)
     {

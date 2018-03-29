@@ -1,0 +1,6 @@
+App\Tests\Controller\AdminController
+ [x] Can create object
+
+App\Test\Simple
+ [x] One plus one equals two
+

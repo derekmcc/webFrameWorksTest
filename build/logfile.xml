@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Project Test Suite" tests="2" assertions="2" errors="0" failures="0" skipped="0" time="0.007228">
+    <testsuite name="App\Tests\Controller\AdminControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\AdminControllerTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.006766">
+      <testcase name="testCanCreateObject" class="App\Tests\Controller\AdminControllerTest" classname="App.Tests.Controller.AdminControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\AdminControllerTest.php" line="17" assertions="1" time="0.006766"/>
+    </testsuite>
+    <testsuite name="App\Test\SimpleTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\SimpleTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.000462">
+      <testcase name="testOnePlusOneEqualsTwo" class="App\Test\SimpleTest" classname="App.Test.SimpleTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\SimpleTest.php" line="9" assertions="1" time="0.000462"/>
+    </testsuite>
+  </testsuite>
+</testsuites>

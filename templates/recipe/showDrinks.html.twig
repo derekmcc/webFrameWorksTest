@@ -4,6 +4,34 @@
 
 {% block body %}
 
+    <div class="container">
+    {% for recipe in recipes %}
+        <div class="row">
+            <div class="col col-lg-2">
+                <img src="/uploads/images/{{ recipe.image }}" alt="{{ recipe.title }}" width="100" height="150">
+            </div>
+            <div class="col col-lg-6">
+                <p></p>
+                <div class="row"><h5><b><a href="{{ path('recipe_show', {'id': recipe.id}) }}">{{ recipe.title }}</a></b></h5></div>
+                <div class="row"><p><b>Summary: </b>{{ recipe.summary }}</p></div>
+                <div class="row"><p><b>Price Range: </b>{{ recipe.price }}</p></div>
+            </div>
+            <div class="col col-lg-4">
+                <h5>Reviews</h5>
+                {% for review in recipe.reviews %}
+                    {% if (is_granted('ROLE_ADMIN')) or (recipe.isPublic == false) %}
+                        <a href="{{ url('review_show', {'id':review.id}) }}">
+                            {{ review.id }} :: {{ review.author.username }}
+                        </a>
+                    {% endif %}
+                {% else %}
+                    No reviews for this drink
+                {% endfor %}
+            </div>
+        </div>
+        <br><br>
+    {% endfor %}
+    </div>
     <h1>Recipe index</h1>
     <table>
         <thead>

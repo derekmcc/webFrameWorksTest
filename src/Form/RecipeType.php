@@ -32,9 +32,11 @@ class RecipeType extends AbstractType
                     'Over €40' => 'Over €40',
                     ),
             ))
-            ->add('reviews')
+          //  ->add('reviews')
             ->add('isPublic')
-            ->add('save', SubmitType::class, array('label' => 'Save'))->getForm()
+           // ->add('save', SubmitType::class, array(
+           //     'attr' => array('class' => 'save'),
+           // ));
         ;
     }
 

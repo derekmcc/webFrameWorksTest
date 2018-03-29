@@ -1,49 +1,22 @@
-<form>
+
 {{ form_start(form) }}
-    <div class="form-group">
-        {{ form_row(form.title) }}
-    </div>
 
-    <div class="form-group">
-        {{ form_row(form.price) }}
-    </div>
+    {{ form_widget(form) }}
 
-    <div class="form-group">
-        {{ form_row(form.summary) }}
-    </div>
 
-    <div class="form-group">
-        {{ form_row(form.description) }}
-    </div>
-
-    <div class="form-group">
-        {{ form_row(form.image) }}
-    </div>
-
-    <div class="form-group">
-        {{ form_row(form.ingredients) }}
-    </div>
-
-    <div class="form-group">
-        {{ form_row(form.isPublic) }}
-    </div>
-
-    <div class="form-group">
-        Reviews for this Drink:
-        <ul>
-            {% for review in form.vars.value.reviews %}
-                <li>
-                    <a href="{{ url('review_show', {'id':review.id}) }}">
-                        {{ review.id }} :: {{ review.author.username }}
-                    </a>
-                </li>
-            {% else %}
-                <li>
-                    (no reviews for this drink)
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-    {{ form_widget(form.reviews) }}
+    Reviews for this Drink:
+    <ul>
+        {% for review in form.vars.value.reviews %}
+            <li>
+                <a href="{{ url('review_show', {'id':review.id}) }}">
+                    {{ review.id }} :: {{ review.author.username }}
+                </a>
+            </li>
+        {% else %}
+            <li>
+                (no reviews for this drink)
+            </li>
+        {% endfor %}
+    </ul>
+    <button>{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
-</form>

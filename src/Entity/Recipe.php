@@ -31,7 +31,7 @@ class Recipe
      */
     private $description;
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      *
      * @Assert\NotBlank(message="Please, upload the image as a jpg")
      * @Assert\File(mimeTypes={ "image/jpeg" })

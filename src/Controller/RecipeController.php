@@ -8,6 +8,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Service\FileUploader;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\File\File;
+
+
 /**
  * @Route("/recipe", name="recipe_")
  */
@@ -40,12 +44,12 @@ class RecipeController extends Controller
     /**
      * @Route("/new", name="new")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function new(Request $request, FileUploader $fileUploader)
     {
         $recipe = new Recipe();
         $recipe->setAuthor($this->getUser());
-
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
@@ -70,9 +74,6 @@ class RecipeController extends Controller
      */
     public function show(Recipe $recipe)
     {
-        if (!$recipe) {
-            return $this->render('error/404.html.twig');
-        }
         return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
         ]);
@@ -80,9 +81,13 @@ class RecipeController extends Controller
     /**
      * @Route("/{id}/edit", name="edit")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function edit(Request $request, Recipe $recipe)
     {
+        $recipe->setImage(
+            new File($this->getParameter('images_directory').'/'.$recipe->getImage())
+        );
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -97,6 +102,7 @@ class RecipeController extends Controller
     /**
      * @Route("/{id}", name="delete")
      * @Method("DELETE")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function delete(Request $request, Recipe $recipe)
     {

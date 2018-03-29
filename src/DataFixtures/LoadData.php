@@ -76,22 +76,19 @@ class LoadData extends Fixture
             $recipe->setIsPublic($public);
 
             $manager->persist($recipe);
-/*
+
             foreach (range(1, 5) as $i) {
                 $review = new Review();
                 $review->setAuthor($this->getReference('john_user'));
-                $review->setSummary($this->getRandomText(random_int(255, 512)));
-                $review->setDate(new \DateTime('now + '.($i).'seconds'));
+                $review->setSummary($this->getPhrases()[$i]);
+                $review->setPublishedAt(new \DateTime('now + '.($i).'seconds'));
                 $review->setRetailers('BLAH');
                 $review->setPrice(1.99);
                 $review->setStars(4);
-                $review->setImage('fasfsa');
-                $review->setRecipes($recipe);
+                $review->setImage('d7f55ebaa8a25f973a3cecd1b61947c5.jpeg');
+                $review->setRecipe($recipe);
                 $manager->persist($review);
             }
-*/
-
-
         }
 
         $manager->flush();
@@ -110,10 +107,10 @@ class LoadData extends Fixture
     private function getRecipeData()
     {
         return [
-            ['test1','test','fsdfsafs','dsafs',$this->getReference('derek', 'john_user'),'gsdfg','10-15',true],
-            ['test2','test','fsdfsafs','dsafs',$this->getReference('derek', 'john_user'),'gsdfg','20-25',true],
-            ['test3','test','fsdfsafs','dsafs',$this->getReference('derek', 'john_user'),'gsdfg','10-15',true],
-            ['test4','test','fsdfsafs','dsafs',$this->getReference('derek', 'john_user'),'gsdfg','40-45',true],
+            ['test1','test','fsdfsafs','d7f55ebaa8a25f973a3cecd1b61947c5.jpeg',$this->getReference('derek', 'john_user'),'gsdfg','10-15',true],
+            ['test2','test','fsdfsafs','d7f55ebaa8a25f973a3cecd1b61947c5.jpeg',$this->getReference('derek', 'john_user'),'gsdfg','20-25',false],
+            ['test3','test','fsdfsafs','d7f55ebaa8a25f973a3cecd1b61947c5.jpeg',$this->getReference('derek', 'john_user'),'gsdfg','10-15',true],
+            ['test4','test','fsdfsafs','d7f55ebaa8a25f973a3cecd1b61947c5.jpeg',$this->getReference('derek', 'john_user'),'gsdfg','40-45',false],
 
         ];
     }
@@ -174,7 +171,7 @@ class LoadData extends Fixture
         ];
     }
 
-    private function getRandomText(int $maxLength = 100): string
+    private function getRandomText(int $maxLength = 50): string
     {
         $phrases = $this->getPhrases();
         shuffle($phrases);

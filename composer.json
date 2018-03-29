@@ -26,6 +26,7 @@
     },
     "require-dev": {
         "symfony/dotenv": "^4.0",
+        "symfony/phpunit-bridge": "^4.0",
         "symfony/web-server-bundle": "^4.0"
     },
     "config": {
@@ -51,6 +52,13 @@
         "symfony/polyfill-php56": "*"
     },
     "scripts": {
+        "route": "php bin/console debug:router",
+        "server": "php bin/console server:run",
+        "createdb": "php bin/console doctrine:database:create",
+        "diff": "php bin/console doctrine:migrations:diff",
+        "migrate": "php bin/console doctrine:migrations:migrate",
+        "load": "php bin/console doctrine:fixtures:load",
+
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd",
