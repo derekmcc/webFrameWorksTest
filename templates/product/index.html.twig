@@ -3,6 +3,9 @@
 {% block title %}Product index{% endblock %}
 
 {% block body %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <h1>Granted admin</h1>
+    {% endif %}
 
     <h1>Recipe index</h1>
     <table>

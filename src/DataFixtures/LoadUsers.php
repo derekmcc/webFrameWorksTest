@@ -20,6 +20,8 @@ class LoadUsers extends Fixture
      */
     private $encoder;
 
+    public const USER_REFERENCE = 'id';
+
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
         $this->encoder = $encoder;
@@ -27,6 +29,7 @@ class LoadUsers extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        /*
         // create objects
         $userUser = $this->createUser('user', 'user');
         $userAdmin = $this->createUser('admin', 'admin', ['ROLE_ADMIN']);
@@ -37,6 +40,10 @@ class LoadUsers extends Fixture
         $manager->persist($userAdmin);
         $manager->persist($userDerek);
         $manager->flush();
+
+        // other fixtures can get this object using the UserFixtures::ADMIN_USER_REFERENCE constant
+        $this->addReference(self::USER_REFERENCE, $userDerek);
+        */
     }
 
     /**

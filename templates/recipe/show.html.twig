@@ -12,13 +12,17 @@
             <td>{{ recipe.id }}</td>
         </tr>
         <tr>
-            <th>Products for this Category</th>
+            <th>Author</th>
+            <td>{{ recipe.author.username }}</td>
+        </tr>
+        <tr>
+            <th>Reviews for this Drink</th>
             <td>{% for review in recipe.reviews %}
                 <a href="{{ url('review_show', {'id':review.id}) }}">
                     {{ review.id }} :: {{ review.author.username }}
                 </a>
         {% else %}
-                (no products for this category)
+                (no reviews for this drink)
             {% endfor %}
             </td>
         </tr>

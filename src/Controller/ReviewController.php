@@ -39,7 +39,7 @@ class ReviewController extends Controller
         $review = new Review();
         $review->setAuthor($this->getUser());
 
-        $review->setDate(new \DateTime('now '));
+        $review->setPublishedAt(new \DateTime('now '));
         $form = $this->createForm(ReviewType::class, $review);
         $form->handleRequest($request);
 

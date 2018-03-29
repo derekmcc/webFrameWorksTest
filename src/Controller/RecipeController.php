@@ -58,6 +58,7 @@ class RecipeController extends Controller
             $em->flush();
             return $this->redirectToRoute('recipe_showRecipe', ['id' => $recipe->getId()]);
         }
+
         return $this->render('recipe/new.html.twig', [
             'recipe' => $recipe,
             'form' => $form->createView(),
@@ -69,6 +70,9 @@ class RecipeController extends Controller
      */
     public function show(Recipe $recipe)
     {
+        if (!$recipe) {
+            return $this->render('error/404.html.twig');
+        }
         return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
         ]);
