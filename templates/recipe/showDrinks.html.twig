@@ -2,8 +2,9 @@
 
 {% block title %}Recipe index{% endblock %}
 
-{% block body %}
 
+{% block body %}
+    {% set counter = 1 %}
     <div class="container">
     {% for recipe in recipes %}
         <div class="row">
@@ -17,13 +18,59 @@
                 <div class="row"><p><b>Price Range: </b>{{ recipe.price }}</p></div>
             </div>
             <div class="col col-lg-4">
-                <h5>Reviews</h5>
+                <h5>Latest 5 Reviews</h5>
                 {% for review in recipe.reviews %}
-                    {% if (is_granted('ROLE_ADMIN')) or (recipe.isPublic == false) %}
+                    {% if (is_granted('ROLE_ADMIN')) or (recipe.isPublic == true) and counter != 5%}
                         <a href="{{ url('review_show', {'id':review.id}) }}">
+                        {% if review.stars == 0 %}
+                            0 Stars
+                        {% elseif review.stars == 0.5 %}
+                            <i class="fas fa-star-half"></i>
+                        {% elseif review.stars == 1 %}
+                            <i class="fas fa-star"></i>
+                        {% elseif review.stars == 1.5 %}
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half"></i>
+                        {% elseif review.stars == 2 %}
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        {% elseif review.stars == 2.5 %}
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half"></i>
+                        {% elseif review.stars == 3 %}
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        {% elseif review.stars == 3.5 %}
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half"></i>
+                        {% elseif review.stars == 4 %}
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        {% elseif review.stars == 4.5 %}
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half"></i>
+                        {% elseif review.stars == 5 %}
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        {% endif %}
                             {{ review.id }} :: {{ review.author.username }}
                         </a>
+                        <br>
+                        {% set counter = counter + 1 %}
                     {% endif %}
+                    {% set counter = 1 %}
                 {% else %}
                     No reviews for this drink
                 {% endfor %}

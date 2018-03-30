@@ -4,9 +4,15 @@ namespace App\Tests\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-/*
 class DefaultControllerTest extends WebTestCase
 {
+    private $client = null;
+
+    public function setUp()
+    {
+        $this->client = static::createClient();
+    }
+
     public function testHomepageResponseCodeOkay()
     {
         // Arrange
@@ -23,22 +29,67 @@ class DefaultControllerTest extends WebTestCase
             $client->getResponse()->getStatusCode()
         );
     }
-
-    public function testHomepageContentContainsHelloWorld()
+    /**
+     * The application contains a lot of secure URLs which shouldn't be
+     * publicly accessible. This tests ensures that whenever a user tries to
+     * access one of those pages, a redirection to the login form is performed.
+     *
+     * @dataProvider getSecureUrls
+     */
+    public function testSecureUrls($url)
     {
-        // Arrange
-        $url = '/';
-        $httpMethod = 'GET';
         $client = static::createClient();
-        $searchText = 'Recipe';
+        $client->request('GET', $url);
 
-        // Act
-        $client->request($httpMethod, $url);
-
-        // Assert
-        $this->assertContains(
-            $searchText,
-            $client->getResponse()->getContent()
+        $response = $client->getResponse();
+        $this->assertSame(Response::HTTP_FOUND, $response->getStatusCode());
+        $this->assertSame(
+            'http://localhost/login',
+            $response->getTargetUrl(),
+            sprintf('The %s secure URL redirects to the login form.', $url)
         );
     }
+
+    /**
+     * PHPUnit's data providers allow to execute the same tests repeated times
+     * using a different set of data each time.
+     * See https://symfony.com/doc/current/cookbook/form/unit_testing.html#testing-against-different-sets-of-data.
+     *
+     * @dataProvider getPublicUrls
+     */
+    public function testPublicUrls(string $url)
+    {
+        // Arrange
+        $httpMethod = 'GET';
+
+        // Act
+        $this->client->request($httpMethod, $url);
+
+        // Assert
+        $this->assertSame(
+            Response::HTTP_OK,
+            $this->client->getResponse()->getStatusCode(),
+            sprintf('The %s public URL loads correctly.', $url)
+        );
+    }
+
+    /**
+     * return URLs for testing ...
+     * @return \Generator
+     */
+    public function getPublicUrls()
+    {
+        yield ['/'];
+    }
+
+    /**
+     * return URLs for testing ...
+     * @return \Generator
+     */
+    public function getSecureUrls()
+    {
+        yield ['/admin'];
+
+    }
+
 }

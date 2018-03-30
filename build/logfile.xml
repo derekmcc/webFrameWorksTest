@@ -1,11 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="Project Test Suite" tests="2" assertions="2" errors="0" failures="0" skipped="0" time="0.007228">
-    <testsuite name="App\Tests\Controller\AdminControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\AdminControllerTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.006766">
-      <testcase name="testCanCreateObject" class="App\Tests\Controller\AdminControllerTest" classname="App.Tests.Controller.AdminControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\AdminControllerTest.php" line="17" assertions="1" time="0.006766"/>
+  <testsuite name="Project Test Suite" tests="8" assertions="9" errors="0" failures="1" skipped="0" time="0.451248">
+    <testsuite name="App\Tests\Controller\AdminControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\AdminControllerTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.005811">
+      <testcase name="testCanCreateObject" class="App\Tests\Controller\AdminControllerTest" classname="App.Tests.Controller.AdminControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\AdminControllerTest.php" line="18" assertions="1" time="0.005811"/>
     </testsuite>
-    <testsuite name="App\Test\SimpleTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\SimpleTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.000462">
-      <testcase name="testOnePlusOneEqualsTwo" class="App\Test\SimpleTest" classname="App.Test.SimpleTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\SimpleTest.php" line="9" assertions="1" time="0.000462"/>
+    <testsuite name="App\Tests\Controller\DefaultControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\DefaultControllerTest.php" tests="3" assertions="4" errors="0" failures="0" skipped="0" time="0.299956">
+      <testcase name="testHomepageResponseCodeOkay" class="App\Tests\Controller\DefaultControllerTest" classname="App.Tests.Controller.DefaultControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\DefaultControllerTest.php" line="16" assertions="1" time="0.180259"/>
+      <testsuite name="App\Tests\Controller\DefaultControllerTest::testSecureUrls" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.079038">
+        <testcase name="testSecureUrls with data set #0" class="App\Tests\Controller\DefaultControllerTest" classname="App.Tests.Controller.DefaultControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\DefaultControllerTest.php" line="39" assertions="2" time="0.079038"/>
+      </testsuite>
+      <testsuite name="App\Tests\Controller\DefaultControllerTest::testPublicUrls" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.040659">
+        <testcase name="testPublicUrls with data set #0" class="App\Tests\Controller\DefaultControllerTest" classname="App.Tests.Controller.DefaultControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\DefaultControllerTest.php" line="60" assertions="1" time="0.040659"/>
+      </testsuite>
+    </testsuite>
+    <testsuite name="App\Tests\Controller\ErrorControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ErrorControllerTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.045582">
+      <testcase name="testErrorResponseOkay" class="App\Tests\Controller\ErrorControllerTest" classname="App.Tests.Controller.ErrorControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ErrorControllerTest.php" line="23" assertions="1" time="0.045582"/>
+    </testsuite>
+    <testsuite name="App\Tests\Controller\RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="0.057394">
+      <testsuite name="App\Tests\Controller\RecipeControllerTest::testListRecipesResponseOkay" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="0.057394">
+        <testcase name="testListRecipesResponseOkay with data set #0" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="47" assertions="1" time="0.057394">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">App\Tests\Controller\RecipeControllerTest::testListRecipesResponseOkay with data set #0 ('//recipe', 'Recipe Index')
+Failed asserting that '&lt;!doctype html&gt;\n
+&lt;html&gt;\n
+    &lt;head&gt;\n
+        &lt;meta charset="utf-8"&gt;\n
+        &lt;title&gt;welcome!&lt;/title&gt;\n
+        &lt;meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"&gt;\n
+                    &lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-psh8r72jq3sodhvi3uxftmaw6vc51mkb0q5p2rruppvrszue4w1povhygtpbfshb" crossorigin="anonymous"&gt;\n
+            &lt;link rel="stylesheet" href="/css/font-awesome.css"&gt;\n
+            &lt;link rel="stylesheet" href="/css/style.css"&gt;\n
+            &lt;link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css" integrity="sha384-v2tw72dyuxeu3y4am2y0tbjqkgfplr39mxzqltbduzab9bgoc40+rdfcg0m10lxk" crossorigin="anonymous"&gt;\n
+            &lt;link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css" integrity="sha384-q3jl8xqu1opdlggfvnrnpdj5vilcvgsdqtqb6owsohwlaurxul7f+jpuovdaij5p" crossorigin="anonymous"&gt;\n
+                &lt;style&gt;\n
+            header {\n
+                text-align: right;\n
+                border-bottom: 0.1rem solid black;\n
+                padding: 1rem;\n
+            }\n
+        &lt;/style&gt;\n
+    &lt;/head&gt;\n
+    &lt;body&gt;\n
+    &lt;header&gt;\n
+                    &lt;a href="http://recipe/login"&gt;&lt;i class="fas fa-sign-in-alt"&gt;&lt;/i&gt; login&lt;/a&gt;\n
+            &lt;/header&gt;\n
+    &lt;nav class="navbar navbar-expand-lg navbar-light navbar-bg mb-5"&gt;\n
+        &lt;a style="margin-left: 75px;" class="navbar-brand space-brand" href="/"&gt;rum reviews&lt;/a&gt;\n
+        &lt;button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarnavdropdown" aria-controls="navbarnavdropdown" aria-expanded="false" aria-label="toggle navigation"&gt; &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt; &lt;/button&gt;\n
+        &lt;div class="collapse navbar-collapse" id="navbarnavdropdown"&gt;\n
+            &lt;ul class="navbar-nav"&gt;\n
+                &lt;li class="nav-item"&gt;\n
+                    &lt;a class="nav-link" href="http://recipe/recipe/showrecipe"&gt;drinks&lt;/a&gt;\n
+                &lt;/li&gt;\n
+                &lt;li class="nav-item"&gt;\n
+                    &lt;a class="nav-link" href="http://recipe/category/"&gt;category&lt;/a&gt;\n
+                &lt;/li&gt;\n
+                &lt;li class="nav-item"&gt;\n
+                    &lt;a class="nav-link" href="http://recipe/review/"&gt;reviews&lt;/a&gt;\n
+                &lt;/li&gt;\n
+                &lt;li class="nav-item"&gt;\n
+                    &lt;a class="nav-link" href="http://recipe/recipe/"&gt;recipe&lt;/a&gt;\n
+                &lt;/li&gt;\n
+                &lt;li class="nav-item dropdown"&gt;\n
+                    &lt;a class="nav-link dropdown-toggle" href="http://example.com" id="navbardropdownmenulink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"&gt;\n
+                        admin\n
+                    &lt;/a&gt;\n
+                    &lt;div class="dropdown-menu" aria-labelledby="navbardropdownmenulink"&gt;\n
+                        &lt;a class="nav-link" href="http://recipe/product/"&gt;drinks&lt;/a&gt;\n
+                        &lt;a class="nav-link" href="http://recipe/category/"&gt;category&lt;/a&gt;\n
+                        &lt;a class="nav-link" href="http://recipe/recipe/"&gt;recipes&lt;/a&gt;\n
+                        &lt;a class="nav-link" href="http://recipe/review/"&gt;reviews&lt;/a&gt;\n
+                    &lt;/div&gt;\n
+                &lt;/li&gt;\n
+                            &lt;/ul&gt;\n
+        &lt;/div&gt;\n
+    &lt;/nav&gt;\n
+            &lt;div class="container"&gt;\n
+        &lt;div class="row"&gt;\n
+            &lt;div class="col-sm-12"&gt;\n
+                    &lt;div id="carouselexamplecontrols" class="carousel slide" data-ride="carousel"&gt;\n
+        &lt;div class="carousel-inner" role="listbox"&gt;\n
+            &lt;div class="carousel-item active"&gt;\n
+                &lt;img class="d-block img-fluid" src="/images/banner1.png" alt="first slide"&gt;\n
+            &lt;/div&gt;\n
+            &lt;div class="carousel-item"&gt;\n
+                &lt;img class="d-block img-fluid" src="/images/banner2.png" alt="second slide"&gt;\n
+            &lt;/div&gt;\n
+            &lt;div class="carousel-item"&gt;\n
+                &lt;img class="d-block img-fluid" src="/images/banner3.png" alt="third slide"&gt;\n
+            &lt;/div&gt;\n
+        &lt;/div&gt;\n
+        &lt;a class="carousel-control-prev" href="#carouselexamplecontrols" role="button" data-slide="prev"&gt;\n
+            &lt;span class="carousel-control-prev-icon" aria-hidden="true"&gt;&lt;/span&gt;\n
+            &lt;span class="sr-only"&gt;previous&lt;/span&gt;\n
+        &lt;/a&gt;\n
+        &lt;a class="carousel-control-next" href="#carouselexamplecontrols" role="button" data-slide="next"&gt;\n
+            &lt;span class="carousel-control-next-icon" aria-hidden="true"&gt;&lt;/span&gt;\n
+            &lt;span class="sr-only"&gt;next&lt;/span&gt;\n
+        &lt;/a&gt;\n
+    &lt;/div&gt;\n
+    &lt;script&gt;\n
+        $('.carousel').carousel()\n
+    &lt;/script&gt;\n
+                &lt;/div&gt;\n
+        &lt;/div&gt;\n
+    &lt;/div&gt;\n
+            &lt;script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgfzhoseeamdoygbf13fyquitwlaqgxvsngt4=" crossorigin="anonymous"&gt;&lt;/script&gt;\n
+        &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vfjxusjphroirbnz7yo7ob41mkfc8jzqzicq4ncceleao4ihwickwpjf9c9ipfgh" crossorigin="anonymous"&gt;&lt;/script&gt;\n
+        &lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpbpkh1pfoepccyvydb4do5unbkysx5wzxm3xxpqe5iktfukjnkck9savuezflj" crossorigin="anonymous"&gt;&lt;/script&gt;\n
+        &lt;script&gt; $('.dropdown-toggle').dropdown(); &lt;/script&gt;\n
+        &lt;/body&gt;\n
+&lt;/html&gt;\n
+' contains "Recipe Index".
+
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php:65
+</failure>
+        </testcase>
+      </testsuite>
+    </testsuite>
+    <testsuite name="App\Controller\Test\ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.042382">
+      <testcase name="testListReviewsResponseOkay" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="24" assertions="1" time="0.042382"/>
+    </testsuite>
+    <testsuite name="App\Test\SimpleTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\SimpleTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.000123">
+      <testcase name="testOnePlusOneEqualsTwo" class="App\Test\SimpleTest" classname="App.Test.SimpleTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\SimpleTest.php" line="9" assertions="1" time="0.000123"/>
     </testsuite>
   </testsuite>
 </testsuites>

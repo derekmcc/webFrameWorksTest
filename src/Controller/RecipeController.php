@@ -41,6 +41,7 @@ class RecipeController extends Controller
             ->findAll();
         return $this->render('recipe/showDrinks.html.twig', ['recipes' => $recipes]);
     }
+
     /**
      * @Route("/new", name="new")
      * @Method({"GET", "POST"})

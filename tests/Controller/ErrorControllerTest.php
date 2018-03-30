@@ -8,8 +8,27 @@
 
 namespace App\Tests\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class ErrorControllerTest
+class ErrorControllerTest extends WebTestCase
 {
+    private $client = null;
 
+    public function setUp()
+    {
+        $this->client = static::createClient();
+    }
+
+
+    public function testErrorResponseOkay()
+    {
+        // Arrange
+        $this->client->request('GET','/error');
+
+        // Act
+        $statusCode = $this->client->getResponse()->getStatusCode();
+        // Assert
+        $this->assertEquals(200, $statusCode);
+
+    }
 }

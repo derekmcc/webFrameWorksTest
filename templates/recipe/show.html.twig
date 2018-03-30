@@ -3,6 +3,112 @@
 {% block title %}Recipe{% endblock %}
 
 {% block body %}
+    <h1 class="display-4">{{ recipe.title }}</h1>
+    <div class="row">
+
+        <div class="col col-lg-3">
+            <br>
+            <img src="/uploads/images/{{ recipe.image }}" alt="{{ recipe.title }}" width="250" height="300">
+        </div>
+        <div class="col col-lg-9">
+            <div class="row"><p></p></div>
+            <div class="row">
+                <p class="lead"><b>Price Range: </b>{{ recipe.price }}</p>
+            </div>
+            <div class="row">
+                <p class="lead"><b>Ingredients: </b>{{ recipe.ingredients }}</p>
+            </div>
+            <div class="row">
+                <p class="lead"><b>Author: </b>{{ recipe.author.username}}</p>
+            </div>
+            <div class="row">
+                {% if (recipe.isPublic) %}
+                    <p class="lead"><b>Public Drink: Yes</b></p>
+                {% else %}
+                    <p class="lead"><b>Public Drink: No</b></p>
+                {% endif %}
+            </div>
+            <div class="row">
+                <p class="lead"><b>Description: </b>{{ recipe.description }}</p>
+            </div>
+            <div class="row">
+                <p class="lead"><b>Summary: </b>{{ recipe.summary }}</p>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <p class="h4">Reviews</p>
+    <br>
+        {% for review in recipe.reviews %}
+            <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <p class="lead"><b> <i class="fas fa-user"></i>  {{ review.author.username }}</b></p>
+                </div>
+                <div class="col-lg-6">
+                    <p class="lead"><b><i class="fas fa-calendar-alt"></i>  {{ review.publishedAt ? review.publishedAt|date('Y-m-d') : '' }}</b></p>
+                </div>
+            </div>
+            <div class="row">
+                <p class="lead"><b>Ingredients: </b>{{ review.price }}</p>
+            </div>
+            <div class="row">
+                <p class="lead"><b>Number of Stars: </b>
+            {% if review.stars == 0 %}
+                0 Stars
+            {% elseif review.stars == 0.5 %}
+                <i class="fas fa-star-half"></i>
+            {% elseif review.stars == 1 %}
+                <i class="fas fa-star"></i>
+            {% elseif review.stars == 1.5 %}
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half"></i>
+            {% elseif review.stars == 2 %}
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            {% elseif review.stars == 2.5 %}
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half"></i>
+            {% elseif review.stars == 3 %}
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            {% elseif review.stars == 3.5 %}
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half"></i>
+            {% elseif review.stars == 4 %}
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            {% elseif review.stars == 4.5 %}
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half"></i>
+            {% elseif review.stars == 5 %}
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            {% endif %}
+                </p>
+            </div>
+            <div class="row">
+                <p class="lead"><b>Summary: </b>{{ review.summary }}</p>
+            </div>
+            </div>
+            <br>
+            <br>
+        {% else %}
+            No reviews for this drink
+        {% endfor %}
 
     <h1>Recipe</h1>
 
@@ -28,7 +134,7 @@
         </tr>
     </table>
 
-    <a href="{{ path('recipe_index') }}">back to list</a>
+    <a href="{{ path('recipe_index') }}"><button type="button" class="btn btn-outline-primary">/a>
 
     <a href="{{ path('recipe_edit', {'id': recipe.id}) }}">edit</a>
 
