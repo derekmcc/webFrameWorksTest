@@ -6,7 +6,11 @@
 {% block body %}
     {% set counter = 1 %}
     <div class="container">
-    {% for recipe in recipes %}
+        {% if (is_granted('IS_AUTHENTICATED_FULLY'))%}
+            <a href="{{ path('recipe_new') }}" class="btn btn-outline-primary">Add New Drink</a>
+            <br>
+        {% endif %}
+        {% for recipe in recipes %}
         {% if (is_granted('IS_AUTHENTICATED_FULLY')) or (recipe.isPublic == true)%}
         <div class="row">
             <div class="col col-lg-2">
@@ -18,11 +22,11 @@
                 <div class="row"><p><b>Summary: </b>{{ recipe.summary }}</p></div>
                 <div class="row"><p><b>Price Range: </b>€{{ recipe.price }}</p></div>
             </div>
+            <i class="fa fa-comments" aria-hidden="true"></i> {{ 'post.num_comments'|transchoice(recipe.reviews|length) }}
             <div class="col col-lg-4">
                 <h5>Last 5 Reviews</h5>
                 {% for review in recipe.reviews %}
                     {% if (counter != 5) %}
-                        <a href="{{ url('review_show', {'id':review.id}) }}">
                         {% if review.stars == 0 %}
                             0 Stars
                         {% elseif review.stars == 0.5 %}
@@ -66,7 +70,8 @@
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                         {% endif %}
-                            {{ review.id }} :: {{ review.author.username }}
+                        <a href="{{ url('review_show', {'id':review.id}) }}">
+                            By {{ review.author.firstName }}  {{ review.author.surname }}
                         </a>
                         <br>
                         {% set counter = counter + 1 %}

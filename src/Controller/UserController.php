@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Product;
-use App\Form\ProductType;
+use App\Entity\User;
+use App\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -11,9 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @Route("/product", name="product_")
+ * @Route("/user", name="user_")
  */
-class ProductController extends Controller
+class UserController extends Controller
 {
     /**
      * @Route("/", name="index")
@@ -22,9 +22,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $template = 'product/index.html.twig';
-        $args = [];
-        return $this->render($template, $args);
+        $users = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->findAll();
+
+        return $this->render('user/index.html.twig', ['users' => $users]);
     }
 
     /**
@@ -33,20 +35,20 @@ class ProductController extends Controller
      */
     public function new(Request $request)
     {
-        $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($product);
+            $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute('product_index', ['id' => $product->getId()]);
+            return $this->redirectToRoute('user_edit', ['id' => $user->getId()]);
         }
 
-        return $this->render('product/new.html.twig', [
-            'product' => $product,
+        return $this->render('user/new.html.twig', [
+            'user' => $user,
             'form' => $form->createView(),
         ]);
     }
@@ -55,10 +57,10 @@ class ProductController extends Controller
      * @Route("/{id}", name="show")
      * @Method("GET")
      */
-    public function show(Product $product)
+    public function show(User $user)
     {
-        return $this->render('product/show.html.twig', [
-            'product' => $product,
+        return $this->render('user/show.html.twig', [
+            'user' => $user,
         ]);
     }
 
@@ -66,19 +68,19 @@ class ProductController extends Controller
      * @Route("/{id}/edit", name="edit")
      * @Method({"GET", "POST"})
      */
-    public function edit(Request $request, Product $product)
+    public function edit(Request $request, User $user)
     {
-        $form = $this->createForm(ProductType::class, $product);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('product_edit', ['id' => $product->getId()]);
+            return $this->redirectToRoute('user_edit', ['id' => $user->getId()]);
         }
 
-        return $this->render('product/edit.html.twig', [
-            'product' => $product,
+        return $this->render('user/edit.html.twig', [
+            'user' => $user,
             'form' => $form->createView(),
         ]);
     }
@@ -87,16 +89,16 @@ class ProductController extends Controller
      * @Route("/{id}", name="delete")
      * @Method("DELETE")
      */
-    public function delete(Request $request, Product $product)
+    public function delete(Request $request, User $user)
     {
-        if (!$this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
-            return $this->redirectToRoute('product_index');
+        if (!$this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+            return $this->redirectToRoute('user_index');
         }
 
         $em = $this->getDoctrine()->getManager();
-        $em->remove($product);
+        $em->remove($user);
         $em->flush();
 
-        return $this->redirectToRoute('product_index');
+        return $this->redirectToRoute('user_index');
     }
 }

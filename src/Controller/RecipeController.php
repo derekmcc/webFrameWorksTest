@@ -45,7 +45,7 @@ class RecipeController extends Controller
     /**
      * @Route("/new", name="new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_USER')")
      */
     public function new(Request $request, FileUploader $fileUploader)
     {
@@ -57,7 +57,8 @@ class RecipeController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $recipe->getImage();
             $fileName = $fileUploader->upload($file);
-            $recipe ->setImage($fileName);
+            $recipe->setImage($fileName);
+            $recipe->setIsPublic(false);
             $em = $this->getDoctrine()->getManager();
             $em->persist($recipe);
             $em->flush();

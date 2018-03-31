@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Review;
+use App\Entity\Recipe;
 use App\Form\ReviewType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -12,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Service\FileUploader;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * @Route("/review", name="review_")
@@ -35,13 +37,15 @@ class ReviewController extends Controller
     /**
      * @Route("/new", name="new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     *
      */
     public function new(Request $request, FileUploader $fileUploader)
     {
         $review = new Review();
         $review->setAuthor($this->getUser());
-
+        $review->setIsPublicReview(false);
+        //$review->setRecipe($recipe);
         $review->setPublishedAt(new \DateTime('now '));
         $form = $this->createForm(ReviewType::class, $review);
         $form->handleRequest($request);
@@ -79,7 +83,7 @@ class ReviewController extends Controller
     /**
      * @Route("/{id}/edit", name="edit")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
     public function edit(Request $request, Review $review, FileUploader $fileUploader)
     {
@@ -106,7 +110,7 @@ class ReviewController extends Controller
     /**
      * @Route("/{id}", name="delete")
      * @Method("DELETE")
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
     public function delete(Request $request, Review $review)
     {

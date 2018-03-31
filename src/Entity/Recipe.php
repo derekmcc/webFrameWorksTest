@@ -16,6 +16,7 @@ class Recipe
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *
      */
     private $id;
     /**
@@ -69,6 +70,12 @@ class Recipe
      * @ORM\OrderBy({"publishedAt": "DESC"})
      */
     private $reviews;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="makeRecipesPublic")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $requestRecipePublic;
 
     /**
      * @return mixed
@@ -223,4 +230,21 @@ class Recipe
         $review->setRecipe(null);
         $this->reviews->removeElement($review);
     }
+
+    /**
+     * @return mixed
+     */
+    public function getRequestRecipePublic()
+    {
+        return $this->requestRecipePublic;
+    }
+
+    /**
+     * @param mixed $requestRecipePublic
+     */
+    public function setRequestRecipePublic($requestRecipePublic = null): void
+    {
+        $this->requestRecipePublic = $requestRecipePublic;
+    }
+
 }

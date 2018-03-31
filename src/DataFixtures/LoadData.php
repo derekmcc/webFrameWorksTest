@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Derek
- * Date: 26/03/2018
- * Time: 15:23
- */
 
 namespace App\DataFixtures;
 
@@ -36,9 +30,11 @@ class LoadData extends Fixture
 
     private function loadUsers(ObjectManager $manager)
     {
-        foreach ($this->getUserData() as [$username, $password, $roles]) {
+        foreach ($this->getUserData() as [$username, $password,$firstName, $surname, $roles]) {
             $user = new User();
             $user->setUsername($username);
+            $user->setFirstname($firstName);
+            $user->setSurname($surname);
             $user->setPassword($this->encodePassword($user, $password));
             $user->setRoles($roles);
 
@@ -85,6 +81,7 @@ class LoadData extends Fixture
                 $review->setRetailers('BLAH');
                 $review->setPrice(1.99);
                 $review->setStars(4);
+                $review->setIsPublicReview($value = (bool)random_int(0, 1));
                 $review->setImage('d7f55ebaa8a25f973a3cecd1b61947c5.jpeg');
                 $review->setRecipe($recipe);
                 $manager->persist($review);
@@ -97,10 +94,10 @@ class LoadData extends Fixture
     private function getUserData(): array
     {
         return [
-            ['derek', 'pass', ['ROLE_SUPER_ADMIN']],
-            ['john_user', 'pass', ['ROLE_USER']],
-            ['admin', 'pass', ['ROLE_ADMIN']],
-            ['joe_user', 'pass', ['ROLE_USER']],
+            ['derek', 'pass','Derek','McCarthy', ['ROLE_SUPER_ADMIN']],
+            ['john_user', 'pass', 'John', 'Doe', ['ROLE_USER']],
+            ['admin', 'pass','Admin', 'Administrator', ['ROLE_ADMIN']],
+            ['joe_user', 'pass','Joe', 'Bloggs', ['ROLE_USER']],
         ];
     }
 

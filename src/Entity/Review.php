@@ -53,6 +53,16 @@ class Review
      */
     private $price;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isPublicReview;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="makeReviewsPublic")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $requestReviewPublic;
 
     public function getImage2()
     {
@@ -226,6 +236,38 @@ class Review
     public function __construct()
     {
         $this->publishedAt = new \DateTime();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getisPublicReview()
+    {
+        return $this->isPublicReview;
+    }
+
+    /**
+     * @param mixed $isPublicReview
+     */
+    public function setIsPublicReview($isPublicReview): void
+    {
+        $this->isPublicReview = $isPublicReview;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRequestReviewPublic()
+    {
+        return $this->requestReviewPublic;
+    }
+
+    /**
+     * @param mixed $requestReviewPublic
+     */
+    public function setRequestReviewPublic(User $requestReviewPublic): void
+    {
+        $this->requestReviewPublic = $requestReviewPublic;
     }
 
 }

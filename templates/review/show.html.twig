@@ -39,6 +39,10 @@
             <th>Author</th>
             <td>{{ review.author.username }}</td>
         </tr>
+        <tr>
+            <th>Recipe</th>
+            <td>{{ review.recipe }}</td>
+        </tr>
     </table>
 
     <a href="{{ path('review_index') }}">back to list</a>

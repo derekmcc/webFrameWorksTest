@@ -1,0 +1,79 @@
+Project Case Study: Food/drink review website
+Summary: Online System to organise and share food/drink items and reviews
+
+NOTE:
+Each student must inform Lecturer what CATEGORY of food/drink their site will review
+(every student must choose a different category)
+e.g.
+cheesecakes / Australian wines / herbal teas etc.
+
+- FOOD/DRINK item = 
+	- title (2-3 words)
+	- summary (1 sentence)
+	- uploaded photo
+	- description
+	- list of ingredients
+	- price range (under 5 / 6-9 / 10-14 / 15-19 / 20-39 etc.)
+		
+- REVIEW = 	
+	- author
+	- date
+	- one sentence summary
+	- list of retailers/cafe/restaurants where item was purchases
+	- actual price paid
+	- number of stars (0..5 in half-star steps)
+	- (optional) photos
+
+
+NOTE: Only logged in 'members' can see all items / reviews
+Public (non-logged in) users can only see items/reviews marked as PUBLIC
+
+-------
+Use cases
+role 'public' (no login required):
+-------
+-   can see most recently added PUBLIC items
+	+ username of recipe author/uploader
+	+ list of PUBLIC reviews for this item
+	+ overall review (sentence + how many stars (0..5 in half-star steps)
+	
+-------
+Use cases
+role 'member'
+- all use cases for 'public' PLUS the following
+-------
+
+- can see ALL items / just items authored by self
+
+- can see ALL reviews / just reviews authored by self
+
+- can CRUD items (default MEMBERS ONLY)
+	- can only delete / update items created by self
+
+- can CRUD reviews (default MEMBERS ONLY)
+	- can only delete / update reviews created by self
+	
+can search by:
+	- free text content search
+	- date range
+	- price range
+
+- up/down vote list reviews of items
+
+- delete user account
+
+- can propose an ITEM / REVIEW by that user be made PUBLIC
+
+-------
+Use cases
+role 'admin'
+-------
+- can CRUD user and member accounts
+
+- can CRUD all items
+
+- can CRUD all reviews
+
+- see list of proposed items / reviews to be made PUBLIC
+	- accept / reject whether to make an item / review PUBLIC
+

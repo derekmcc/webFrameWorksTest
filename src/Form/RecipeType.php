@@ -33,7 +33,7 @@ class RecipeType extends AbstractType
                     ),
             ))
           //  ->add('reviews')
-            ->add('isPublic')
+           // ->add('isPublic')
            // ->add('save', SubmitType::class, array(
            //     'attr' => array('class' => 'save'),
            // ));

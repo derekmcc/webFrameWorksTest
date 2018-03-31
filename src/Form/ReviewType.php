@@ -46,12 +46,12 @@ class ReviewType extends AbstractType
                 'data_class' => null,
                 'required'    => false
             ))
-            ->add('recipe',
+          /*  ->add('recipe',
                EntityType::class, [
                    // list objects from this class
                    'class' => 'App:Recipe',
                    'choice_label' => 'title',
-               ])
+               ])*/
         ;
     }
 
