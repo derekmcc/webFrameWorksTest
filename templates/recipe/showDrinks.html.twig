@@ -7,6 +7,7 @@
     {% set counter = 1 %}
     <div class="container">
     {% for recipe in recipes %}
+        {% if (is_granted('IS_AUTHENTICATED_FULLY')) or (recipe.isPublic == true)%}
         <div class="row">
             <div class="col col-lg-2">
                 <img src="/uploads/images/{{ recipe.image }}" alt="{{ recipe.title }}" width="100" height="150">
@@ -15,12 +16,12 @@
                 <p></p>
                 <div class="row"><h5><b><a href="{{ path('recipe_show', {'id': recipe.id}) }}">{{ recipe.title }}</a></b></h5></div>
                 <div class="row"><p><b>Summary: </b>{{ recipe.summary }}</p></div>
-                <div class="row"><p><b>Price Range: </b>{{ recipe.price }}</p></div>
+                <div class="row"><p><b>Price Range: </b>€{{ recipe.price }}</p></div>
             </div>
             <div class="col col-lg-4">
-                <h5>Latest 5 Reviews</h5>
+                <h5>Last 5 Reviews</h5>
                 {% for review in recipe.reviews %}
-                    {% if (is_granted('ROLE_ADMIN')) or (recipe.isPublic == true) and counter != 5%}
+                    {% if (counter != 5) %}
                         <a href="{{ url('review_show', {'id':review.id}) }}">
                         {% if review.stars == 0 %}
                             0 Stars
@@ -71,11 +72,12 @@
                         {% set counter = counter + 1 %}
                     {% endif %}
                     {% set counter = 1 %}
-                {% else %}
-                    No reviews for this drink
+                    {% else %}
+                        <p>No reviews for this drink</p>
                 {% endfor %}
             </div>
         </div>
+        {% endif %}
         <br><br>
     {% endfor %}
     </div>

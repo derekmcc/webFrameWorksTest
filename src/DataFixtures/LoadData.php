@@ -97,10 +97,10 @@ class LoadData extends Fixture
     private function getUserData(): array
     {
         return [
-            // $userData = [ $username, $password, $roles];
             ['derek', 'pass', ['ROLE_SUPER_ADMIN']],
             ['john_user', 'pass', ['ROLE_USER']],
             ['admin', 'pass', ['ROLE_ADMIN']],
+            ['joe_user', 'pass', ['ROLE_USER']],
         ];
     }
 

@@ -37,107 +37,119 @@
         </div>
     </div>
     <br>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% if (is_granted('ROLE_ADMIN') or app.user.username == review.author.username) %}
+            <div class="row">
+                <a href="{{ path('recipe_edit', {'id': recipe.id}) }}" class="btn btn-outline-success">Edit Drink</a>
+                {% include 'recipe/_delete_form.html.twig' with {'identifier': recipe.id} only %}
+            </div>
+        {% endif %}
+    {% endif %}
     <br>
-    <p class="h4">Reviews</p>
+    <br>
+    <div style="height: 50px; background-color: rgba(230, 255, 230,5.8);">
+        <div class="row justify-content-center">
+            <div class="col-3 text-center">
+                <p class="h1">Reviews</p>
+            </div>
+        </div>
+    </div>
+    <br>
     <br>
         {% for review in recipe.reviews %}
             <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <p class="lead"><b> <i class="fas fa-user"></i>  {{ review.author.username }}</b></p>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <p class="lead"><b> <i class="fas fa-user"></i>  {{ review.author.username }}</b></p>
+                    </div>
+                    <div class="col-lg-6">
+                        <p class="lead"><b><i class="fas fa-calendar-alt"></i>  {{ review.publishedAt ? review.publishedAt|date('Y-m-d') : '' }}</b></p>
+                    </div>
                 </div>
-                <div class="col-lg-6">
-                    <p class="lead"><b><i class="fas fa-calendar-alt"></i>  {{ review.publishedAt ? review.publishedAt|date('Y-m-d') : '' }}</b></p>
+                <div class="row">
+                    <p class="lead"><b>Price Paid: </b>€{{ review.price }}</p>
+                </div>
+                <div class="row">
+                    <p class="lead"><b>Number of Stars: </b>
+                {% if review.stars == 0 %}
+                    0 Stars
+                {% elseif review.stars == 0.5 %}
+                    <i class="fas fa-star-half"></i>
+                {% elseif review.stars == 1 %}
+                    <i class="fas fa-star"></i>
+                {% elseif review.stars == 1.5 %}
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half"></i>
+                {% elseif review.stars == 2 %}
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                {% elseif review.stars == 2.5 %}
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half"></i>
+                {% elseif review.stars == 3 %}
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                {% elseif review.stars == 3.5 %}
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half"></i>
+                {% elseif review.stars == 4 %}
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                {% elseif review.stars == 4.5 %}
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half"></i>
+                {% elseif review.stars == 5 %}
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                {% endif %}
+                    </p>
+                </div>
+                <div class="row">
+                    <p class="lead"><b>Summary: </b>{{ review.summary }}</p>
+                </div>
+                <div class="row">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    {% if (is_granted('ROLE_ADMIN')) %}
+                        <div class="col-lg-10">
+                            <a href="{{ path('review_show', {'id': review.id}) }}" class="btn btn-outline-primary">View Review</a>
+                            <a href="{{ path('review_edit', {'id': review.id}) }}" class="btn btn-outline-info">Edit Review</a>
+                        </div>
+                        <div class="col-lg-2">
+                            {% include 'review/_delete_form.html.twig' with {'identifier': review.id} only %}
+                        </div>
+                    {% elseif(app.user.username == review.author.username) %}
+                    <div class="col-lg-10">
+                        <a href="{{ path('review_show', {'id': review.id}) }}" class="btn btn-outline-primary">View Review</a>
+                        <a href="{{ path('review_edit', {'id': review.id}) }}" class="btn btn-outline-info">Edit Review</a>
+                    </div>
+                    <div class="col-lg-2">
+                        {% include 'review/_delete_form.html.twig' with {'identifier': review.id} only %}
+                    </div>
+                    {% endif %}
+                {% else %}
+                    <a href="{{ path('review_show', {'id': review.id}) }}" class="btn btn-outline-primary">View Review</a>
+                {% endif %}
                 </div>
             </div>
-            <div class="row">
-                <p class="lead"><b>Ingredients: </b>{{ review.price }}</p>
-            </div>
-            <div class="row">
-                <p class="lead"><b>Number of Stars: </b>
-            {% if review.stars == 0 %}
-                0 Stars
-            {% elseif review.stars == 0.5 %}
-                <i class="fas fa-star-half"></i>
-            {% elseif review.stars == 1 %}
-                <i class="fas fa-star"></i>
-            {% elseif review.stars == 1.5 %}
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half"></i>
-            {% elseif review.stars == 2 %}
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-            {% elseif review.stars == 2.5 %}
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half"></i>
-            {% elseif review.stars == 3 %}
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-            {% elseif review.stars == 3.5 %}
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half"></i>
-            {% elseif review.stars == 4 %}
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-            {% elseif review.stars == 4.5 %}
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half"></i>
-            {% elseif review.stars == 5 %}
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-            {% endif %}
-                </p>
-            </div>
-            <div class="row">
-                <p class="lead"><b>Summary: </b>{{ review.summary }}</p>
-            </div>
-            </div>
-            <br>
-            <br>
+            <hr>
         {% else %}
-            No reviews for this drink
+        <div class="row">
+            <p class="lead">No reviews for this drink</p>
+        </div>
         {% endfor %}
-
-    <h1>Recipe</h1>
-
-    <table>
-        <tr>
-            <th>Id</th>
-            <td>{{ recipe.id }}</td>
-        </tr>
-        <tr>
-            <th>Author</th>
-            <td>{{ recipe.author.username }}</td>
-        </tr>
-        <tr>
-            <th>Reviews for this Drink</th>
-            <td>{% for review in recipe.reviews %}
-                <a href="{{ url('review_show', {'id':review.id}) }}">
-                    {{ review.id }} :: {{ review.author.username }}
-                </a>
-        {% else %}
-                (no reviews for this drink)
-            {% endfor %}
-            </td>
-        </tr>
-    </table>
-
-    <a href="{{ path('recipe_index') }}"><button type="button" class="btn btn-outline-primary">/a>
-
-    <a href="{{ path('recipe_edit', {'id': recipe.id}) }}">edit</a>
-
-    {% include 'recipe/_delete_form.html.twig' with {'identifier': recipe.id} only %}
-
+    <a href="{{ path('recipe_index') }}" class="btn btn-outline-primary btn-block">Back to Drinks</a>
+    <br>
+    <br>
 {% endblock %}
