@@ -23,6 +23,8 @@ before_install:
   - '[[ "$TRAVIS_PHP_VERSION" == "nightly" ]] || phpenv config-rm xdebug.ini'
   - composer self-update
 
+before_script:
+  - composer install
 install:
   - composer install
   - ./vendor/bin/simple-phpunit install

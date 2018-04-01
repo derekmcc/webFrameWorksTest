@@ -15,6 +15,16 @@
         <env name="APP_SECRET" value="s$cretf0rt3st" />
         <env name="SHELL_VERBOSITY" value="-1" />
         <!-- define your env variables for the test env here -->
+
+        <env name="DB_USER" value="root" />
+        <env name="DB_PASSWORD" value="root" />
+        <env name="DB_HOST" value="127.0.0.1" />
+        <env name="DB_PORT" value="3306" />
+        <env name="DB_NAME" value="webFrameWorks6" />
+
+        <env name="DATABASE_URL" value="mysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}" />
+        <env name="DATABASE_URL" value="mysql://root:root@127.0.0.1:3306/webFrameWorks6" />
+
     </php>
 
     <testsuites>

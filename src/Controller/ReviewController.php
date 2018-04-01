@@ -35,17 +35,21 @@ class ReviewController extends Controller
     }
 
     /**
-     * @Route("/new", name="new")
+     * @Route("/new/{recipeID}",  defaults={"recipeID" = 0}, name="new")
      * @Method({"GET", "POST"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      */
-    public function new(Request $request, FileUploader $fileUploader)
+    public function new(Request $request, FileUploader $fileUploader, Recipe $recipeID)
     {
         $review = new Review();
         $review->setAuthor($this->getUser());
         $review->setIsPublicReview(false);
-        //$review->setRecipe($recipe);
+        $em = $this->getDoctrine()->getManager();
+
+        $recipeClassID = $em->getRepository('App:Recipe')->find($recipeID);
+        $review->setRecipe($recipeClassID);
+
         $review->setPublishedAt(new \DateTime('now '));
         $form = $this->createForm(ReviewType::class, $review);
         $form->handleRequest($request);

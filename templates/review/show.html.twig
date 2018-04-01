@@ -4,8 +4,38 @@
 
 {% block body %}
 
-    <h1>Review</h1>
-
+    <h1>Review Details</h1>
+    <div class="row">
+        <div class="col col-lg-3">
+            <br>
+            <img src="/uploads/images/{{ review.image }}"width="250" height="300">
+        </div>
+        <div class="col col-lg-9">
+            <div class="row"><p></p></div>
+            <div class="row">
+                <p class="lead"><b>Author: </b>{{ review.author.firstName}} {{ review.author.surname}}</p>
+            </div>
+            <div class="row">
+                <p class="lead"><i class="fas fa-dollar-sign"></i><b>Price Paid: </b>€{{ review.price }}</p>
+            </div>
+            <div class="row">
+                <p class="lead"><b><i class="fas fa-calendar-alt"></i>  {{ review.publishedAt ? review.publishedAt|date('Y-m-d') : '' }}</b></p>
+            </div>
+            <div class="row">
+                {% if (review.isPublicReview) %}
+                    <p class="lead"><b>Public Drink: Yes</b></p>
+                {% else %}
+                    <p class="lead"><b>Public Drink: No</b></p>
+                {% endif %}
+            </div>
+            <div class="row">
+                <p class="lead"><b>Number of Stars: </b>{{ review.stars }}</p>
+            </div>
+            <div class="row">
+                <p class="lead"><b>Summary: </b>{{ review.summary }}</p>
+            </div>
+        </div>
+    </div>
     <table>
         <tr>
             <th>Id</th>
@@ -41,7 +71,9 @@
         </tr>
         <tr>
             <th>Recipe</th>
-            <td>{{ review.recipe }}</td>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <td>{{ review.recipe.title}}</td>
+        {% endif %}
         </tr>
     </table>
 

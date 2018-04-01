@@ -13,13 +13,13 @@
         <div class="col col-lg-9">
             <div class="row"><p></p></div>
             <div class="row">
-                <p class="lead"><b>Price Range: </b>{{ recipe.price }}</p>
+                <p class="lead"><b>Price Range: </b>€{{ recipe.price }}</p>
             </div>
             <div class="row">
                 <p class="lead"><b>Ingredients: </b>{{ recipe.ingredients }}</p>
             </div>
             <div class="row">
-                <p class="lead"><b>Author: </b>{{ recipe.author.username}}</p>
+                <p class="lead"><b>Author: </b>{{ recipe.author.firstName}} {{ recipe.author.surname}}</p>
             </div>
             <div class="row">
                 {% if (recipe.isPublic) %}
@@ -55,14 +55,14 @@
         </div>
     </div>
     <br>
-    <a href="{{ path('review_new', {'id': recipe.id}) }}" class="btn btn-outline-dark">Add New Review</a>
+    <a href="{{ path('review_new', {'recipeID': recipe.id}) }}" class="btn btn-outline-dark">Add New Review</a>
     <br>
     <br>
         {% for review in recipe.reviews %}
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6">
-                        <p class="lead"><b> <i class="fas fa-user"></i>  {{ review.author.username }}</b></p>
+                        <p class="lead"><b> <i class="fas fa-user"></i>  {{ review.author.firstName}} {{ review.author.surname}}</b></p>
                     </div>
                     <div class="col-lg-6">
                         <p class="lead"><b><i class="fas fa-calendar-alt"></i>  {{ review.publishedAt ? review.publishedAt|date('Y-m-d') : '' }}</b></p>

@@ -10,10 +10,13 @@ App\Tests\Controller\ErrorController
  [x] Error response okay
 
 App\Tests\Controller\RecipeController
- [x] Backend pages load correctly
+ [x] Recipe public urls 
+ [x] Edit recipe
+ [x] Admin home page
 
 App\Controller\Test\ReviewController
- [ ] List reviews response okay
+ [x] Review public urls 
+ [x] Edit review
 
 App\Test\Simple
  [x] One plus one equals two

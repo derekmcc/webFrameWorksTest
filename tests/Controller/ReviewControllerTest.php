@@ -20,11 +20,14 @@ class ReviewControllerTest extends WebTestCase
         $this->client = static::createClient();
     }
 
-
-    public function testListReviewsResponseOkay()
+    /**
+     * @dataProvider publicReviewUrls
+     */
+    public function testReviewPublicUrls($url)
     {
         // Arrange
-        $this->client->request('GET','//review');
+        $this->client->request('GET',$url);
+        $crawler = $this->client->getResponse();
 
         // Act
         $statusCode = $this->client->getResponse()->getStatusCode();
@@ -34,6 +37,27 @@ class ReviewControllerTest extends WebTestCase
             Response::HTTP_OK,
             $this->client->getResponse()->getStatusCode()
         );
+    }
 
+    public function publicReviewUrls()
+    {
+        return array(
+            ['/review/']
+        );
+    }
+
+    public function testEditReview()
+    {
+        // Arrange
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'derek',
+            'PHP_AUTH_PW' => 'pass',
+        ]);
+
+        // Act
+        $client->request('GET', '/review/1/edit');
+
+        // Assert
+        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
 }

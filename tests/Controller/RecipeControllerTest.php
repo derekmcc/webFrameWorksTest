@@ -20,24 +20,59 @@ class RecipeControllerTest extends WebTestCase
         $this->client = static::createClient();
     }
     /**
-     *  queryParametersProvider
+     * @dataProvider publicRecipeUrls
      */
-    public function testBackendPagesLoadCorrectly()
+    public function testRecipePublicUrls($url)
     {
-        $client = static::createClient();
+        // Arrange
+        $this->client->request('GET',$url);
+        $crawler = $this->client->getResponse();
 
-        $client->request('GET', '/recipe');
-        $crawler = $client->followRedirect();
+        // Act
+        $statusCode = $this->client->getResponse()->getStatusCode();
 
-        $this->assertEquals('http://localhost/recipe/', $crawler->getUri());
+        // Assert
+        $this->assertSame(
+            Response::HTTP_OK,
+            $this->client->getResponse()->getStatusCode()
+        );
     }
 
-    public function queryParametersProvider()
+    public function publicRecipeUrls()
     {
         return array(
-            ['/recipe']
-
+            ['/recipe/'],
+            ['/recipe/showRecipe'],
         );
+    }
+
+    public function testEditRecipe()
+    {
+        // Arrange
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'derek',
+            'PHP_AUTH_PW' => 'pass',
+        ]);
+
+        // Act
+        $client->request('GET', '/recipe/1/edit');
+
+        // Assert
+        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+    }
+    public function testAdminHomePage()
+    {
+        // Arrange
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'derek',
+            'PHP_AUTH_PW' => 'pass',
+        ]);
+
+        // Act
+        $client->request('GET', '/admin');
+
+        // Assert
+        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
 
     /**
