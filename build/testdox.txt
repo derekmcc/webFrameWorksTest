@@ -1,0 +1,26 @@
+App\Tests\Controller\AdminController
+ [x] Can create object
+ [x] Access denied for regular users 
+ [x] Access for admin users 
+ [x] Admin home page
+
+App\Tests\Controller\DefaultController
+ [x] Homepage response code okay
+ [x] Secure urls 
+ [x] Public urls 
+
+App\Tests\Controller\ErrorController
+ [x] Error response okay
+
+App\Tests\Controller\RecipeController
+ [x] Recipe public urls 
+ [ ] Edit recipe
+ [x] Admin home page
+
+App\Controller\Test\ReviewController
+ [x] Review public urls 
+ [x] Edit review
+
+App\Test\Simple
+ [x] One plus one equals two
+

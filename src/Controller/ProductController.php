@@ -22,11 +22,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = $this->getDoctrine()
-            ->getRepository(Product::class)
-            ->findAll();
-
-        return $this->render('product/index.html.twig', ['products' => $products]);
+        $template = 'product/index.html.twig';
+        $args = [];
+        return $this->render($template, $args);
     }
 
     /**

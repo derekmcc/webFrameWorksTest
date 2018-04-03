@@ -7,6 +7,7 @@
         {% block stylesheets %}
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
             <link rel="stylesheet" href="/css/font-awesome.css">
+            <link href="/static/fontawesome/fontawesome-all.css" rel="stylesheet">
             <link rel="stylesheet" href="/css/style.css">
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css" integrity="sha384-v2Tw72dyUXeU3y4aM2Y0tBJQkGfplr39mxZqlTBDUZAb9BGoC40+rdFCG0m10lXk" crossorigin="anonymous">
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css" integrity="sha384-q3jl8XQu1OpdLgGFvNRnPdj5VIlCvgsDQTQB6owSOHWlAurxul7f+JpUOVdAiJ5P" crossorigin="anonymous">
@@ -39,13 +40,13 @@
                     <a class="nav-link" href="{{ url('recipe_showRecipe') }}">Drinks</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('category_index') }}">Category</a>
+                    <a class="nav-link" href="{{ url('user_index') }}">Users</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('review_index') }}">Reviews</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('recipe_index') }}">Recipe</a>
+                    <a class="nav-link" href="{{ url('user_account') }}">User Account</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

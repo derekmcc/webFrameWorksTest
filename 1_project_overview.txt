@@ -1,0 +1,28 @@
+Year3 computing - Web Framworks
+
+You are to develop, test and defend a data-driven PHP website, to illustrate the topics of the module. See the attached diagram specifying the scope of the project, and criteria for different grades.
+
+You submit the project via GitHub repo URL
+	- the URL must be submitted before the Easter break
+	
+No grade is given for the project until it has been defended one-to-one with the lecturer during week 12  week scheduled project grading sessions.
+
+regards,
+
+.. matt ..
+
+NOTE: Sources and plagiarism
+This project is an individual project. All work submitted should be your own, except for any images you use, and any HTML/CSS/JS templates. You should document all image and client-side code sources in file /public/sources.txt
+
+All code and text content should be your own original work, with the following exceptions:
+- you may use and modify any example code from the lectures/labs/evote-dvd case study without any need to reference such sources. 
+- you may (and in fact are encouraged to) use full PHP components installed using Composer. Your composer.json file and vendor folder lists all project dependencies for third-party components, so there is no need to acknowledge any such components any further.
+
+You may NOT use other PHP code inserted into your own classes or scripts - i.e. your PHP code in index.php/setups and all your OO classes must all be your own code. 
+
+While you may get IDEAS for code to solve particular problems from other sources, you must WRITE all lines of code yourself and full understand every line of code in your classes and index.php files. Remember by submitting this project you are declaring that it is all your own individual work unless explicitly and unambiguously acknowledged by you.
+
+There is no need to cite any code:
+- from my examples
+- from the Symfony and Twig websites
+- for any componengts installed via Composer (since they are cited for you in composer.json)

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- https://phpunit.de/manual/current/en/appendixes.configuration.html -->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.1/phpunit.xsd"
+         backupGlobals="false"
+         colors="true"
+         bootstrap="vendor/autoload.php"
+>
+    <php>
+        <ini name="error_reporting" value="-1" />
+        <env name="KERNEL_CLASS" value="App\Kernel" />
+        <env name="APP_ENV" value="test" />
+        <env name="APP_DEBUG" value="1" />
+        <env name="APP_SECRET" value="s$cretf0rt3st" />
+        <env name="SHELL_VERBOSITY" value="-1" />
+        <!-- define your env variables for the test env here -->
+
+        <env name="DB_USER" value="root" />
+        <env name="DB_PASSWORD" value="root" />
+        <env name="DB_HOST" value="127.0.0.1" />
+        <env name="DB_PORT" value="3306" />
+        <env name="DB_NAME" value="webFrameWorks1" />
+
+        <env name="DATABASE_URL" value="mysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}" />
+        <env name="DATABASE_URL" value="mysql://root:root@127.0.0.1:3306/webFrameWorks1" />
+
+    </php>
+
+    <testsuites>
+        <testsuite name="Project Test Suite">
+            <directory>tests/</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <!--
+            <directory>./src/</directory>
+            -->
+            <directory>./src/Controller</directory>
+            <directory>./src/Util</directory>
+            <directory>./src/Entity</directory>
+            <directory>./src/EventListener</directory>
+            <directory>./src/Form</directory>
+            <directory>./src/Repository</directory>
+            <directory>./src/Security</directory>
+            <directory>./src/Service</directory>
+        </whitelist>
+    </filter>
+
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+    </listeners>
+
+    <logging>
+        <log type="tap" target="./build/logfile.tap"/>
+        <log type="junit" target="./build/logfile.xml"/>
+        <log type="testdox-html" target="./build/testdox.html"/>
+        <log type="testdox-text" target="./build/testdox.txt"/>
+        <!--log type="coverage-html" target="./build/report"/-->
+    </logging>
+
+</phpunit>
+
+

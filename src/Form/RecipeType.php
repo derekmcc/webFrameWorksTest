@@ -18,11 +18,15 @@ class RecipeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title',TextType::class)
-            ->add('summary',TextType::class)
-            ->add('description',TextType::class)
-            ->add('image', FileType::class, array('data_class' => null))
-            ->add('ingredients',TextType::class)
+            ->add('title')
+            ->add('summary')
+            ->add('description')
+            ->add('image', FileType::class, [
+                'label' => 'Image',
+                'data_class' => null,
+                'required' => false
+            ])
+            ->add('ingredients')
             ->add('price', ChoiceType::class, array(
                 'choices' => array(
                     'Under €10' => 'Under €10',
@@ -32,9 +36,12 @@ class RecipeType extends AbstractType
                     'Over €40' => 'Over €40',
                     ),
             ))
-            ->add('reviews')
-            ->add('isPublic')
-            ->add('save', SubmitType::class, array('label' => 'Save'))->getForm()
+
+          //  ->add('reviews')
+         //   ->add('isPublic')
+          //  ->add('save', SubmitType::class, array(
+           //     'attr' => array('class' => 'save'),
+           // ));
         ;
     }
 

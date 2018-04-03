@@ -2,12 +2,18 @@
 namespace App\Controller;
 use App\Entity\Recipe;
 use App\Form\RecipeType;
+use App\Form\RequestType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+//use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use App\Service\FileUploader;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\File\File;
+
+
 /**
  * @Route("/recipe", name="recipe_")
  */
@@ -37,22 +43,24 @@ class RecipeController extends Controller
             ->findAll();
         return $this->render('recipe/showDrinks.html.twig', ['recipes' => $recipes]);
     }
+
     /**
      * @Route("/new", name="new")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_USER')")
      */
     public function new(Request $request, FileUploader $fileUploader)
     {
         $recipe = new Recipe();
         $recipe->setAuthor($this->getUser());
-
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $recipe->getImage();
             $fileName = $fileUploader->upload($file);
-            $recipe ->setImage($fileName);
+            $recipe->setImage($fileName);
+            $recipe->setIsPublic(false);
             $em = $this->getDoctrine()->getManager();
             $em->persist($recipe);
             $em->flush();
@@ -64,28 +72,60 @@ class RecipeController extends Controller
             'form' => $form->createView(),
         ]);
     }
+
     /**
      * @Route("/{id}", name="show")
      * @Method("GET")
      */
     public function show(Recipe $recipe)
     {
-        if (!$recipe) {
-            return $this->render('error/404.html.twig');
-        }
         return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
         ]);
     }
+
+    /**
+     * @Route("/{id}/request", name="request")
+     * @Method({"GET", "POST"})
+     *
+     */
+    public function request(Request $request, Recipe $recipe)
+    {
+
+        $form = $this->createForm(RequestType::class, $recipe);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $recipe->setImage(
+                new File($this->getParameter('images_directory').'/'.$recipe->getImage())
+            );
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('request_edit', ['id' => $recipe->getId()]);
+        }
+        return $this->render('request/edit.html.twig', [
+            'recipe' => $recipe,
+            'form' => $form->createView(),
+        ]);
+    }
+
     /**
      * @Route("/{id}/edit", name="edit")
      * @Method({"GET", "POST"})
+     *
      */
     public function edit(Request $request, Recipe $recipe)
     {
+        //fixes issue if file not found when going to form
+        if($recipe->getImage() == null)
+        {
+            $recipe->setImage(
+                new File($this->getParameter('images_directory').'/'.$recipe->getImage())
+            );
+        }
+
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('recipe_edit', ['id' => $recipe->getId()]);
         }
@@ -97,6 +137,7 @@ class RecipeController extends Controller
     /**
      * @Route("/{id}", name="delete")
      * @Method("DELETE")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function delete(Request $request, Recipe $recipe)
     {

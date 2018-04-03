@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ReviewType extends AbstractType
 {
@@ -33,13 +34,24 @@ class ReviewType extends AbstractType
                     '5' => 5,
                 ),
             ))
-           // ->add('image', FileType::class, array('data_class' => null))
-            ->add('recipe',
+           // ->add('image', FileType::class, array('required'=>false))
+            //->add('image', FileType::class, array('data_class' => null))
+           ->add('image', TextType::class, array(
+               'label' => 'Image',
+               'attr' => ['readonly' => true],
+               'required'    => false
+           ))
+            ->add('image2', FileType::class, array(
+                'label' => 'Image',
+                'data_class' => null,
+                'required'    => false
+            ))
+          /*  ->add('recipe',
                EntityType::class, [
                    // list objects from this class
                    'class' => 'App:Recipe',
                    'choice_label' => 'title',
-               ])
+               ])*/
         ;
     }
 

@@ -54,19 +54,44 @@ class Review
     private $price;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isPublicReview;
+
+    /*
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="makeReviewsPublic")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    //private $requestReviewPublic;
+
+    public function getImage2()
+    {
+        return $this->image2;
+    }
+
+
+    public function setImage2($image2): void
+    {
+        $this->image2 = $image2;
+    }
+
+    /**
      * @ORM\Column(type="float")
      */
     private $stars;
 
     /**
-     * @Assert\Image(
-     *     minWidth = 200,
-     *     maxWidth = 800,
-     *     minHeight = 200,
-     *     maxHeight = 800
-     * )
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @Assert\Image
      */
     private $image;
+
+    /**
+     * @var string $image
+     * @Assert\File( maxSize = "1024k", mimeTypesMessage = "Please upload a valid Image")
+     */
+    private $image2;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="reviews")
@@ -187,11 +212,11 @@ class Review
     }
 
     /**
-     * @param File|null $file
+     * @param mixed $image
      */
-    public function setImage(File $file = null): void
+    public function setImage($image): void
     {
-        $this->image = $file;
+        $this->image = $image;
     }
 
     public function getRecipe()
@@ -211,6 +236,39 @@ class Review
     public function __construct()
     {
         $this->publishedAt = new \DateTime();
+        $this->requestReviewPublic = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getisPublicReview()
+    {
+        return $this->isPublicReview;
+    }
+
+    /**
+     * @param mixed $isPublicReview
+     */
+    public function setIsPublicReview($isPublicReview): void
+    {
+        $this->isPublicReview = $isPublicReview;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRequestReviewPublic()
+    {
+        return $this->requestReviewPublic;
+    }
+
+    /**
+     * @param mixed $requestReviewPublic
+     */
+    public function setRequestReviewPublic(User $requestReviewPublic): void
+    {
+        $this->requestReviewPublic = $requestReviewPublic;
     }
 
 }
