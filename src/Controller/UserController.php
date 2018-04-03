@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/user", name="user_")
@@ -30,16 +31,33 @@ class UserController extends Controller
     }
 
     /**
+     * @Route("/account", name="account")
+     * @return Response
+     */
+    public function userAccount()
+    {
+        $users = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->findAll();
+
+        return $this->render('user/account.html.twig', ['users' => $users]);
+    }
+
+    /**
      * @Route("/new", name="new")
      * @Method({"GET", "POST"})
      */
-    public function new(Request $request)
+    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($password);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
@@ -101,4 +119,5 @@ class UserController extends Controller
 
         return $this->redirectToRoute('user_index');
     }
+
 }

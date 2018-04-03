@@ -6,20 +6,23 @@
 
     <h1>Review Details</h1>
     <div class="row">
-        <div class="col col-lg-3">
+        <div class="col col-lg-5">
             <br>
             <img src="/uploads/images/{{ review.image }}"width="250" height="300">
         </div>
-        <div class="col col-lg-9">
+        <div class="col col-lg-7">
             <div class="row"><p></p></div>
             <div class="row">
                 <p class="lead"><b>Author: </b>{{ review.author.firstName}} {{ review.author.surname}}</p>
             </div>
             <div class="row">
-                <p class="lead"><i class="fas fa-dollar-sign"></i><b>Price Paid: </b>€{{ review.price }}</p>
+                <p class="lead"><b>Price Paid: </b>€{{ review.price }}</p>
             </div>
             <div class="row">
                 <p class="lead"><b><i class="fas fa-calendar-alt"></i>  {{ review.publishedAt ? review.publishedAt|date('Y-m-d') : '' }}</b></p>
+            </div>
+            <div class="row">
+                <p class="lead"><b>Retailers: </b>{{ review.retailers }}</p>
             </div>
             <div class="row">
                 {% if (review.isPublicReview) %}
@@ -36,47 +39,11 @@
             </div>
         </div>
     </div>
-    <table>
-        <tr>
-            <th>Id</th>
-            <td>{{ review.id }}</td>
-        </tr>
-        <tr>
-            <th>Date</th>
-            <td>{{ review.publishedAt ? review.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
-        </tr>
-        <tr>
-            <th>Summary</th>
-            <td>{{ review.summary }}</td>
-        </tr>
-        <tr>
-            <th>Retailers</th>
-            <td>{{ review.retailers }}</td>
-        </tr>
-        <tr>
-            <th>Price</th>
-            <td>{{ review.price }}</td>
-        </tr>
-        <tr>
-            <th>Stars</th>
-            <td>{{ review.stars }}</td>
-        </tr>
-        <tr>
-            <th>Image</th>
-            <td>{{ review.image }}</td>
-        </tr>
-        <tr>
-            <th>Author</th>
-            <td>{{ review.author.username }}</td>
-        </tr>
-        <tr>
-            <th>Recipe</th>
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <td>{{ review.recipe.title}}</td>
-        {% endif %}
-        </tr>
-    </table>
 
+    <th>Recipe</th>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <td>{{ review.recipe.title}}</td>
+    {% endif %}
     <a href="{{ path('review_index') }}">back to list</a>
 
     <a href="{{ path('review_edit', {'id': review.id}) }}">edit</a>

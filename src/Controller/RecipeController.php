@@ -2,6 +2,7 @@
 namespace App\Controller;
 use App\Entity\Recipe;
 use App\Form\RecipeType;
+use App\Form\RequestType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 //use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -71,6 +72,7 @@ class RecipeController extends Controller
             'form' => $form->createView(),
         ]);
     }
+
     /**
      * @Route("/{id}", name="show")
      * @Method("GET")
@@ -81,19 +83,49 @@ class RecipeController extends Controller
             'recipe' => $recipe,
         ]);
     }
+
+    /**
+     * @Route("/{id}/request", name="request")
+     * @Method({"GET", "POST"})
+     *
+     */
+    public function request(Request $request, Recipe $recipe)
+    {
+
+        $form = $this->createForm(RequestType::class, $recipe);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $recipe->setImage(
+                new File($this->getParameter('images_directory').'/'.$recipe->getImage())
+            );
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('request_edit', ['id' => $recipe->getId()]);
+        }
+        return $this->render('request/edit.html.twig', [
+            'recipe' => $recipe,
+            'form' => $form->createView(),
+        ]);
+    }
+
     /**
      * @Route("/{id}/edit", name="edit")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_ADMIN')")
+     *
      */
     public function edit(Request $request, Recipe $recipe)
     {
-        $recipe->setImage(
-            new File($this->getParameter('images_directory').'/'.$recipe->getImage())
-        );
+        //fixes issue if file not found when going to form
+        if($recipe->getImage() == null)
+        {
+            $recipe->setImage(
+                new File($this->getParameter('images_directory').'/'.$recipe->getImage())
+            );
+        }
+
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('recipe_edit', ['id' => $recipe->getId()]);
         }

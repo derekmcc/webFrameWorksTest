@@ -58,11 +58,11 @@ class Review
      */
     private $isPublicReview;
 
-    /**
+    /*
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="makeReviewsPublic")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $requestReviewPublic;
+    //private $requestReviewPublic;
 
     public function getImage2()
     {
@@ -236,6 +236,7 @@ class Review
     public function __construct()
     {
         $this->publishedAt = new \DateTime();
+        $this->requestReviewPublic = new ArrayCollection();
     }
 
     /**

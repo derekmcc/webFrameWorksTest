@@ -71,9 +71,11 @@ class Recipe
      */
     private $reviews;
 
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="makeRecipesPublic")
      * @ORM\JoinColumn(nullable=true)
+     *
      */
     private $requestRecipePublic;
 

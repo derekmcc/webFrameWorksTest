@@ -59,6 +59,8 @@ class ReviewController extends Controller
             if($img){
                 $fileLocation = $fileUploader->upload($img);
                 $review->setImage($fileLocation);
+            }elseif (!$img){
+                $review->setImage('noimage.png');
             }
             $em = $this->getDoctrine()->getManager();
             $em->persist($review);
@@ -99,6 +101,8 @@ class ReviewController extends Controller
             if($img){
                 $fileLocation = $fileUploader->upload($img);
                 $review->setImage($fileLocation);
+            }elseif (!$img){
+                $review->setImage('noimage.png');
             }
             $this->getDoctrine()->getManager()->flush();
 

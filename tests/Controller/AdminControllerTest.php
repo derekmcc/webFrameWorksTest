@@ -10,11 +10,18 @@ namespace App\Tests\Controller;
 
 
 use App\Controller\AdminController;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class AdminControllerTest extends TestCase
+class AdminControllerTest extends WebTestCase
 {
+    private $client = null;
+
+    public function setUp()
+    {
+        $this->client = static::createClient();
+    }
+
     public function testCanCreateObject()
     {
         // Arrange
@@ -28,24 +35,43 @@ class AdminControllerTest extends TestCase
 
 
     /**
-     * @dataProvider getUrlsForRegularUsers
+     * @dataProvider getUrlsForAdminUsers
      */
-  /*  public function testAccessDeniedForRegularUsers($httpMethod, $url)
+    public function testAccessDeniedForRegularUsers($httpMethod, $url)
     {
+        // Arrange
         $client = static::createClient([], [
             'PHP_AUTH_USER' => 'john_user',
             'PHP_AUTH_PW' => 'pass',
         ]);
 
+        // Act
         $client->request($httpMethod, $url);
+
+        // Assert
         $this->assertSame(Response::HTTP_FORBIDDEN, $client->getResponse()->getStatusCode());
     }
 
-    public function getUrlsForRegularUsers()
+    /**
+     * @dataProvider getUrlsForAdminUsers
+     */
+    public function testAccessForAdminUsers($httpMethod, $url)
     {
-        yield ['GET', '/'];
-        yield ['GET', '/recipe/showRecipe'];
-       // yield ['GET', '/en/admin/post/1/edit'];
-       // yield ['POST', '/en/admin/post/1/delete'];
-    }*/
+        // Arrange
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'derek',
+            'PHP_AUTH_PW' => 'pass',
+        ]);
+
+        // Act
+        $client->request($httpMethod, $url);
+
+        // Assert
+        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+    }
+
+    public function getUrlsForAdminUsers()
+    {
+        yield ['GET', '/admin'];
+    }
 }

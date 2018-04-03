@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Table(name="app_users")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -20,14 +21,28 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=25, unique=true)
+     * @Assert\NotBlank()
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=64)
      */
-
     private $password;
+
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
+     */
+    private $email;
+
     /**
      * @ORM\Column(type="json_array")
      */
@@ -52,6 +67,7 @@ class User implements UserInterface, \Serializable
      *      orphanRemoval=true,
      *      cascade={"persist"}
      * )
+     *
      */
     private $makeRecipesPublic;
 
@@ -64,7 +80,6 @@ class User implements UserInterface, \Serializable
      *      orphanRemoval=true,
      *      cascade={"persist"}
      * )
-     * @ORM\OrderBy({"publishedAt": "DESC"})
      */
     private $makeReviewsPublic;
 
@@ -185,6 +200,26 @@ class User implements UserInterface, \Serializable
         $this->surname = $surname;
     }
 
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($password)
+    {
+        $this->plainPassword = $password;
+    }
+
     /**
      * @return Recipe[]|ArrayCollection
      */
@@ -193,31 +228,30 @@ class User implements UserInterface, \Serializable
         return $this->makeRecipesPublic;
     }
 
-    /**
-     * @param Recipe[]|ArrayCollection $makeRecipesPublic
-     */
-    public function setMakeRecipesPublic(Recipe $makePublic): void
+
+    public function setMakeRecipesPublic(Recipe $makeRecipesPublic): void
     {
-        $makePublic->setRequestRecipePublic($this);
-        if (!$this->makeRecipesPublic->contains($makePublic)) {
-            $this->makeRecipesPublic->add($makePublic);
+        $makeRecipesPublic->setRequestRecipePublic($this);
+        if (!$this->makeRecipesPublic->contains($makeRecipesPublic)) {
+            $this->makeRecipesPublic->add($makeRecipesPublic);
         }
     }
 
     /**
      * @return Review[]|ArrayCollection
      */
-    public function getMankeReviewsPublic()
+    public function getMakeReviewsPublic()
     {
-        return $this->mankeReviewsPublic;
+        return $this->makeReviewsPublic;
     }
 
     /**
-     * @param Review[]|ArrayCollection $mankeReviewsPublic
+     * @param Review[]|ArrayCollection $makeReviewsPublic
      */
-    public function setMankeReviewsPublic($mankeReviewsPublic): void
+    public function setMakeReviewsPublic($makeReviewsPublic): void
     {
-        $this->mankeReviewsPublic = $mankeReviewsPublic;
+        $this->makeReviewsPublic = $makeReviewsPublic;
     }
 
 }
+

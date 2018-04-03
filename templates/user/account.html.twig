@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User Account{% endblock %}
+
+{% block body %}
+    <h1>User Account</h1>
+    {% for makePublic in user.makeRecipesPublic  %}
+        {{ user.makePublic }}
+    {% endfor %}
+{% endblock %}

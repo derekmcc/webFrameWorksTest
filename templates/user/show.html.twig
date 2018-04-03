@@ -5,7 +5,9 @@
 {% block body %}
 
     <h1>User</h1>
-
+    {% for role in user.roles %}
+        {{ role }},
+    {% endfor %}
     <table>
         <tr>
             <th>Id</th>
@@ -21,7 +23,11 @@
         </tr>
         <tr>
             <th>Roles</th>
-            <td>{{ user.roles }}</td>
+            <td>
+                {% for role in user.roles %}
+                    {{ role }},
+                {% endfor %}
+            </td>
         </tr>
         <tr>
             <th>Firstname</th>
@@ -31,7 +37,10 @@
             <th>Surname</th>
             <td>{{ user.surname }}</td>
         </tr>
-
+        //
+        {% for makePublic in user.makeRecipesPublic  %}
+            ======{{ user.makePublic }}====
+        {% endfor %}
     </table>
 
     <a href="{{ path('user_index') }}">back to list</a>

@@ -1,5 +1,8 @@
 App\Tests\Controller\AdminController
  [x] Can create object
+ [x] Access denied for regular users 
+ [x] Access for admin users 
+ [x] Admin home page
 
 App\Tests\Controller\DefaultController
  [x] Homepage response code okay
@@ -11,7 +14,7 @@ App\Tests\Controller\ErrorController
 
 App\Tests\Controller\RecipeController
  [x] Recipe public urls 
- [x] Edit recipe
+ [ ] Edit recipe
  [x] Admin home page
 
 App\Controller\Test\ReviewController

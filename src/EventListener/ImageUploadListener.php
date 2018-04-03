@@ -14,6 +14,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use App\Entity\Recipe;
 use App\Service\FileUploader;
+use Symfony\Component\HttpFoundation\File\File;
 
 class ImageUploadListener
 {
@@ -51,6 +52,19 @@ class ImageUploadListener
         if ($file instanceof UploadedFile) {
             $fileName = $this->uploader->upload($file);
             $entity->setImage($fileName);
+        }
+    }
+
+    public function postLoad(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+
+        if (!$entity instanceof Recipe) {
+            return;
+        }
+
+        if ($fileName = $entity->getBrochure()) {
+            $entity->setBrochure(new File($this->uploader->getTargetDirectory().'/'.$fileName));
         }
     }
 }
