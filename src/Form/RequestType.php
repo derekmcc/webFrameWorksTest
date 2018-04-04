@@ -20,6 +20,11 @@ class RequestType extends AbstractType
             ->add('requestRecipePublic',TextType::class, array(
                 'required'    => false
             ))
+            ->add('image', FileType::class, [
+                'label' => 'Image',
+                'data_class' => null,
+                'required' => false
+            ])
         ;
     }
 

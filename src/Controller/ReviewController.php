@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Review;
 use App\Entity\Recipe;
 use App\Form\ReviewType;
+use App\Repository\ReviewRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,24 +15,27 @@ use Symfony\Component\Validator\Constraints\DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 /**
  * @Route("/review", name="review_")
  */
 class ReviewController extends Controller
 {
     /**
-     * @Route("/", name="index")
      *
-     * @return Response
+     * @Route("/", defaults={"page": "1", "_format"="html"}, name="index")
+     * @Route("/page/{page}", defaults={"_format"="html"}, requirements={"page": "[1-9]\d*"}, name="paginated")
+     * @Method("GET")
+     * @Cache(smaxage="10")
      */
-    public function index()
+    public function index(int $page, string $_format, ReviewRepository $recipes)
     {
-        $reviews = $this->getDoctrine()
-            ->getRepository(Review::class)
-            ->findAll();
+        $latestPosts = $recipes->findLatest($page, $this->getUser());
 
-        return $this->render('review/index.html.twig', ['reviews' => $reviews]);
+        // Every template name also has two extensions that specify the format and
+        // engine for that template.
+        // See https://symfony.com/doc/current/templating.html#template-suffix
+        return $this->render('review/index.'.$_format.'.twig', ['reviews' => $latestPosts]);
     }
 
     /**

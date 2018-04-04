@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\File\File;
  */
 class Review
 {
+    const NUM_ITEMS = 10;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -57,6 +59,7 @@ class Review
      * @ORM\Column(type="boolean")
      */
     private $isPublicReview;
+
 
     /*
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="makeReviewsPublic")

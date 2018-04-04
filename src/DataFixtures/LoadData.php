@@ -38,7 +38,7 @@ class LoadData extends Fixture
             $user->setSurname($surname);
             $user->setPassword($this->encodePassword($user, $password));
             $user->setRoles($roles);
-           // $user->setMakeRecipesPublic('asf');
+          //  $user->setMakeRecipesPublic(false);
           //  $user->setMakeReviewsPublic('af');
             $user->setEmail($faker->email);
             $manager->persist($user);
@@ -152,7 +152,7 @@ class LoadData extends Fixture
             'john_user',
             'admin',
             'joe_user',
-            'username1',
+         /*   'username1',
             'username2',
             'username3',
             'username4',
@@ -171,7 +171,7 @@ class LoadData extends Fixture
             'username17',
             'username18',
             'username19',
-            'username20',
+            'username20',*/
         ];
     }
 
@@ -190,9 +190,9 @@ class LoadData extends Fixture
             ['derek', 'pass','Derek','McCarthy', ['ROLE_SUPER_ADMIN']],
             ['john_user', 'pass', 'John', 'Doe', ['ROLE_USER']],
             ['admin', 'pass',$faker->firstName, $faker->lastName, ['ROLE_ADMIN']],
-            ['joe_user', 'pass','Joe', $faker->lastName, ['ROLE_USER']],
-            ['jane_user', 'pass','Jane', $faker->lastName, ['ROLE_USER']],
-            ['username1', 'pass',$faker->firstName('male'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
+            ['joe_user', 'pass','Joe', 'Bloggs', ['ROLE_USER']],
+            ['jane_user', 'pass','Jane', 'Smith', ['ROLE_USER']],
+       /*     ['username1', 'pass',$faker->firstName('male'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
             ['username2', 'pass',$faker->firstName('male'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
             ['username3', 'pass',$faker->firstName('male'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
             ['username4', 'pass',$faker->firstName('male'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
@@ -211,7 +211,7 @@ class LoadData extends Fixture
             ['username17', 'pass',$faker->firstName('female'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
             ['username18', 'pass',$faker->firstName('female'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
             ['username19', 'pass',$faker->firstName('female'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
-            ['username20', 'pass',$faker->firstName('female'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
+            ['username20', 'pass',$faker->firstName('female'), $faker->lastName, $faker->randomElement($this->getUserRoles())],*/
         ];
     }
 

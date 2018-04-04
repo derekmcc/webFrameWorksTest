@@ -5,8 +5,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-
-
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RecipeRepository")
  */
@@ -57,7 +55,6 @@ class Recipe
      * @ORM\Column(type="boolean")
      */
     private $isPublic;
-
     /**
      * @var Review[]|ArrayCollection
      *
@@ -70,12 +67,8 @@ class Recipe
      * @ORM\OrderBy({"publishedAt": "DESC"})
      */
     private $reviews;
-
-
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="makeRecipesPublic")
-     * @ORM\JoinColumn(nullable=true)
-     *
+     * @ORM\Column(type="boolean")
      */
     private $requestRecipePublic;
 
@@ -94,6 +87,7 @@ class Recipe
     {
         $this->isPublic = $isPublic;
     }
+
     /**
      * @return mixed
      */
@@ -101,6 +95,7 @@ class Recipe
     {
         return $this->id;
     }
+
     /**
      * @return mixed
      */
@@ -108,6 +103,7 @@ class Recipe
     {
         return $this->title;
     }
+
     /**
      * @param mixed $title
      */
@@ -115,6 +111,7 @@ class Recipe
     {
         $this->title = $title;
     }
+
     /**
      * @return mixed
      */
@@ -122,6 +119,7 @@ class Recipe
     {
         return $this->summary;
     }
+
     /**
      * @param mixed $summary
      */
@@ -129,6 +127,7 @@ class Recipe
     {
         $this->summary = $summary;
     }
+
     /**
      * @return mixed
      */
@@ -136,6 +135,7 @@ class Recipe
     {
         return $this->description;
     }
+
     /**
      * @param mixed $description
      */
@@ -143,6 +143,7 @@ class Recipe
     {
         $this->description = $description;
     }
+
     /**
      * @return mixed
      */
@@ -150,6 +151,7 @@ class Recipe
     {
         return $this->image;
     }
+
     /**
      * @param mixed $image
      */
@@ -157,6 +159,7 @@ class Recipe
     {
         $this->image = $image;
     }
+
     /**
      * @return mixed
      */
@@ -164,6 +167,7 @@ class Recipe
     {
         return $this->ingredients;
     }
+
     /**
      * @param mixed $ingredients
      */
@@ -171,6 +175,7 @@ class Recipe
     {
         $this->ingredients = $ingredients;
     }
+
     /**
      * @return mixed
      */
@@ -178,6 +183,7 @@ class Recipe
     {
         return $this->price;
     }
+
     /**
      * @param mixed $price
      */
@@ -185,6 +191,7 @@ class Recipe
     {
         $this->price = $price;
     }
+
     /**
      * @return mixed
      */
@@ -203,8 +210,8 @@ class Recipe
 
     public function __construct()
     {
-       // $this->reviews = new ArrayCollection();
-
+        // $this->reviews = new ArrayCollection();
+        $this->requestRecipePublic = new ArrayCollection();
     }
 
     public function getReviews()
@@ -215,7 +222,7 @@ class Recipe
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title') ->add('reviews')
+            ->add('title')->add('reviews')
             ->add('image', FileType::class, array('data_class' => null));
     }
 
@@ -244,7 +251,7 @@ class Recipe
     /**
      * @param mixed $requestRecipePublic
      */
-    public function setRequestRecipePublic($requestRecipePublic = null): void
+    public function setRequestRecipePublic($requestRecipePublic): void
     {
         $this->requestRecipePublic = $requestRecipePublic;
     }

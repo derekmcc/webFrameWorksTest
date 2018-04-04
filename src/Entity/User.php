@@ -1,11 +1,11 @@
 <?php
-
 namespace App\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\FormBuilderInterface;
+
 /**
  * @ORM\Table(name="app_users")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -18,46 +18,38 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="integer")
      */
     private $id;
-
     /**
      * @ORM\Column(type="string", length=25, unique=true)
      * @Assert\NotBlank()
      */
     private $username;
-
     /**
      * @ORM\Column(type="string", length=64)
      */
     private $password;
-
     /**
      * @Assert\NotBlank()
      * @Assert\Length(max=4096)
      */
     private $plainPassword;
-
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotBlank()
      * @Assert\Email()
      */
     private $email;
-
     /**
      * @ORM\Column(type="json_array")
      */
     private $roles = [];
-
     /**
      * @ORM\Column(type="string", length=25, unique=true)
      */
     private $firstname;
-
     /**
      * @ORM\Column(type="string", length=25, unique=true)
      */
     private $surname;
-
     /**
      * @var Recipe[]|ArrayCollection
      *
@@ -70,7 +62,6 @@ class User implements UserInterface, \Serializable
      *
      */
     private $makeRecipesPublic;
-
     /**
      * @var Review[]|ArrayCollection
      *
@@ -82,17 +73,14 @@ class User implements UserInterface, \Serializable
      * )
      */
     private $makeReviewsPublic;
-
     public function getSalt()
     {
         // no salt needed since we are using bcrypt
         return null;
     }
-
     public function eraseCredentials()
     {
     }
-
     /**
      * @see \Serializable::serialize()
      */
@@ -104,7 +92,6 @@ class User implements UserInterface, \Serializable
             $this->password,
         ));
     }
-
     /**
      * @see \Serializable::unserialize()
      */
@@ -116,12 +103,10 @@ class User implements UserInterface, \Serializable
             $this->password,
             ) = unserialize($serialized);
     }
-
     public function getRoles()
     {
         return $this->roles;
     }
-
     /**
      * @return mixed
      */
@@ -129,13 +114,11 @@ class User implements UserInterface, \Serializable
     {
         return $this->id;
     }
-
     public function setRoles($roles)
     {
         $this->roles = $roles;
         return $this;
     }
-
     /**
      * @return mixed
      */
@@ -143,7 +126,6 @@ class User implements UserInterface, \Serializable
     {
         return $this->username;
     }
-
     /**
      * @param mixed $username
      */
@@ -151,7 +133,6 @@ class User implements UserInterface, \Serializable
     {
         $this->username = $username;
     }
-
     /**
      * @return mixed
      */
@@ -159,7 +140,6 @@ class User implements UserInterface, \Serializable
     {
         return $this->password;
     }
-
     /**
      * @param mixed $password
      */
@@ -167,7 +147,6 @@ class User implements UserInterface, \Serializable
     {
         $this->password = $password;
     }
-
     /**
      * @return mixed
      */
@@ -175,7 +154,6 @@ class User implements UserInterface, \Serializable
     {
         return $this->firstname;
     }
-
     /**
      * @param mixed $firstname
      */
@@ -183,7 +161,6 @@ class User implements UserInterface, \Serializable
     {
         $this->firstname = $firstname;
     }
-
     /**
      * @return mixed
      */
@@ -191,7 +168,6 @@ class User implements UserInterface, \Serializable
     {
         return $this->surname;
     }
-
     /**
      * @param mixed $surname
      */
@@ -199,59 +175,20 @@ class User implements UserInterface, \Serializable
     {
         $this->surname = $surname;
     }
-
     public function getEmail()
     {
         return $this->email;
     }
-
     public function setEmail($email)
     {
         $this->email = $email;
     }
-
     public function getPlainPassword()
     {
         return $this->plainPassword;
     }
-
     public function setPlainPassword($password)
     {
         $this->plainPassword = $password;
     }
-
-    /**
-     * @return Recipe[]|ArrayCollection
-     */
-    public function getMakeRecipesPublic()
-    {
-        return $this->makeRecipesPublic;
-    }
-
-
-    public function setMakeRecipesPublic(Recipe $makeRecipesPublic): void
-    {
-        $makeRecipesPublic->setRequestRecipePublic($this);
-        if (!$this->makeRecipesPublic->contains($makeRecipesPublic)) {
-            $this->makeRecipesPublic->add($makeRecipesPublic);
-        }
-    }
-
-    /**
-     * @return Review[]|ArrayCollection
-     */
-    public function getMakeReviewsPublic()
-    {
-        return $this->makeReviewsPublic;
-    }
-
-    /**
-     * @param Review[]|ArrayCollection $makeReviewsPublic
-     */
-    public function setMakeReviewsPublic($makeReviewsPublic): void
-    {
-        $this->makeReviewsPublic = $makeReviewsPublic;
-    }
-
 }
-
