@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Recipe;
 use App\Entity\Review;
+use App\Entity\User;
+use Doctrine\ORM\Mapping\Entity;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -11,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class RecipeType extends AbstractType
 {
@@ -36,8 +38,7 @@ class RecipeType extends AbstractType
                     'Over €40' => 'Over €40',
                     ),
             ))
-
-          //  ->add('reviews')
+            ->add('requestRecipePublic')
          //   ->add('isPublic')
           //  ->add('save', SubmitType::class, array(
            //     'attr' => array('class' => 'save'),

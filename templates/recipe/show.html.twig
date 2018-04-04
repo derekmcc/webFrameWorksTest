@@ -42,7 +42,12 @@
             <div class="row">
                 <a href="{{ path('recipe_edit', {'id': recipe.id}) }}" class="btn btn-outline-success">Edit Drink</a>
                 {% include 'recipe/_delete_form.html.twig' with {'identifier': recipe.id} only %}
-                <a href="{{ path('recipe_request', {'id': recipe.id}) }}" class="btn btn-outline-primary">Request Be Made Public</a>
+                {% if (is_granted('ROLE_ADMIN') and recipe.requestRecipePublic == false and recipe.isPublic == false) %}
+                    <a href="{{ path('recipe_request_publish', {'id': recipe.id }) }}" class="btn btn-outline-primary">Request Be Made Public</a>
+                {% endif %}
+                {% if (is_granted('ROLE_ADMIN') and recipe.isPublic == false and recipe.requestRecipePublic == true) %}
+                    <a href="{{ path('recipe_publish_recipe', {'id': recipe.id }) }}" class="btn btn-outline-primary">Accept Request to publish</a>
+                {% endif %}
             </div>
         {% endif %}
     {% endif %}

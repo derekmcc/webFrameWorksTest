@@ -4,7 +4,7 @@ use App\Entity\Recipe;
 use App\Form\RecipeType;
 use App\Form\RequestType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-//use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use App\Repository\RecipeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,7 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\File\File;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @Route("/recipe", name="recipe_")
@@ -20,16 +21,20 @@ use Symfony\Component\HttpFoundation\File\File;
 class RecipeController extends Controller
 {
     /**
-     * @Route("/", name="index")
      *
-     * @return Response
+     * @Route("/", defaults={"page": "1", "_format"="html"}, name="index")
+     * @Route("/page/{page}", defaults={"_format"="html"}, requirements={"page": "[1-9]\d*"}, name="blog_index_paginated")
+     * @Method("GET")
+     * @Cache(smaxage="10")
      */
-    public function index()
+    public function index(int $page, string $_format, RecipeRepository $recipes)
     {
-        $recipes = $this->getDoctrine()
-            ->getRepository(Recipe::class)
-            ->findAll();
-        return $this->render('recipe/index.html.twig', ['recipes' => $recipes]);
+        $latestPosts = $recipes->findLatest($page, $this->getUser());
+
+        // Every template name also has two extensions that specify the format and
+        // engine for that template.
+        // See https://symfony.com/doc/current/templating.html#template-suffix
+        return $this->render('recipe/index.'.$_format.'.twig', ['recipes' => $latestPosts]);
     }
     /**
      * @Route("/showRecipe", name="showRecipe")
@@ -53,6 +58,7 @@ class RecipeController extends Controller
     {
         $recipe = new Recipe();
         $recipe->setAuthor($this->getUser());
+       // $recipe->setRequestRecipePublic($this->getUser()->setMakeReviewsPublic($this->getUser()));
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
@@ -92,12 +98,19 @@ class RecipeController extends Controller
     public function request(Request $request, Recipe $recipe)
     {
 
-        $form = $this->createForm(RequestType::class, $recipe);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        //fixes issue if file not found when going to form
+        if($recipe->getImage() == null)
+        {
             $recipe->setImage(
                 new File($this->getParameter('images_directory').'/'.$recipe->getImage())
             );
+        }
+        $form = $this->createForm(RequestType::class, $recipe);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+          //  $recipe->setImage(
+            //    new File($this->getParameter('images_directory').'/'.$recipe->getImage())
+          //  );
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('request_edit', ['id' => $recipe->getId()]);
         }
@@ -148,5 +161,33 @@ class RecipeController extends Controller
         $em->remove($recipe);
         $em->flush();
         return $this->redirectToRoute('recipe_index');
+    }
+
+    /**
+     * @param Recipe $recipe
+     * @Route("/{id}/publish", requirements={"id" = "\d+"}, name="publish_recipe")
+     * @return RedirectResponse
+     */
+    public function setRecipeToPublic(Recipe $recipe)
+    {
+        $recipe->setIsPublic(true);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($recipe);
+        $em->flush();
+        return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId()]);
+    }
+
+    /**
+     * @param Recipe $recipe
+     * @Route("/{id}/request", requirements={"id" = "\d+"}, name="request_publish")
+     * @return RedirectResponse
+     */
+    public function setMakeRequestPublic(Recipe $recipe)
+    {
+        $recipe->setRequestRecipePublic(true);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($recipe);
+        $em->flush();
+        return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId()]);
     }
 }

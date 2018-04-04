@@ -13,7 +13,7 @@
                         <img src="/uploads/images/{{ review.image }}"  width="200" height="200">
                         <br>
                     {% else %}
-                        <img src="/uploads/images/9baa6480b73a5dbc33bd93e2e40d75f6.jpeg"  width="200" height="200">
+                        <img src="/uploads/images/9baa6480b73a5dbc33bd93e2e40d75f6.jpeg" width="200" height="200">
                         <br>
                     {% endif %}
                 </div>
@@ -103,47 +103,16 @@
                 {% endif %}
             </div>
         </div>
+
         <hr>
     {% else %}
         <div class="row">
             <p class="lead">No reviews for this drink</p>
         </div>
     {% endfor %}
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Date</th>
-                <th>Summary</th>
-                <th>Retailers</th>
-                <th>Price Paid</th>
-                <th>Number of Stars</th>
-                <th>Image</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for review in reviews %}
-            <tr>
-                <td>{{ review.id }}</td>
-                <td><i class="fa fa-calendar"></i> {{ review.publishedAt ? review.publishedAt|date('Y-m-d') : '' }}</td>
-                <td>{{ review.summary }}</td>
-                <td>{{ review.retailers }}</td>
-                <td>{{ review.price }}</td>
-                <td>{{ review.stars }}</td>
-                <td>{{ review.image }}</td>
-                <td>
-                    <a href="{{ path('review_show', {'id': review.id}) }}">show</a>
-                    <a href="{{ path('review_edit', {'id': review.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <a href="{{ path('review_new') }}">Create new</a>
-
+    {% if reviews.haveToPaginate %}
+        <div class="navigation text-center">
+            {{ pagerfanta(reviews, 'twitter_bootstrap4', {routeName: 'review_paginated'}) }}
+        </div>
+    {% endif %}
 {% endblock %}
