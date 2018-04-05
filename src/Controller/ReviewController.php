@@ -30,7 +30,7 @@ class ReviewController extends Controller
      */
     public function index(int $page, string $_format, ReviewRepository $recipes)
     {
-        $latestPosts = $recipes->findLatest($page, $this->getUser());
+        $latestPosts = $recipes->findLatest($page);
 
         // Every template name also has two extensions that specify the format and
         // engine for that template.

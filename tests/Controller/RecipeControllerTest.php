@@ -27,14 +27,27 @@ class RecipeControllerTest extends WebTestCase
         // Arrange
         $this->client->request('GET',$url);
         $crawler = $this->client->getResponse();
+        $searchText = 'Drinks Index';
+
 
         // Act
         $statusCode = $this->client->getResponse()->getStatusCode();
+        $content = $this->client->getResponse()->getContent();
+
+        // to lower case
+        $searchTextLowerCase = strtolower($searchText);
+        $contentLowerCase = strtolower($content);
 
         // Assert
         $this->assertSame(
             Response::HTTP_OK,
             $this->client->getResponse()->getStatusCode()
+        );
+
+        // Assert
+        $this->assertContains(
+            $searchTextLowerCase,
+            $contentLowerCase
         );
     }
 
@@ -53,13 +66,55 @@ class RecipeControllerTest extends WebTestCase
             'PHP_AUTH_USER' => 'derek',
             'PHP_AUTH_PW' => 'pass',
         ]);
+        $searchText = 'Edit Drink';
+
 
         // Act
         $client->request('GET', '/recipe/1/edit');
+        $content = $client->getResponse()->getContent();
 
         // Assert
         $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+
+        // to lower case
+        $searchTextLowerCase = strtolower($searchText);
+        $contentLowerCase = strtolower($content);
+
+        // Assert
+        $this->assertContains(
+            $searchTextLowerCase,
+            $contentLowerCase
+        );
     }
+
+    public function testNewRecipe()
+    {
+        // Arrange
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'derek',
+            'PHP_AUTH_PW' => 'pass',
+        ]);
+        $searchText = 'New Drink';
+
+
+        // Act
+        $client->request('GET', '/recipe/new');
+        $content = $client->getResponse()->getContent();
+
+        // Assert
+        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+
+        // to lower case
+        $searchTextLowerCase = strtolower($searchText);
+        $contentLowerCase = strtolower($content);
+
+        // Assert
+       // $this->assertContains(
+         //   $searchTextLowerCase,
+           // $contentLowerCase
+        //);
+    }
+
     public function testAdminHomePage()
     {
         // Arrange

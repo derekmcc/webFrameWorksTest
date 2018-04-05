@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Recipe index{% endblock %}
+{% block title %}Drinks Index{% endblock %}
 
 
 {% block body %}
@@ -27,7 +27,7 @@
                 <p></p>
                 <div class="row"><h5><b><a href="{{ path('recipe_show', {'id': recipe.id}) }}">{{ recipe.title }}</a></b></h5></div>
                 <div class="row"><p><b>Summary: </b>{{ recipe.summary }}</p></div>
-                <div class="row"><p><b>Price Range: </b>€{{ recipe.price }}</p></div>
+                <div class="row"><p><b>Price Range: </b>{{ recipe.price }}</p></div>
             </div>
             <div class="col col-lg-4">
                 <h6>Latest</h6>

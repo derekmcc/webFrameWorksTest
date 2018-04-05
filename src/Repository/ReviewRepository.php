@@ -22,8 +22,16 @@ class ReviewRepository extends ServiceEntityRepository
         parent::__construct($registry, Review::class);
     }
 
-    public function findLatest(int $page = 1, User $user): Pagerfanta
+    public function findLatest(int $page = 1): Pagerfanta
     {
+        /*
+        return $this->createQueryBuilder('r', $user)
+            ->where('r.something = :value')->setParameter('value', $value)
+            ->orderBy('$user.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+         */
         $query = $this->getEntityManager()
             ->createQuery("
                 SELECT p

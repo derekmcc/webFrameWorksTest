@@ -58,6 +58,7 @@ class AdminControllerTest extends WebTestCase
     public function testAccessForAdminUsers($httpMethod, $url)
     {
         // Arrange
+        $searchText = 'Admin Page';
         $client = static::createClient([], [
             'PHP_AUTH_USER' => 'derek',
             'PHP_AUTH_PW' => 'pass',
@@ -65,9 +66,20 @@ class AdminControllerTest extends WebTestCase
 
         // Act
         $client->request($httpMethod, $url);
+        $content = $client->getResponse()->getContent();
+
+        // to lower case
+        $searchTextLowerCase = strtolower($searchText);
+        $contentLowerCase = strtolower($content);
 
         // Assert
         $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+
+        // Assert
+        $this->assertContains(
+            $searchTextLowerCase,
+            $contentLowerCase
+        );
     }
 
     public function getUrlsForAdminUsers()

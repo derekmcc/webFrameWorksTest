@@ -1,31 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('build/js/search.js') }}"></script>
-{% endblock %}
+{% block title %}Search{% endblock %}
 
-{% block body_id 'recipe_search' %}
-
-{% block main %}
+{% block body %}
     <form action="{{ path('recipe_search') }}" method="get">
         <div class="form-group">
             <input name="q"
                    class="form-control search-field"
-                   placeholder="{{ 'recipe.search_for'|trans }}"
+                   placeholder="Search"
                    autocomplete="off"
-                   autofocus
-                   data-no-results-message="{{ 'recipe.search_no_results'|trans }}"
-            >
+                   autofocus>
         </div>
     </form>
 
     <div id="results">
+        {% if recipes != null %}
+            {% for recipe in recipes %}
+                {{ recipe.title }}
+            {% endfor %}
+        {% else %}
+            <p class="lead">No Results found</p>
+        {% endif %}
     </div>
-{% endblock %}
 
-{% block sidebar %}
-    {{ parent() }}
-
-    {{ show_source_code(_self) }}
 {% endblock %}

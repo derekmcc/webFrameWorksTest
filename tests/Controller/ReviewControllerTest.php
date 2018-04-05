@@ -39,6 +39,33 @@ class ReviewControllerTest extends WebTestCase
         );
     }
 
+    public function testNewReview()
+    {
+        // Arrange
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'derek',
+            'PHP_AUTH_PW' => 'pass',
+        ]);
+        $searchText = 'New Drink';
+
+        // Act
+        $client->request('GET', '/review/new');
+        $content = $client->getResponse()->getContent();
+
+        // Assert
+        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+
+        // to lower case
+        $searchTextLowerCase = strtolower($searchText);
+        $contentLowerCase = strtolower($content);
+
+        // Assert
+        // $this->assertContains(
+        //   $searchTextLowerCase,
+        // $contentLowerCase
+        //);
+    }
+
     public function publicReviewUrls()
     {
         return array(

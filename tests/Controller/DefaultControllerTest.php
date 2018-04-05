@@ -61,15 +61,26 @@ class DefaultControllerTest extends WebTestCase
     {
         // Arrange
         $httpMethod = 'GET';
+        $searchText = 'Rum Reviews';
 
         // Act
         $this->client->request($httpMethod, $url);
+        $content = $this->client->getResponse()->getContent();
 
         // Assert
         $this->assertSame(
             Response::HTTP_OK,
-            $this->client->getResponse()->getStatusCode(),
-            sprintf('The %s public URL loads correctly.', $url)
+            $this->client->getResponse()->getStatusCode()
+        );
+
+        // to lower case
+        $searchTextLowerCase = strtolower($searchText);
+        $contentLowerCase = strtolower($content);
+
+        // Assert
+        $this->assertContains(
+            $searchTextLowerCase,
+            $contentLowerCase
         );
     }
 

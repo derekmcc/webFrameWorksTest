@@ -21,20 +21,17 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class RecipeController extends Controller
 {
     /**
+     * @Route("/", name="index")
      *
-     * @Route("/", defaults={"page": "1", "_format"="html"}, name="index")
-     * @Route("/page/{page}", defaults={"_format"="html"}, requirements={"page": "[1-9]\d*"}, name="blog_index_paginated")
-     * @Method("GET")
-     * @Cache(smaxage="10")
+     * @return Response
      */
-    public function index(int $page, string $_format, RecipeRepository $recipes)
+    public function index()
     {
-        $latestPosts = $recipes->findLatest($page, $this->getUser());
+        $recipes = $this->getDoctrine()
+            ->getRepository(Recipe::class)
+            ->findAll();
 
-        // Every template name also has two extensions that specify the format and
-        // engine for that template.
-        // See https://symfony.com/doc/current/templating.html#template-suffix
-        return $this->render('recipe/index.'.$_format.'.twig', ['recipes' => $latestPosts]);
+        return $this->render('recipe/index.html.twig', ['recipes' => $recipes]);
     }
     /**
      * @Route("/showRecipe", name="showRecipe")
@@ -78,45 +75,43 @@ class RecipeController extends Controller
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/search", name="search")
+     * @Method("GET")
+     */
+    public function search(Request $request, RecipeRepository $recipes): Response
+    {
+        //dump($recipes);
 
+        $query = $request->query->get('q', '');
+        $foundRecipes = $recipes->findBySearchQuery($query);
+
+        $results = [];
+        foreach ($foundRecipes as $recipe) {
+            $results[] = [
+                'title' => $recipe->getTitle(),
+                //   'date' => $post->getPublishedAt()->format('M d, Y'),
+                //  'author' => htmlspecialchars($post->getAuthor()->getFullName()),
+                //  'summary' => htmlspecialchars($post->getSummary()),
+              //  'url' => $this->generateUrl('recipe_search'),
+            ];
+        }
+
+        return $this->render('recipe/search.html.twig', ['recipes' => $results]);
+    }
     /**
      * @Route("/{id}", name="show")
      * @Method("GET")
      */
     public function show(Recipe $recipe)
     {
-        return $this->render('recipe/show.html.twig', [
-            'recipe' => $recipe,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/request", name="request")
-     * @Method({"GET", "POST"})
-     *
-     */
-    public function request(Request $request, Recipe $recipe)
-    {
-
-        //fixes issue if file not found when going to form
-        if($recipe->getImage() == null)
-        {
-            $recipe->setImage(
-                new File($this->getParameter('images_directory').'/'.$recipe->getImage())
+        if (!$recipe) {
+            throw $this->createNotFoundException(
+                'No Drink found for id ' . $recipe->getId()
             );
         }
-        $form = $this->createForm(RequestType::class, $recipe);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-          //  $recipe->setImage(
-            //    new File($this->getParameter('images_directory').'/'.$recipe->getImage())
-          //  );
-            $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('request_edit', ['id' => $recipe->getId()]);
-        }
-        return $this->render('request/edit.html.twig', [
+        return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
-            'form' => $form->createView(),
         ]);
     }
 
@@ -179,6 +174,20 @@ class RecipeController extends Controller
 
     /**
      * @param Recipe $recipe
+     * @Route("/{id}/reject", requirements={"id" = "\d+"}, name="reject_recipe")
+     * @return RedirectResponse
+     */
+    public function rejectPublicRequest(Recipe $recipe)
+    {
+        $recipe->setRequestRecipePublic(false);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($recipe);
+        $em->flush();
+        return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId()]);
+    }
+
+    /**
+     * @param Recipe $recipe
      * @Route("/{id}/request", requirements={"id" = "\d+"}, name="request_publish")
      * @return RedirectResponse
      */
@@ -190,4 +199,6 @@ class RecipeController extends Controller
         $em->flush();
         return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId()]);
     }
+
+
 }

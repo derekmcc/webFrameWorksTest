@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Recipe index{% endblock %}
+{% block title %}Drinks index{% endblock %}
 
 {% block body %}
 
-    <h1>Recipe index</h1>
+    <h1>Drinks index</h1>
     <table>
         <thead>
         <tr>
             <th>Id</th>
             <th>Title</th>
-            <th>Summary</th>
+            <th>Public</th>
             <th>Description</th>
             <th>Image</th>
             <th>Ingredients</th>
@@ -23,7 +23,7 @@
             <tr>
                 <td>{{ recipe.id }}</td>
                 <td>{{ recipe.title }}</td>
-                <td>{{ recipe.summary }}</td>
+                <td>{{ recipe.isPublic }}</td>
                 <td>{{ recipe.description }}</td>
                 <td><img src="/uploads/images/{{ recipe.image }}" alt="{{ recipe.title }}" width="30" height="30"></td>
                 <td>{{ recipe.ingredients }}</td>
