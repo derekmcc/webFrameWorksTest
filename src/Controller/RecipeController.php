@@ -55,6 +55,7 @@ class RecipeController extends Controller
     {
         $recipe = new Recipe();
         $recipe->setAuthor($this->getUser());
+        $recipe->setRequestRecipePublic(false);
        // $recipe->setRequestRecipePublic($this->getUser()->setMakeReviewsPublic($this->getUser()));
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
@@ -64,6 +65,7 @@ class RecipeController extends Controller
             $fileName = $fileUploader->upload($file);
             $recipe->setImage($fileName);
             $recipe->setIsPublic(false);
+            $recipe->setRequestRecipePublic(false);
             $em = $this->getDoctrine()->getManager();
             $em->persist($recipe);
             $em->flush();
@@ -89,11 +91,12 @@ class RecipeController extends Controller
         $results = [];
         foreach ($foundRecipes as $recipe) {
             $results[] = [
+                'id' => $recipe->getId(),
                 'title' => $recipe->getTitle(),
-                //   'date' => $post->getPublishedAt()->format('M d, Y'),
-                //  'author' => htmlspecialchars($post->getAuthor()->getFullName()),
-                //  'summary' => htmlspecialchars($post->getSummary()),
-              //  'url' => $this->generateUrl('recipe_search'),
+                'image' => $recipe->getImage(),
+                'author' => $recipe->getAuthor(),
+                'summary' => $recipe->getSummary(),
+               // 'url' => $this->generateUrl('recipe_search_aa'),
             ];
         }
 

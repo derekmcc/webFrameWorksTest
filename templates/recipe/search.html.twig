@@ -15,11 +15,25 @@
 
     <div id="results">
         {% if recipes != null %}
+            <p class="lead">Search Results</p>
             {% for recipe in recipes %}
-                {{ recipe.title }}
+                    {% if (is_granted('IS_AUTHENTICATED_FULLY')) and (is_granted('ROLE_ADMIN')) or (recipe.isPublic == true) or (is_granted('IS_AUTHENTICATED_FULLY')) and (recipe.author.username == app.user.username) %}
+
+                        <div class="row">
+                            <div class="col col-lg-2">
+                                <img src="/uploads/images/{{ recipe.image }}" alt="{{ recipe.title }}" width="70" height="150">
+                            </div>
+                            <div class="col col-lg-6">
+                                <p></p>
+                                <div class="row"><h5><b><a href="{{ path('recipe_show', {'id': recipe.id}) }}">{{ recipe.title }}</a></b></h5></div>
+                                <div class="row"><p><b>Summary: </b>{{ recipe.summary }}</p></div>
+                                <div class="row"><p><b>Author: </b>{{ recipe.author.firstName }} {{ recipe.author.surname }}</p></div>
+                            </div>
+                        </div><br><br>
+                    {% endif %}
             {% endfor %}
         {% else %}
-            <p class="lead">No Results found</p>
+            <p class="lead">No Results Found</p>
         {% endif %}
     </div>
 

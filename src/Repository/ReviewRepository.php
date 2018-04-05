@@ -22,25 +22,43 @@ class ReviewRepository extends ServiceEntityRepository
         parent::__construct($registry, Review::class);
     }
 
-    public function findLatest(int $page = 1): Pagerfanta
+    public function findLatestReviews(int $page = 1): Pagerfanta
     {
-        /*
-        return $this->createQueryBuilder('r', $user)
-            ->where('r.something = :value')->setParameter('value', $value)
-            ->orderBy('$user.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult();
-         */
         $query = $this->getEntityManager()
             ->createQuery("
-                SELECT p
-                FROM App:Review p 
-                ORDER BY p.publishedAt DESC
+                SELECT r
+                FROM App:Review r 
+                ORDER BY r.publishedAt DESC
             ")
-          //  ->setParameter('author', 'author')
         ;
 
+        return $this->createPaginator($query, $page);
+    }
+
+    public function findLatestPublicReviews(int $page = 1): Pagerfanta
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("
+                SELECT r
+                FROM App:Review r
+                WHERE r.isPublicReview = TRUE
+                ORDER BY r.publishedAt DESC
+            ")
+        ;
+        return $this->createPaginator($query, $page);
+    }
+
+    public function findReviewsByAuthor(int $page = 1, $user): Pagerfanta
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("
+                SELECT r
+                FROM App:Review r
+                WHERE r.author = '{$user->getId()}'
+                OR r.isPublicReview = true
+                ORDER BY r.publishedAt DESC
+            ")
+        ;
         return $this->createPaginator($query, $page);
     }
 
@@ -52,20 +70,5 @@ class ReviewRepository extends ServiceEntityRepository
 
         return $paginator;
     }
-/*
-    public function findLatest(int $page = 1): Pagerfanta
-    {
-        $query = $this->getEntityManager()
-            ->createQuery("
-                SELECT p
-                FROM App:Review p
-                WHERE p.isPublicReview = TRUE
-                ORDER BY p.publishedAt DESC
-            ")
-           // ->setParameter('now', new \DateTime())
-        ;
 
-        return $this->createPaginator($query, $page);
-    }
-*/
 }

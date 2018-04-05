@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Review;
 use App\Entity\Recipe;
+use App\Entity\User;
 use App\Form\ReviewType;
 use App\Repository\ReviewRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -28,9 +29,19 @@ class ReviewController extends Controller
      * @Method("GET")
      * @Cache(smaxage="10")
      */
-    public function index(int $page, string $_format, ReviewRepository $recipes)
+    public function index(int $page, string $_format, ReviewRepository $reviews)
     {
-        $latestPosts = $recipes->findLatest($page);
+        $user = $this->getUser();
+
+        if ($user == null) {
+            $latestPosts = $reviews->findLatestPublicReviews($page);
+        } elseif ($this->isGranted('ROLE_ADMIN')) {
+            $latestPosts = $reviews->findLatestReviews($page);
+        } else {
+            dump($user->getUsername());
+            $latestPosts = $reviews->findReviewsByAuthor($page, $user);
+        }
+        //$latestPosts = $recipes->findLatest($page);
 
         // Every template name also has two extensions that specify the format and
         // engine for that template.

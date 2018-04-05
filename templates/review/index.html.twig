@@ -89,6 +89,10 @@
                         <div class="col-lg-2">
                             {% include 'review/_delete_form.html.twig' with {'identifier': review.id} only %}
                         </div>
+                    {% elseif(review.isPublicReview == true and app.user.username != review.author.username) %}
+                        <div class="col-lg-10">
+                            <a href="{{ path('review_show', {'id': review.id}) }}" class="btn btn-outline-primary">View Review</a>
+                        </div>
                     {% elseif(app.user.username == review.author.username) %}
                         <div class="col-lg-10">
                             <a href="{{ path('review_show', {'id': review.id}) }}" class="btn btn-outline-primary">View Review</a>

@@ -39,15 +39,19 @@
             </div>
         </div>
     </div>
+    <br>
+    <hr>
+    <div class="row">
 
-    <th>Recipe</th>
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <td>{{ review.recipe.title}}</td>
+        {% if (is_granted('ROLE_ADMIN') or app.user.username == review.author.username) %}
+            <a href="{{ path('review_edit', {'id': review.id}) }}" class="btn btn-outline-primary" style="margin-right:1% ">Edit Review</a>
+
+            {% include 'review/_delete_form.html.twig' with {'identifier': review.id} only %}
+        {% endif %}
     {% endif %}
-    <a href="{{ path('review_index') }}">back to list</a>
+    <a href="{{ path('review_index') }}" class="btn btn-outline-dark" style="margin-left:1%" >Back to Reviews</a>
 
-    <a href="{{ path('review_edit', {'id': review.id}) }}">edit</a>
-
-    {% include 'review/_delete_form.html.twig' with {'identifier': review.id} only %}
+    </div>
 
 {% endblock %}

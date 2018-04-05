@@ -40,22 +40,25 @@
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         {% if (is_granted('ROLE_ADMIN') or app.user.username == recipe.author.username) %}
             <div class="row">
-                <div class="col-lg-8">
-                    <a href="{{ path('recipe_edit', {'id': recipe.id}) }}" class="btn btn-outline-success">Edit Drink</a>
-                    {% include 'recipe/_delete_form.html.twig' with {'identifier': recipe.id} only %}
-                </div>
-                <div class="col-lg-4">
-                    {% if (app.user.username == recipe.author.username and recipe.requestRecipePublic == false and recipe.isPublic == false) %}
-                        <p class="lead">Request Drink to become Public</p>
-                        <a href="{{ path('recipe_request_publish', {'id': recipe.id }) }}" class="btn btn-outline-primary">Request Be Made Public</a>
-                    {% endif %}
-                    {% if (is_granted('ROLE_ADMIN') and recipe.isPublic == false and recipe.requestRecipePublic == true) %}
-                        <p class="lead">User Requests</p>
-                        <a href="{{ path('recipe_publish_recipe', {'id': recipe.id }) }}" class="btn btn-outline-success">Accept Request to publish</a>
-                        <a href="{{ path('recipe_reject_recipe', {'id': recipe.id }) }}" class="btn btn-outline-danger">Reject Request to publish</a>
-                    {% endif %}
-                </div>
+                <a href="{{ path('recipe_edit', {'id': recipe.id}) }}" class="btn btn-outline-success" style="margin-right: 1%">Edit Drink</a>
+                {% include 'recipe/_delete_form.html.twig' with {'identifier': recipe.id} only %}
+                {% if (app.user.username == recipe.author.username and recipe.requestRecipePublic == false and recipe.isPublic == false) %}
+                    <a href="{{ path('recipe_request_publish', {'id': recipe.id }) }}" class="btn btn-outline-primary" style="margin-left: 1%">Request Be Made Public</a>
+                {% endif %}
             </div>
+            <br>
+            {% if (is_granted('ROLE_ADMIN') and recipe.isPublic == false and recipe.requestRecipePublic == true) %}
+                <div class="jumbotron">
+                    <div class="container">
+                        <h1 class="display-3">User Requests</h1>
+                        <p class="lead">The user has requested this Drink becoming public.</p>
+                        <hr>
+                        <a href="{{ path('recipe_publish_recipe', {'id': recipe.id }) }}" class="btn btn-info">Accept Request to publish</a>
+                        <a href="{{ path('recipe_reject_recipe', {'id': recipe.id }) }}" class="btn btn-warning"style="margin-left: 1%">Reject Request to publish</a>
+                    </div>
+                </div>
+
+            {% endif %}
         {% endif %}
     {% endif %}
     <br>
@@ -68,8 +71,10 @@
         </div>
     </div>
     <br>
-    <a href="{{ path('review_new', {'recipeID': recipe.id}) }}" class="btn btn-outline-dark">Add New Review</a>
-    <br>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <a href="{{ path('review_new', {'recipeID': recipe.id}) }}" class="btn btn-outline-dark">Add New Review</a>
+        <br>
+    {% endif %}
     <br>
         {% for review in recipe.reviews %}
             <div class="container">
