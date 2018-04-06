@@ -3,7 +3,6 @@
 {% block title %}Review{% endblock %}
 
 {% block body %}
-
     <h1>Review Details</h1>
     <div class="row">
         <div class="col col-lg-5">
@@ -12,6 +11,9 @@
         </div>
         <div class="col col-lg-7">
             <div class="row"><p></p></div>
+            <div class="row">
+                <p class="lead"><b>Drink Reviewed: </b>{{ review.recipe.title}}</p>
+            </div>
             <div class="row">
                 <p class="lead"><b>Author: </b>{{ review.author.firstName}} {{ review.author.surname}}</p>
             </div>
@@ -34,24 +36,90 @@
             <div class="row">
                 <p class="lead"><b>Number of Stars: </b>{{ review.stars }}</p>
             </div>
-            <div class="row">
-                <p class="lead"><b>Summary: </b>{{ review.summary }}</p>
-            </div>
         </div>
     </div>
-    <br>
-    <hr>
     <div class="row">
+        <h3>
+            Summary
+            <br>
+            <small class="text-muted">{{ review.summary }}</small>
+        </h3>
+    </div>
+    <br>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% if review.votes == null %}
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="fa-3x">
+                <span class="fa-layers fa-fw">
+                    <a href="{{ path('review_upVote', {'id': review.id}) }}"> <i class="fas fa-thumbs-up" data-fa-transform="rotate--30" ></i></a>
+                    <span class="fa-layers-counter" data-fa-transform="shrink-6 up-3" style="background:Tomato">{{ review.upVotes }}</span>
+                </span>
+                        <p class="lead">Total Likes {{review.upVotes  }}</p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="fa-3x">
+                <span class="fa-layers fa-fw">
+                    <a href="{{ path('review_downVote', {'id': review.id}) }}"> <i class="fas fa-thumbs-down"></i></a>
+                    <span class="fa-layers-counter" data-fa-transform="shrink-6 up-3" style="background:Tomato">{{ review.downVotes }}</span>
+                </span>
+                        <p class="lead">Total Dislikes {{review.downVotes  }}</p>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="fa-3x">
+                <span class="fa-layers fa-fw">
+                    <i class="fas fa-thumbs-up" data-fa-transform="rotate--30" ></i>
+                    <span class="fa-layers-counter" data-fa-transform="shrink-6 up-3" style="background:Tomato">{{ review.upVotes }}</span>
+                </span>
+                        <p class="lead">Total Likes {{review.upVotes  }}</p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="fa-3x">
+                <span class="fa-layers fa-fw">
+                    <i class="fas fa-thumbs-down"></i>
+                    <span class="fa-layers-counter" data-fa-transform="shrink-6 up-3" style="background:Tomato">{{ review.downVotes }}</span>
+                </span>
+                        <p class="lead">Total Dislikes {{review.downVotes  }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <hr>
+    {% endif %}
 
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         {% if (is_granted('ROLE_ADMIN') or app.user.username == review.author.username) %}
+            <div class="row">
             <a href="{{ path('review_edit', {'id': review.id}) }}" class="btn btn-outline-primary" style="margin-right:1% ">Edit Review</a>
 
             {% include 'review/_delete_form.html.twig' with {'identifier': review.id} only %}
+            {% if (app.user.username == review.author.username and review.requestReviewPublic == false and review.isPublicReview == false) %}
+                <a href="{{ path('review_request_publish', {'id': review.id }) }}" class="btn btn-outline-primary" style="margin-left: 1%">Request Be Made Public</a>
+            {% endif %}
+            </div>
+            {% if (is_granted('ROLE_ADMIN') and review.isPublicReview == false and review.requestReviewPublic == true) %}
+                <br>
+                <br>
+                <div class="jumbotron">
+                    <div class="container">
+                        <h1 class="display-3">User Requests</h1>
+                        <p class="lead">The user has requested this Review becoming public.</p>
+                        <hr>
+                        <a href="{{ path('review_publish_review', {'id': review.id }) }}" class="btn btn-info">Accept Request to publish</a>
+                        <a href="{{ path('review_reject_review', {'id': review.id }) }}" class="btn btn-warning"style="margin-left: 1%">Reject Request to publish</a>
+                    </div>
+                </div>
+            {% endif %}
         {% endif %}
     {% endif %}
+    <br>
     <a href="{{ path('review_index') }}" class="btn btn-outline-dark" style="margin-left:1%" >Back to Reviews</a>
-
-    </div>
-
+    <br>
+    <br>
 {% endblock %}

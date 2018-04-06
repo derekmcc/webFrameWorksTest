@@ -17,6 +17,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 /**
  * @Route("/review", name="review_")
  */
@@ -64,6 +66,7 @@ class ReviewController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $review->setRequestReviewPublic(false);
             $img = $form['image2']->getData();
             if($img){
                 $fileLocation = $fileUploader->upload($img);
@@ -140,5 +143,85 @@ class ReviewController extends Controller
         $em->flush();
 
         return $this->redirectToRoute('review_index');
+    }
+
+    /**
+     * @param Review $review
+     * @Route("/{id}/publish", requirements={"id" = "\d+"}, name="publish_review")
+     * @return RedirectResponse
+     */
+    public function setRecipeToPublic(Review $review)
+    {
+        $review->setIsPublicReview(true);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($review);
+        $em->flush();
+        return $this->redirectToRoute('review_show', ['id' => $review->getId()]);
+    }
+
+    /**
+     * @param Review $review
+     * @Route("/{id}/reject", requirements={"id" = "\d+"}, name="reject_review")
+     * @return RedirectResponse
+     */
+    public function rejectPublicRequest(Review $review)
+    {
+        $review->setRequestReviewPublic(false);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($review);
+        $em->flush();
+        return $this->redirectToRoute('review_show', ['id' => $review->getId()]);
+    }
+
+    /**
+     * @param Review $review
+     * @Route("/{id}/request", requirements={"id" = "\d+"}, name="request_publish")
+     * @return RedirectResponse
+     */
+    public function setMakeRequestPublic(Review $review)
+    {
+        $review->setRequestReviewPublic(true);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($review);
+        $em->flush();
+        return $this->redirectToRoute('review_show', ['id' => $review->getId()]);
+    }
+
+    /**
+     * @param Review $review
+     * @Route("/{id}/upVote", requirements={"id" = "\d+"}, name="upVote")
+     * @return RedirectResponse
+     */
+    public function upVoteReview(Review $review)
+    {
+        $upVote = $review->getUpVotes() + 1;
+        $review->setUpVotes($upVote);
+        $review->setVotes($this->getUser());
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($review);
+        $em->flush();
+        return $this->redirectToRoute('review_show', ['id' => $review->getId()]);
+    }
+
+    /**
+     * @param Review $review
+     * @Route("/{id}/downVote", requirements={"id" = "\d+"}, name="downVote")
+     * @return RedirectResponse
+     */
+    public function downVoteReview(Review $review)
+    {
+        $checkIfVoted = $review->getVotes();
+        if ($checkIfVoted = $this->getUser()){
+
+        }
+        $review->setVotes($this->getUser());
+
+        $downVote = $review->getDownVotes() + 1;
+        $review->setDownVotes($downVote);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($review);
+        $em->flush();
+        return $this->redirectToRoute('review_show', ['id' => $review->getId()]);
     }
 }

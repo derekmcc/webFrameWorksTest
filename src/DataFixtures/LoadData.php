@@ -66,6 +66,7 @@ class LoadData extends Fixture
             $recipe->setPrice($price);
             $recipe->setIsPublic($public);
             $recipe->setPublishedAt($faker->dateTimeThisMonth('now'));
+            $recipe->setRequestRecipePublic($faker->randomElement($this->getTrueFalse()));
             $manager->persist($recipe);
 
             foreach (range(1, 5) as $i) {
@@ -78,6 +79,7 @@ class LoadData extends Fixture
                 $review->setStars($faker->randomElement($this->getNumberOfStars()));
                 $review->setIsPublicReview($value = (bool)random_int(0, 1));
                 $review->setImage($faker->randomElement($this->getReviewImage()));
+                $review->setRequestReviewPublic($faker->randomElement($this->getTrueFalse()));
                 $review->setRecipe($recipe);
                 $manager->persist($review);
             }

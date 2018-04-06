@@ -61,7 +61,7 @@ class User implements UserInterface, \Serializable
      * )
      *
      */
-    private $makeRecipesPublic;
+  //  private $makeRecipesPublic;
 
     /**
      * @var Review[]|ArrayCollection
@@ -73,12 +73,12 @@ class User implements UserInterface, \Serializable
      *      cascade={"persist"}
      * )
      */
-    private $makeReviewsPublic;
+  //  private $makeReviewsPublic;
 
     /**
-     * @var integer
      *
-     * @ORM\OneToOne(targetEntity="Review", mappedBy="votes")
+     *
+     * @ORM\OneToMany(targetEntity="Review", mappedBy="votes")
      */
     private $voter;
 

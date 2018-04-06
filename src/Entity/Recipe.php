@@ -76,6 +76,7 @@ class Recipe
      * @ORM\OrderBy({"publishedAt": "DESC"})
      */
     private $reviews;
+
     /**
      * @ORM\Column(type="boolean")
      */

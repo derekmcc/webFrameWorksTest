@@ -56,7 +56,7 @@ class RecipeController extends Controller
     /**
      * @Route("/new", name="new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
     public function new(Request $request, FileUploader $fileUploader)
     {
@@ -130,7 +130,7 @@ class RecipeController extends Controller
     /**
      * @Route("/{id}/edit", name="edit")
      * @Method({"GET", "POST"})
-     *
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
     public function edit(Request $request, Recipe $recipe)
     {
@@ -157,7 +157,7 @@ class RecipeController extends Controller
     /**
      * @Route("/{id}", name="delete")
      * @Method("DELETE")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
     public function delete(Request $request, Recipe $recipe)
     {
@@ -173,6 +173,7 @@ class RecipeController extends Controller
     /**
      * @param Recipe $recipe
      * @Route("/{id}/publish", requirements={"id" = "\d+"}, name="publish_recipe")
+     * @Security("has_role('ROLE_ADMIN')")
      * @return RedirectResponse
      */
     public function setRecipeToPublic(Recipe $recipe)
@@ -187,6 +188,7 @@ class RecipeController extends Controller
     /**
      * @param Recipe $recipe
      * @Route("/{id}/reject", requirements={"id" = "\d+"}, name="reject_recipe")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @return RedirectResponse
      */
     public function rejectPublicRequest(Recipe $recipe)
@@ -201,6 +203,7 @@ class RecipeController extends Controller
     /**
      * @param Recipe $recipe
      * @Route("/{id}/request", requirements={"id" = "\d+"}, name="request_publish")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @return RedirectResponse
      */
     public function setMakeRequestPublic(Recipe $recipe)

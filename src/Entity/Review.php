@@ -66,9 +66,10 @@ class Review
     private $requestReviewPublic;
 
     /**
-     * @var integer
+     * @var User
      *
-     * @ORM\OneToOne(targetEntity="User", inversedBy="voter")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="voter")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $votes;
 
@@ -93,6 +94,16 @@ class Review
      * @Assert\Image
      */
     private $image;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $upVotes = 0;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $downVotes = 0;
 
     /**
      * @var string $image
@@ -273,9 +284,56 @@ class Review
     /**
      * @param mixed $requestReviewPublic
      */
-    public function setRequestReviewPublic(User $requestReviewPublic): void
+    public function setRequestReviewPublic($requestReviewPublic): void
     {
         $this->requestReviewPublic = $requestReviewPublic;
     }
 
+    /**
+     * @return User|null
+     */
+    public function getVotes(): ?User
+    {
+        return $this->votes;
+    }
+
+    /**
+     * @param User $votes
+     */
+    public function setVotes(User $votes): void
+    {
+        $this->votes = $votes;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpVotes()
+    {
+        return $this->upVotes;
+    }
+
+    /**
+     * @param mixed $upVotes
+     */
+    public function setUpVotes($upVotes): void
+    {
+        $this->upVotes = $upVotes;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDownVotes()
+    {
+        return $this->downVotes;
+    }
+
+    /**
+     * @param mixed $downVotes
+     */
+    public function setDownVotes($downVotes): void
+    {
+        $this->downVotes = $downVotes;
+    }
 }

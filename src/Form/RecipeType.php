@@ -39,10 +39,6 @@ class RecipeType extends AbstractType
                     ),
             ))
             ->add('requestRecipePublic')
-         //   ->add('isPublic')
-          //  ->add('save', SubmitType::class, array(
-           //     'attr' => array('class' => 'save'),
-           // ));
         ;
     }
 
