@@ -65,7 +65,7 @@ class LoadData extends Fixture
             $recipe->setIngredients($ingredients);
             $recipe->setPrice($price);
             $recipe->setIsPublic($public);
-
+            $recipe->setPublishedAt($faker->dateTimeThisMonth('now'));
             $manager->persist($recipe);
 
             foreach (range(1, 5) as $i) {
@@ -152,7 +152,7 @@ class LoadData extends Fixture
             'john_user',
             'admin',
             'joe_user',
-         /*   'username1',
+            'username1',
             'username2',
             'username3',
             'username4',
@@ -171,7 +171,7 @@ class LoadData extends Fixture
             'username17',
             'username18',
             'username19',
-            'username20',*/
+            'username20',
         ];
     }
 
@@ -192,26 +192,26 @@ class LoadData extends Fixture
             ['admin', 'pass',$faker->firstName, $faker->lastName, ['ROLE_ADMIN']],
             ['joe_user', 'pass','Joe', 'Bloggs', ['ROLE_USER']],
             ['jane_user', 'pass','Jane', 'Smith', ['ROLE_USER']],
-       /*     ['username1', 'pass',$faker->firstName('male'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
-            ['username2', 'pass',$faker->firstName('male'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
-            ['username3', 'pass',$faker->firstName('male'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
-            ['username4', 'pass',$faker->firstName('male'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
-            ['username5', 'pass',$faker->firstName('male'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
-            ['username6', 'pass',$faker->firstName('male'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
-            ['username7', 'pass',$faker->firstName('male'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
-            ['username8', 'pass',$faker->firstName('male'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
-            ['username9', 'pass',$faker->firstName('male'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
-            ['username10', 'pass',$faker->firstName('female'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
-            ['username11', 'pass',$faker->firstName('female'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
-            ['username12', 'pass',$faker->firstName('female'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
-            ['username13', 'pass',$faker->firstName('female'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
-            ['username14', 'pass',$faker->firstName('female'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
-            ['username15', 'pass',$faker->firstName('female'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
-            ['username16', 'pass',$faker->firstName('female'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
-            ['username17', 'pass',$faker->firstName('female'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
-            ['username18', 'pass',$faker->firstName('female'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
-            ['username19', 'pass',$faker->firstName('female'), $faker->lastName, $faker->randomElement($this->getUserRoles())],
-            ['username20', 'pass',$faker->firstName('female'), $faker->lastName, $faker->randomElement($this->getUserRoles())],*/
+            ['username1', 'pass',$faker->firstName('male'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username2', 'pass',$faker->firstName('male'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username3', 'pass',$faker->firstName('male'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username4', 'pass',$faker->firstName('male'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username5', 'pass',$faker->firstName('male'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username6', 'pass',$faker->firstName('male'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username7', 'pass',$faker->firstName('male'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username8', 'pass',$faker->firstName('male'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username9', 'pass',$faker->firstName('male'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username10', 'pass',$faker->firstName('female'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username11', 'pass',$faker->firstName('female'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username12', 'pass',$faker->firstName('female'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username13', 'pass',$faker->firstName('female'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username14', 'pass',$faker->firstName('female'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username15', 'pass',$faker->firstName('female'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username16', 'pass',$faker->firstName('female'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username17', 'pass',$faker->firstName('female'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username18', 'pass',$faker->firstName('female'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username19', 'pass',$faker->firstName('female'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username20', 'pass',$faker->firstName('female'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
         ];
     }
 

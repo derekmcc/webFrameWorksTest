@@ -1,47 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}User profile{% endblock %}
 
 {% block body %}
+    <h1 class="display-4">{{ user.firstName }} {{ user.surname }} Profile</h1>
+    <div class="row">
 
-    <h1>User</h1>
-    {% for role in user.roles %}
-        {{ role }},
-    {% endfor %}
-    <table>
-        <tr>
-            <th>Id</th>
-            <td>{{ user.id }}</td>
-        </tr>
-        <tr>
-            <th>Username</th>
-            <td>{{ user.username }}</td>
-        </tr>
-        <tr>
-            <th>Password</th>
-            <td>{{ user.password }}</td>
-        </tr>
-        <tr>
-            <th>Roles</th>
-            <td>
+        <div class="col col-lg-3">
+            <br>
+            <img src="/uploads/images/profile.png" alt="{{ user.firstName }} {{ user.surname }}" width="150" height="200">
+        </div>
+        <div class="col col-lg-9">
+            <div class="row"><p></p></div>
+            <div class="row">
+                <p class="lead"><b>ID: </b>{{ user.id }}</p>
+            </div>
+            <div class="row">
+                <p class="lead"><b>Username: </b>{{ user.username}}</p>
+            </div>
+            <div class="row">
                 {% for role in user.roles %}
-                    {{ role }},
+                <p class="lead"><b>Role: </b>{{ role }}</p>
                 {% endfor %}
-            </td>
-        </tr>
-        <tr>
-            <th>Firstname</th>
-            <td>{{ user.firstname }}</td>
-        </tr>
-        <tr>
-            <th>Surname</th>
-            <td>{{ user.surname }}</td>
-        </tr>
-        //
-        {% for makePublic in user.makeRecipesPublic  %}
-            ======{{ user.makePublic }}====
-        {% endfor %}
-    </table>
+            </div>
+            <div class="row">
+                <p class="lead"><b>First name: </b>{{ user.firstName }}</p>
+            </div>
+            <div class="row">
+                <p class="lead"><b>Surname: </b>{{ user.surname }}</p>
+            </div>
+        </div>
+    </div>
 
     <a href="{{ path('user_index') }}">back to list</a>
 

@@ -10,6 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
  */
 class Recipe
 {
+    const NUM_ITEMS = 10;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -33,7 +35,14 @@ class Recipe
      * @ORM\Column(type="string", nullable=true)
      *
      * @Assert\NotBlank(message="Please, upload the image as a jpg")
-     * @Assert\File(mimeTypes={ "image/jpeg" })
+     * @Assert\File(maxSize="10M",
+     *          mimeTypes={
+     *          "image/png",
+     *          "image/jpeg",
+     *          "image/jpg",
+     *          "image/gif"
+     *          }
+     * )
      */
     private $image;
     /**
@@ -71,6 +80,30 @@ class Recipe
      * @ORM\Column(type="boolean")
      */
     private $requestRecipePublic;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime")
+     * @Assert\DateTime
+     */
+    private $publishedAt;
+
+    /**
+     * @return \DateTime
+     */
+    public function getPublishedAt(): \DateTime
+    {
+        return $this->publishedAt;
+    }
+
+    /**
+     * @param \DateTime $publishedAt
+     */
+    public function setPublishedAt(\DateTime $publishedAt): void
+    {
+        $this->publishedAt = $publishedAt;
+    }
 
     /**
      * @return mixed

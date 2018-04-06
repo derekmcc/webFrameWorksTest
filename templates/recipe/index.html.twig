@@ -1,45 +1,135 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Drinks index{% endblock %}
+{% block title %}Drinks Index{% endblock %}
+
 
 {% block body %}
+    {% set counter = 0 %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <h1 class="display-4">Drinks</h1>
+            </div>
+            <div class="col-lg-4">
+                {% if (is_granted('IS_AUTHENTICATED_FULLY'))%}
+                    <a href="{{ path('recipe_new') }}" class="btn btn-outline-primary">Add New Drink</a>
+                    <br>
+                {% endif %}
+            </div>
+        </div>
+        {% for recipe in recipes %}
+            {% if (is_granted('IS_AUTHENTICATED_FULLY')) and (is_granted('ROLE_ADMIN')) or (recipe.isPublic == true) or (is_granted('IS_AUTHENTICATED_FULLY')) and (recipe.author.username == app.user.username) %}
 
-    <h1>Drinks index</h1>
+                <div class="row">
+                    <div class="col col-lg-2">
+                        <img src="/uploads/images/{{ recipe.image }}" alt="{{ recipe.title }}" width="70" height="150">
+                    </div>
+                    <div class="col col-lg-6">
+                        <p></p>
+                        <div class="row"><h5><b><a href="{{ path('recipe_show', {'id': recipe.id}) }}">{{ recipe.title }}</a></b></h5></div>
+                        <div class="row"><p><b>Summary: </b>{{ recipe.summary }}</p></div>
+                        <div class="row"><p><b>Price Range: </b>{{ recipe.price }}</p></div>
+                    </div>
+                    <div class="col col-lg-4">
+                        <h6>Latest Public Reviews</h6>
+                        <h5><i class="fa fa-comments" aria-hidden="true"></i>Total Reviews {{ recipe.reviews|length }}</h5>
+                        {% for review in recipe.reviews %}
+                            {% if (is_granted('IS_AUTHENTICATED_FULLY')) and (is_granted('ROLE_ADMIN')) or (review.isPublicReview == true) or (is_granted('IS_AUTHENTICATED_FULLY')) and (review.author.username == app.user.username) %}
+                                {% if (counter != 5) %}
+                                    {% set counter = counter + 1 %}
+                                    {% if review.stars == 0 %}
+                                        0 Stars
+                                    {% elseif review.stars == 0.5 %}
+                                        <i class="fas fa-star-half"></i>
+                                    {% elseif review.stars == 1 %}
+                                        <i class="fas fa-star"></i>
+                                    {% elseif review.stars == 1.5 %}
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half"></i>
+                                    {% elseif review.stars == 2 %}
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    {% elseif review.stars == 2.5 %}
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half"></i>
+                                    {% elseif review.stars == 3 %}
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    {% elseif review.stars == 3.5 %}
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half"></i>
+                                    {% elseif review.stars == 4 %}
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    {% elseif review.stars == 4.5 %}
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half"></i>
+                                    {% elseif review.stars == 5 %}
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    {% else %}
+                                        <p>No reviews for this drink</p>
+                                    {% endif %}
+                                    <a href="{{ url('review_show', {'id':review.id}) }}">
+                                        By {{ review.author.firstName }}  {{ review.author.surname }}
+                                    </a>
+                                    <br>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        {% set counter = 0 %}
+                    </div>
+                </div><br><br>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <h1>Recipe index</h1>
     <table>
         <thead>
         <tr>
             <th>Id</th>
-            <th>Title</th>
+            <th>Author</th>
             <th>Public</th>
-            <th>Description</th>
-            <th>Image</th>
-            <th>Ingredients</th>
-            <th>Price</th>
-            <th>actions</th>
         </tr>
         </thead>
         <tbody>
         {% for recipe in recipes %}
-            <tr>
-                <td>{{ recipe.id }}</td>
-                <td>{{ recipe.title }}</td>
-                <td>{{ recipe.isPublic }}</td>
-                <td>{{ recipe.description }}</td>
-                <td><img src="/uploads/images/{{ recipe.image }}" alt="{{ recipe.title }}" width="30" height="30"></td>
-                <td>{{ recipe.ingredients }}</td>
-                <td>{{ recipe.price }}</td>
-                <td>
-                    <a href="{{ path('recipe_show', {'id': recipe.id}) }}">show</a>
-                    <a href="{{ path('recipe_edit', {'id': recipe.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
+            {% if (is_granted('IS_AUTHENTICATED_FULLY')) and (is_granted('ROLE_ADMIN')) or (recipe.isPublic == true) or (is_granted('IS_AUTHENTICATED_FULLY')) and (recipe.author.username == app.user.username) %}
+                <tr>
+                    <td>{{ recipe.id }}</td>
+                    <td>{{ recipe.author.username }}</td>
+                    <td>{{ recipe.isPublic }}</td>
+                    <td>
+                        {% for review in recipe.reviews %}
+                            {% if (is_granted('ROLE_ADMIN')) or (recipe.isPublic == false) %}
+                                <a href="{{ url('review_show', {'id':review.id}) }}">
+                                    {{ review.id }} :: {{ review.author.username }}
+                                </a>
+                            {% endif %}
+                        {% else %}
+                            (no reviews for this drink)
+                        {% endfor %}</td>
+                </tr>
+            {% endif %}
         {% endfor %}
         </tbody>
     </table>
-    <a href="{{ path('recipe_new') }}">Create new</a>
+    {% if recipes.haveToPaginate %}
+        <div class="navigation text-center">
+            {{ pagerfanta(recipes, 'twitter_bootstrap4', {routeName: 'recipe_paginated'}) }}
+        </div>
+    {% endif %}
 
 {% endblock %}

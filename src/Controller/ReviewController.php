@@ -38,14 +38,8 @@ class ReviewController extends Controller
         } elseif ($this->isGranted('ROLE_ADMIN')) {
             $latestPosts = $reviews->findLatestReviews($page);
         } else {
-            dump($user->getUsername());
             $latestPosts = $reviews->findReviewsByAuthor($page, $user);
         }
-        //$latestPosts = $recipes->findLatest($page);
-
-        // Every template name also has two extensions that specify the format and
-        // engine for that template.
-        // See https://symfony.com/doc/current/templating.html#template-suffix
         return $this->render('review/index.'.$_format.'.twig', ['reviews' => $latestPosts]);
     }
 

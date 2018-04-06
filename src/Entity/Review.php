@@ -60,18 +60,22 @@ class Review
      */
     private $isPublicReview;
 
-
-    /*
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="makeReviewsPublic")
-     * @ORM\JoinColumn(nullable=true)
+    /**
+     * @ORM\Column(type="boolean")
      */
-    //private $requestReviewPublic;
+    private $requestReviewPublic;
+
+    /**
+     * @var integer
+     *
+     * @ORM\OneToOne(targetEntity="User", inversedBy="voter")
+     */
+    private $votes;
 
     public function getImage2()
     {
         return $this->image2;
     }
-
 
     public function setImage2($image2): void
     {

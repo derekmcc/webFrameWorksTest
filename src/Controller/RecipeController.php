@@ -21,17 +21,24 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class RecipeController extends Controller
 {
     /**
-     * @Route("/", name="index")
      *
-     * @return Response
+     * @Route("/", defaults={"page": "1", "_format"="html"}, name="index")
+     * @Route("/page/{page}", defaults={"_format"="html"}, requirements={"page": "[1-9]\d*"}, name="paginated")
+     * @Method("GET")
+     * @Cache(smaxage="10")
      */
-    public function index()
+    public function index(int $page, string $_format, RecipeRepository $recipes)
     {
-        $recipes = $this->getDoctrine()
-            ->getRepository(Recipe::class)
-            ->findAll();
+        $user = $this->getUser();
 
-        return $this->render('recipe/index.html.twig', ['recipes' => $recipes]);
+        if ($user == null) {
+            $latestRecipes = $recipes->findLatestPublicRecipes($page);
+        } elseif ($this->isGranted('ROLE_ADMIN')) {
+            $latestRecipes = $recipes->findLatestRecipes($page);
+        } else {
+            $latestRecipes = $recipes->findRecipesByAuthor($page, $user);
+        }
+        return $this->render('recipe/index.'.$_format.'.twig', ['recipes' => $latestRecipes]);
     }
     /**
      * @Route("/showRecipe", name="showRecipe")
@@ -56,6 +63,7 @@ class RecipeController extends Controller
         $recipe = new Recipe();
         $recipe->setAuthor($this->getUser());
         $recipe->setRequestRecipePublic(false);
+        $recipe->setPublishedAt(new \DateTime('now '));
        // $recipe->setRequestRecipePublic($this->getUser()->setMakeReviewsPublic($this->getUser()));
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
@@ -96,6 +104,7 @@ class RecipeController extends Controller
                 'image' => $recipe->getImage(),
                 'author' => $recipe->getAuthor(),
                 'summary' => $recipe->getSummary(),
+                'isPublic' => $recipe->getIsPublic(),
                // 'url' => $this->generateUrl('recipe_search_aa'),
             ];
         }

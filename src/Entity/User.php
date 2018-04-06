@@ -43,11 +43,11 @@ class User implements UserInterface, \Serializable
      */
     private $roles = [];
     /**
-     * @ORM\Column(type="string", length=25, unique=true)
+     * @ORM\Column(type="string", length=25, unique=false)
      */
     private $firstname;
     /**
-     * @ORM\Column(type="string", length=25, unique=true)
+     * @ORM\Column(type="string", length=25, unique=false)
      */
     private $surname;
     /**
@@ -62,6 +62,7 @@ class User implements UserInterface, \Serializable
      *
      */
     private $makeRecipesPublic;
+
     /**
      * @var Review[]|ArrayCollection
      *
@@ -73,6 +74,14 @@ class User implements UserInterface, \Serializable
      * )
      */
     private $makeReviewsPublic;
+
+    /**
+     * @var integer
+     *
+     * @ORM\OneToOne(targetEntity="Review", mappedBy="votes")
+     */
+    private $voter;
+
     public function getSalt()
     {
         // no salt needed since we are using bcrypt

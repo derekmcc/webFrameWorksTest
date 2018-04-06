@@ -68,6 +68,55 @@ class RecipeRepository extends ServiceEntityRepository
             return 2 <= mb_strlen($term);
         });
     }
+
+    public function findLatestRecipes(int $page = 1): Pagerfanta
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("
+                SELECT r
+                FROM App:Recipe r 
+                ORDER BY r.publishedAt ASC 
+            ")
+        ;
+
+        return $this->createPaginator($query, $page);
+    }
+
+    public function findLatestPublicRecipes(int $page = 1): Pagerfanta
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("
+                SELECT r
+                FROM App:Recipe r
+                WHERE r.isPublic = TRUE
+                ORDER BY r.publishedAt ASC
+            ")
+        ;
+        return $this->createPaginator($query, $page);
+    }
+
+    public function findRecipesByAuthor(int $page = 1, $user): Pagerfanta
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("
+                SELECT r
+                FROM App:Recipe r
+                WHERE r.author = '{$user->getId()}'
+                OR r.isPublic = true
+                ORDER BY r.publishedAt ASC
+            ")
+        ;
+        return $this->createPaginator($query, $page);
+    }
+
+    private function createPaginator(Query $query, int $page): Pagerfanta
+    {
+        $paginator = new Pagerfanta(new DoctrineORMAdapter($query));
+        $paginator->setMaxPerPage(Recipe::NUM_ITEMS);
+        $paginator->setCurrentPage($page);
+
+        return $paginator;
+    }
     /*
     public function findLatest(int $page = 1): Pagerfanta
     {

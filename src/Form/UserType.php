@@ -27,7 +27,7 @@ class UserType extends AbstractType
                 'second_options' => array('label' => 'Repeat Password'),
             ))
            // ->add('password')
-            ->add(
+         /*   ->add(
                 'roles',
                 ChoiceType::class, [
                     'choices' => [
@@ -38,8 +38,7 @@ class UserType extends AbstractType
                     //'expanded' => true,
                     'multiple' => true,
                 ]
-            )
-
+            )*/
         ;
     }
 

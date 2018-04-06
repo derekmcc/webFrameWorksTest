@@ -36,11 +36,11 @@ class UserController extends Controller
      */
     public function userAccount()
     {
-        $users = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->findAll();
+        $user = $this->getUser();
+        return $this->render('user/show.html.twig', [
+            'user' => $user,
+        ]);
 
-        return $this->render('user/account.html.twig', ['users' => $users]);
     }
 
     /**
@@ -50,6 +50,7 @@ class UserController extends Controller
     public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = new User();
+        $user->setRoles('[ROLE_USER]');
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
