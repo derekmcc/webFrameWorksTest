@@ -200,4 +200,21 @@ class User implements UserInterface, \Serializable
     {
         $this->plainPassword = $password;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getVoter()
+    {
+        return $this->voter;
+    }
+
+    /**
+     * @param mixed $voter
+     */
+    public function setVoter($voter): void
+    {
+        $this->voter = $voter;
+    }
+
 }

@@ -83,7 +83,11 @@
                                         <p>No reviews for this drink</p>
                                     {% endif %}
                                     <a href="{{ url('review_show', {'id':review.id}) }}">
+                                        {% if review.author != null %}
                                         By {{ review.author.firstName }}  {{ review.author.surname }}
+                                        {% else %}
+                                        By Unknown Author
+                                        {% endif %}
                                     </a>
                                     <br>
                                 {% endif %}
@@ -109,13 +113,21 @@
             {% if (is_granted('IS_AUTHENTICATED_FULLY')) and (is_granted('ROLE_ADMIN')) or (recipe.isPublic == true) or (is_granted('IS_AUTHENTICATED_FULLY')) and (recipe.author.username == app.user.username) %}
                 <tr>
                     <td>{{ recipe.id }}</td>
-                    <td>{{ recipe.author.username }}</td>
+                    {% if recipe.author != null %}
+                        <td>{{ recipe.author.username }}</td>
+                    {% else %}
+                        <td>Unknown Author</td>
+                    {% endif %}
                     <td>{{ recipe.isPublic }}</td>
                     <td>
                         {% for review in recipe.reviews %}
                             {% if (is_granted('ROLE_ADMIN')) or (recipe.isPublic == false) %}
                                 <a href="{{ url('review_show', {'id':review.id}) }}">
-                                    {{ review.id }} :: {{ review.author.username }}
+                                    {% if review.author != null %}
+                                        By {{ review.author.firstName }}  {{ review.author.surname }}
+                                    {% else %}
+                                        By Unknown
+                                    {% endif %}
                                 </a>
                             {% endif %}
                         {% else %}

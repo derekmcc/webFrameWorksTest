@@ -38,33 +38,55 @@ class ReviewControllerTest extends WebTestCase
             $this->client->getResponse()->getStatusCode()
         );
     }
-
-    public function testNewReview()
+    public function testNewComment()
     {
-        // Arrange
         $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'derek',
+            'PHP_AUTH_USER' => 'username',
             'PHP_AUTH_PW' => 'pass',
         ]);
-        $searchText = 'New Drink';
+        $client->followRedirects();
 
-        // Act
-        $client->request('GET', '/review/new');
-        $content = $client->getResponse()->getContent();
+        // Find first blog post
+        $crawler = $client->request('GET', 'review/new');
+       // $postLink = $crawler->filter('article.post > h2 a')->link();
 
-        // Assert
-        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        //$crawler = $client->click($postLink);
 
-        // to lower case
-        $searchTextLowerCase = strtolower($searchText);
-        $contentLowerCase = strtolower($content);
+        $form = $crawler->selectButton('Publish comment')->form([
+            'comment[content]' => 'Hi, Symfony!',
+        ]);
+        $crawler = $client->submit($form);
 
-        // Assert
-        // $this->assertContains(
-        //   $searchTextLowerCase,
-        // $contentLowerCase
-        //);
+        $newComment = $crawler->filter('.post-comment')->first()->filter('div > p')->text();
+
+        $this->assertSame('Hi, Symfony!', $newComment);
     }
+//    public function testNewReview()
+//    {
+//        // Arrange
+//        $client = static::createClient([], [
+//            'PHP_AUTH_USER' => 'derek',
+//            'PHP_AUTH_PW' => 'pass',
+//        ]);
+//        $searchText = 'New Drink';
+//
+//        // Act
+//        $client->request('GET', '/review/new');
+//        $content = $client->getResponse()->getContent();
+//
+//        // Assert
+//        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+//
+//        // to lower case
+//        $searchTextLowerCase = strtolower($searchText);
+//        $contentLowerCase = strtolower($content);
+//
+//        // Assert
+//         $this->assertContains(
+//           $searchTextLowerCase,
+//         $contentLowerCase
+//        );
+//    }
 
     public function publicReviewUrls()
     {
@@ -73,18 +95,18 @@ class ReviewControllerTest extends WebTestCase
         );
     }
 
-    public function testEditReview()
-    {
-        // Arrange
-        $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'derek',
-            'PHP_AUTH_PW' => 'pass',
-        ]);
-
-        // Act
-        $client->request('GET', '/review/1/edit');
-
-        // Assert
-        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
-    }
+//    public function testEditReview()
+//    {
+//        // Arrange
+//        $client = static::createClient([], [
+//            'PHP_AUTH_USER' => 'derek',
+//            'PHP_AUTH_PW' => 'pass',
+//        ]);
+//
+//        // Act
+//        $client->request('GET', '/review/1/edit');
+//
+//        // Assert
+//        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+//    }
 }

@@ -54,10 +54,9 @@ class Recipe
      */
     private $price;
     /**
-     * @var User
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $author;
     /**
@@ -227,9 +226,9 @@ class Recipe
     }
 
     /**
-     * @return mixed
+     * @return User|null
      */
-    public function getAuthor(): User
+    public function getAuthor(): ?User
     {
         return $this->author;
     }

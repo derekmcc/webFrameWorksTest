@@ -188,7 +188,7 @@ class RecipeController extends Controller
     /**
      * @param Recipe $recipe
      * @Route("/{id}/reject", requirements={"id" = "\d+"}, name="reject_recipe")
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('ROLE_ADMIN')")
      * @return RedirectResponse
      */
     public function rejectPublicRequest(Recipe $recipe)

@@ -25,10 +25,9 @@ class Review
     private $id;
 
     /**
-     * @var User
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $author;
 
@@ -69,7 +68,7 @@ class Review
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="voter")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $votes;
 
@@ -126,9 +125,9 @@ class Review
     }
 
     /**
-     * @return mixed
+     * @return Author|null
      */
-    public function getAuthor(): User
+    public function getAuthor(): ?User
     {
         return $this->author;
     }

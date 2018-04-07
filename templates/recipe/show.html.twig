@@ -19,7 +19,13 @@
                 <p class="lead"><b>Ingredients: </b>{{ recipe.ingredients }}</p>
             </div>
             <div class="row">
-                <p class="lead"><b>Author: </b>{{ recipe.author.firstName}} {{ recipe.author.surname}}</p>
+                <p class="lead">
+                    {% if recipe.author != null %}
+                        <b>Author: </b>{{ recipe.author.firstName}} {{ recipe.author.surname}}
+                    {% else %}
+                        <b>Author: </b>Unknown
+                    {% endif %}
+                </p>
             </div>
             <div class="row">
                 {% if (recipe.isPublic) %}
@@ -81,7 +87,13 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6">
-                        <p class="lead"><b> <i class="fas fa-user"></i>  {{ review.author.firstName}} {{ review.author.surname}}</b></p>
+                        {% if review.author != null %}
+                            <p class="lead"><b> <i class="fas fa-user"></i>  {{ review.author.firstName}} {{ review.author.surname}}</b></p>
+                        {% else %}
+                            {{ path('recipe_delete', {'id': recipe.id}) }}
+                            <b>Author: </b>Unknown
+                        {% endif %}
+
                     </div>
                     <div class="col-lg-6">
                         <p class="lead"><b><i class="fas fa-calendar-alt"></i>  {{ review.publishedAt ? review.publishedAt|date('Y-m-d') : '' }}</b></p>

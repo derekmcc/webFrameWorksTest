@@ -148,6 +148,7 @@ class ReviewController extends Controller
     /**
      * @param Review $review
      * @Route("/{id}/publish", requirements={"id" = "\d+"}, name="publish_review")
+     * @Security("has_role('ROLE_ADMIN')")
      * @return RedirectResponse
      */
     public function setRecipeToPublic(Review $review)
@@ -162,6 +163,7 @@ class ReviewController extends Controller
     /**
      * @param Review $review
      * @Route("/{id}/reject", requirements={"id" = "\d+"}, name="reject_review")
+     * @Security("has_role('ROLE_ADMIN')")
      * @return RedirectResponse
      */
     public function rejectPublicRequest(Review $review)
@@ -176,6 +178,7 @@ class ReviewController extends Controller
     /**
      * @param Review $review
      * @Route("/{id}/request", requirements={"id" = "\d+"}, name="request_publish")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @return RedirectResponse
      */
     public function setMakeRequestPublic(Review $review)
@@ -190,6 +193,7 @@ class ReviewController extends Controller
     /**
      * @param Review $review
      * @Route("/{id}/upVote", requirements={"id" = "\d+"}, name="upVote")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @return RedirectResponse
      */
     public function upVoteReview(Review $review)
@@ -206,6 +210,7 @@ class ReviewController extends Controller
     /**
      * @param Review $review
      * @Route("/{id}/downVote", requirements={"id" = "\d+"}, name="downVote")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @return RedirectResponse
      */
     public function downVoteReview(Review $review)

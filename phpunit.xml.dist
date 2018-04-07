@@ -58,7 +58,7 @@
         <log type="junit" target="./build/logfile.xml"/>
         <log type="testdox-html" target="./build/testdox.html"/>
         <log type="testdox-text" target="./build/testdox.txt"/>
-        <log type="coverage-html" target="./build/report"/>
+        <!--log type="coverage-html" target="./build/report"/-->
     </logging>
 
 </phpunit>

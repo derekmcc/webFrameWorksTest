@@ -29,7 +29,9 @@
             <a href="{{ url('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
         {% else %}
             <a href="{{ url('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a>
+            <a href="{{ path('user_new')}}"><i class="fas fa-user-plus"></i> Signup</a>
         {% endif %}
+
     </header>
     <nav class="navbar navbar-expand-lg navbar-light navbar-bg mb-5">
         <a style="margin-left: 75px;" class="navbar-brand space-brand" href="/">Rum Reviews</a>
@@ -40,26 +42,25 @@
                     <a class="nav-link" href="{{ url('recipe_index') }}"><i class="fas fa-glass-martini"></i> Drinks</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('user_index') }}"><i class="fas fa-user-circle"></i> Users</a>
+
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('review_index') }}"><i class="fas fa-pencil-alt"></i> Reviews</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('user_account') }}">User Account</a>
-                </li>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('user_account') }}"><i class="fas fa-user-circle"></i> User Account</a>
+                    </li>
+                {% endif %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-lock-open"></i> Admin
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="nav-link" href="{{ url('product_index') }}">Drinks</a>
-                        <a class="nav-link" href="{{ url('category_index') }}">Category</a>
-                        <a class="nav-link" href="{{ url('recipe_index') }}">Recipes</a>
-                        <a class="nav-link" href="{{ url('review_index') }}">Reviews</a>
-                    </div>
                 </li>
                 {% if is_granted('ROLE_ADMIN') %}
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="nav-link" href="{{ url('user_index') }}"> Users</a>
+                    </div>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('admin') }}">Admin</a>
                     </li>

@@ -33,3 +33,12 @@
     <a href="{{ path('category_new') }}">Create new</a>
 
 {% endblock %}
+
+    <td>{{ drink.ingredients }}</td>
+    <td>{{ drink.comment }}</td>
+    {% for review in drink.reviews %}
+        <td>{{ review.author }}<td>
+        <td>{{ review.id }}</td>
+        <td>{{ review.summary }}</td>
+        //etc......
+    {% endfor %}

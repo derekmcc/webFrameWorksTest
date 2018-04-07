@@ -75,7 +75,7 @@ class RecipeRepository extends ServiceEntityRepository
             ->createQuery("
                 SELECT r
                 FROM App:Recipe r 
-                ORDER BY r.publishedAt ASC 
+                ORDER BY r.publishedAt DESC
             ")
         ;
 
@@ -89,7 +89,7 @@ class RecipeRepository extends ServiceEntityRepository
                 SELECT r
                 FROM App:Recipe r
                 WHERE r.isPublic = TRUE
-                ORDER BY r.publishedAt ASC
+                ORDER BY r.publishedAt DESC
             ")
         ;
         return $this->createPaginator($query, $page);
@@ -103,7 +103,7 @@ class RecipeRepository extends ServiceEntityRepository
                 FROM App:Recipe r
                 WHERE r.author = '{$user->getId()}'
                 OR r.isPublic = true
-                ORDER BY r.publishedAt ASC
+                ORDER BY r.publishedAt DESC
             ")
         ;
         return $this->createPaginator($query, $page);
@@ -116,6 +116,19 @@ class RecipeRepository extends ServiceEntityRepository
         $paginator->setCurrentPage($page);
 
         return $paginator;
+    }
+
+    public function findRecipesByAuthorToDelete($user)
+    {
+
+        return $this->getEntityManager()
+            ->createQuery("
+                SELECT r 
+                FROM App:Recipe r
+                WHERE r.author = '{$user->getId()}'
+            ")
+        ;
+
     }
     /*
     public function findLatest(int $page = 1): Pagerfanta
@@ -142,17 +155,15 @@ class RecipeRepository extends ServiceEntityRepository
         $paginator->setCurrentPage($page);
 
         return $paginator;
-    }
-    /*
+    }*/
+
     public function findBySomething($value)
     {
         return $this->createQueryBuilder('r')
-            ->where('r.something = :value')->setParameter('value', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
+            ->where('r.author = :value')->setParameter('value', $value)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 }
