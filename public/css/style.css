@@ -57,3 +57,6 @@ body#blog_search .post-metadata {
 .jumbotron {
    background-color: #c7ddef;
 }
+footer {
+    padding: 25px;
+}

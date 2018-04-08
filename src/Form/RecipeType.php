@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 class RecipeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -38,7 +38,10 @@ class RecipeType extends AbstractType
                     'Over €40' => 'Over €40',
                     ),
             ))
-            ->add('requestRecipePublic')
+            ->add('requestRecipePublic', CheckboxType::class, array(
+                'label'    => 'Request this dink br made public?',
+                'required' => false,
+            ))
         ;
     }
 

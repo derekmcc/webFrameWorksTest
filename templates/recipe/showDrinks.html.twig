@@ -1,9 +1,22 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Drinks Index{% endblock %}
-
+{% block javascripts %}
+    $('.input-daterange input').each(function() {
+    $(this).datepicker('clearDates');
+    });
+{% endblock %}
 
 {% block body %}
+    <form action="{{ path('recipe_daterange') }}" method="get">
+    <div class="input-group input-daterange">
+
+        <input type="date" class="form-control" value="2012-04-05">
+        <div class="input-group-addon">to</div>
+        <input type="date" class="form-control" value="2012-04-19">
+
+    </div>
+    </form>
     {% set counter = 0 %}
     <div class="container">
         <div class="row">

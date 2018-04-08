@@ -3,20 +3,19 @@
 
     {{ form_widget(form) }}
 
-
     Reviews for this Drink:
     <ul>
         {% for review in form.vars.value.reviews %}
             <li>
                 <a href="{{ url('review_show', {'id':review.id}) }}">
-                    {{ review.id }} :: {{ review.author.username }}
+                    Rating {{ review.id }} By {{ review.author.username }}
                 </a>
             </li>
         {% else %}
             <li>
-                (no reviews for this drink)
+                No reviews for this drink
             </li>
         {% endfor %}
     </ul>
-    <button>{{ button_label|default('Save') }}</button>
+    <button class="btn btn-outline-success">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

@@ -99,43 +99,6 @@
             {% endif %}
         {% endfor %}
     </div>
-    <h1>Recipe index</h1>
-    <table>
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Author</th>
-            <th>Public</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for recipe in recipes %}
-            {% if (is_granted('IS_AUTHENTICATED_FULLY')) and (is_granted('ROLE_ADMIN')) or (recipe.isPublic == true) or (is_granted('IS_AUTHENTICATED_FULLY')) and (recipe.author.username == app.user.username) %}
-                <tr>
-                    <td>{{ recipe.id }}</td>
-
-                        <td>{{ recipe.author.username }}</td>
-
-                    <td>{{ recipe.isPublic }}</td>
-                    <td>
-                        {% for review in recipe.reviews %}
-                            {% if (is_granted('ROLE_ADMIN')) or (recipe.isPublic == false) %}
-                                <a href="{{ url('review_show', {'id':review.id}) }}">
-                                    {% if review.author != null %}
-                                        By {{ review.author.firstName }}  {{ review.author.surname }}
-                                    {% else %}
-                                        By Unknown
-                                    {% endif %}
-                                </a>
-                            {% endif %}
-                        {% else %}
-                            (no reviews for this drink)
-                        {% endfor %}</td>
-                </tr>
-            {% endif %}
-        {% endfor %}
-        </tbody>
-    </table>
     {% if recipes.haveToPaginate %}
         <div class="navigation text-center">
             {{ pagerfanta(recipes, 'twitter_bootstrap4', {routeName: 'recipe_paginated'}) }}
