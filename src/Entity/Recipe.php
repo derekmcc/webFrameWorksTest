@@ -53,10 +53,11 @@ class Recipe
      * @ORM\Column(type="string")
      */
     private $price;
+
     /**
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="recipeAuthor")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $author;
     /**
@@ -236,7 +237,7 @@ class Recipe
     /**
      * @param mixed $author
      */
-    public function setAuthor($author): void
+    public function setAuthor(User $author)
     {
         $this->author = $author;
     }

@@ -113,11 +113,9 @@
             {% if (is_granted('IS_AUTHENTICATED_FULLY')) and (is_granted('ROLE_ADMIN')) or (recipe.isPublic == true) or (is_granted('IS_AUTHENTICATED_FULLY')) and (recipe.author.username == app.user.username) %}
                 <tr>
                     <td>{{ recipe.id }}</td>
-                    {% if recipe.author != null %}
+
                         <td>{{ recipe.author.username }}</td>
-                    {% else %}
-                        <td>Unknown Author</td>
-                    {% endif %}
+
                     <td>{{ recipe.isPublic }}</td>
                     <td>
                         {% for review in recipe.reviews %}

@@ -19,13 +19,7 @@
                 <p class="lead"><b>Ingredients: </b>{{ recipe.ingredients }}</p>
             </div>
             <div class="row">
-                <p class="lead">
-                    {% if recipe.author != null %}
-                        <b>Author: </b>{{ recipe.author.firstName}} {{ recipe.author.surname}}
-                    {% else %}
-                        <b>Author: </b>Unknown
-                    {% endif %}
-                </p>
+                <p class="lead"><b>Author: </b>{{ recipe.author.firstName}} {{ recipe.author.surname}}</p>
             </div>
             <div class="row">
                 {% if (recipe.isPublic) %}

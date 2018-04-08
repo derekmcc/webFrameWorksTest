@@ -26,8 +26,8 @@ class Review
 
     /**
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reviewAuthor")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $author;
 
@@ -125,7 +125,7 @@ class Review
     }
 
     /**
-     * @return Author|null
+     * @return User|null
      */
     public function getAuthor(): ?User
     {
@@ -135,7 +135,7 @@ class Review
     /**
      * @param mixed $author
      */
-    public function setAuthor(User $author): void
+    public function setAuthor(User $author)
     {
         $this->author = $author;
     }

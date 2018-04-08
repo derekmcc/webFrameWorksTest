@@ -82,6 +82,30 @@ class User implements UserInterface, \Serializable
      */
     private $voter;
 
+    /**
+     * @var Review[]|ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="Review",
+     *      mappedBy="author",
+     *      orphanRemoval=true,
+     *      cascade={"persist"}
+     * )
+     */
+    private $reviewAuthor;
+
+    /**
+     * @var Recipe[]|ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="Recipe",
+     *      mappedBy="author",
+     *      orphanRemoval=true,
+     *      cascade={"persist"}
+     * )
+     */
+    private $recipeAuthor;
+
     public function getSalt()
     {
         // no salt needed since we are using bcrypt

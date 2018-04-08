@@ -10,8 +10,19 @@ App\Tests\Controller\DefaultController
 App\Tests\Controller\ErrorController
  [x] Error response okay
 
+App\Tests\Controller\RecipeController
+ [x] Recipe public urls 
+ [x] Edit recipe
+ [x] New recipe
+ [x] Admin home page
+
 App\Controller\Test\ReviewController
  [x] Review public urls 
+ [x] New review
+ [x] Edit review
+
+App\Tests\Form\RecipeType
+ [ ] Set values and submit form in one go
 
 App\Test\Simple
  [x] One plus one equals two
