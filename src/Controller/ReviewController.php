@@ -151,7 +151,7 @@ class ReviewController extends Controller
      * @Security("has_role('ROLE_ADMIN')")
      * @return RedirectResponse
      */
-    public function setRecipeToPublic(Review $review)
+    public function setReviewToPublic(Review $review)
     {
         $review->setIsPublicReview(true);
         $em = $this->getDoctrine()->getManager();

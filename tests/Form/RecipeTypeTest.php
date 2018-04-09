@@ -5,7 +5,7 @@ namespace App\Tests\Form;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
-
+use App\Entity\Recipe;
 class RecipeTypeTest extends WebTestCase
 {
     public function testSetValuesAndSubmitFormInOneGo()
@@ -17,14 +17,15 @@ class RecipeTypeTest extends WebTestCase
             'PHP_AUTH_USER' => 'derek',
             'PHP_AUTH_PW' => 'pass',
         ]);
-        $title = 'Bacardi';
+
+        $title = 'Bacardi Añejo';
+       // $title = 'Tester';
         $image = 'image.jpeg';
         $description = 'Rum';
-        $summary = 'New rum';
+        $summary = 'Ubi est audax amicitia.';
         $ingredients = 'ingredients, etc';
-        $price = 10-20;
+        $price = '€11-20';
         $requestPublic = false;
-
         $buttonName = 'Save';
 
         // Act
@@ -35,19 +36,33 @@ class RecipeTypeTest extends WebTestCase
 
         // submit the form with data
         $client->submit($form, [
-            'recipe_title'  => $title,
-            'recipe_image'  => $image,
-            'recipe_summary'  => $summary,
-            'recipe_description'  => $description,
-            'recipe_ingredients'  => $ingredients,
-            'recipe_price'  => $price,
-            'recipe_requestRecipePublic'  => $requestPublic,
+            'recipe[title]'  => $title,
+            'recipe[image]'  => $image,
+            'recipe[summary]'  => $summary,
+            'recipe[description]'  => $description,
+            'recipe[ingredients]'  => $ingredients,
+            'recipe[price]'  => $price,
+            'recipe[requestRecipePublic]'  => $requestPublic,
         ]);
 
-        $content = $client->getResponse()->getContent();
+       // $content = $client->getResponse()->getContent();
+        //$client->followRedirect();
+        $crawler = $client->getResponse();
 
         // Assert
         $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+       // $this->assertSame('/recipe/index', $client->getResponse()->getStatusCode());
 
+        $recipe = $client->getContainer()->get('doctrine')->getRepository(Recipe::class)->findOneBy([
+            'title' => $title,
+        ]);
+
+        $this->assertNotNull($recipe);
+        $this->assertSame($summary, $recipe->getSummary());
+//        $this->assertSame($image, $recipe->getImage());
+//        $this->assertSame($description, $recipe->getDescription());
+//        $this->assertSame($ingredients, $recipe->getIngredients());
+//        $this->assertSame($price, $recipe->getPrice());
+//        $this->assertSame($requestPublic, $recipe->getRequestIsPublic());
     }
 }

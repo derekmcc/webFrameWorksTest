@@ -41,10 +41,13 @@ class UserController extends Controller
      */
     public function userAccount()
     {
-
+        $recipes= $this->getDoctrine()
+            ->getRepository(Recipe::class)
+            ->findAll();
         $user = $this->getUser();
         return $this->render('user/show.html.twig', [
             'user' => $user,
+            'recipes' => $recipes,
         ]);
 
     }

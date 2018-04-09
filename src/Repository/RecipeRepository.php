@@ -109,6 +109,21 @@ class RecipeRepository extends ServiceEntityRepository
         return $this->createPaginator($query, $page);
     }
 
+    public function findRecipesByDate(int $page = 1, $date1, $date2): Pagerfanta
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("
+                SELECT r
+                FROM App:Recipe r
+                WHERE r.date = '{$date1}'
+                AND r.date = '{$date2}'
+                OR r.isPublic = true
+                ORDER BY r.publishedAt DESC
+            ")
+        ;
+        return $this->createPaginator($query, $page);
+    }
+
     private function createPaginator(Query $query, int $page): Pagerfanta
     {
         $paginator = new Pagerfanta(new DoctrineORMAdapter($query));

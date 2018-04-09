@@ -8,12 +8,15 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\Recipe;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 class RecipeControllerTest extends WebTestCase
 {
     private $client = null;
+    const ID = '1';
 
     public function setUp()
     {
@@ -55,22 +58,32 @@ class RecipeControllerTest extends WebTestCase
     {
         return array(
             ['/recipe/'],
-            ['/recipe/showRecipe'],
         );
     }
+    public function userNameAndPasswords()
+    {
+        return [
+            ['derek' , 'pass'],
+            ['joe_user', 'pass']
+        ];
+    }
 
-    public function testEditRecipe()
+    /**
+     * @dataProvider userNameAndPasswords
+     */
+    public function testRecipeMembersUrls($name, $pass)
     {
         // Arrange
         $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'derek',
-            'PHP_AUTH_PW' => 'pass',
+            'PHP_AUTH_USER' => $name,
+            'PHP_AUTH_PW' => $pass,
         ]);
-        $searchText = 'Edit Drink';
+        $crawler = $this->client->getResponse();
+        $searchText = 'Drinks Index';
 
 
         // Act
-        $client->request('GET', '/recipe/1/edit');
+        $client->request('GET', '/recipe/');
         $content = $client->getResponse()->getContent();
 
         // Assert
@@ -87,6 +100,34 @@ class RecipeControllerTest extends WebTestCase
         );
     }
 
+//    public function testEditRecipe()
+//    {
+//        // Arrange
+//        $client = static::createClient([], [
+//            'PHP_AUTH_USER' => 'derek',
+//            'PHP_AUTH_PW' => 'pass',
+//        ]);
+//        $searchText = 'Edit Drink';
+//
+//
+//        // Act
+//        $client->request('GET', '/recipe/1/edit');
+//        $content = $client->getResponse()->getContent();
+//
+//        // Assert
+//        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+//
+//        // to lower case
+//        $searchTextLowerCase = strtolower($searchText);
+//        $contentLowerCase = strtolower($content);
+//
+//        // Assert
+//        $this->assertContains(
+//            $searchTextLowerCase,
+//            $contentLowerCase
+//        );
+//    }
+
     public function testNewRecipe()
     {
         // Arrange
@@ -100,6 +141,13 @@ class RecipeControllerTest extends WebTestCase
         // Act
         $client->request('GET', '/recipe/new');
         $content = $client->getResponse()->getContent();
+        $te = 'afd';
+        $recipe = new Recipe();
+        $file = $recipe->getImage();
+        $recipe->setImage($file);
+        $recipe->setIsPublic(false);
+
+        //$client->followRedirect();
 
         // Assert
         $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
@@ -130,56 +178,134 @@ class RecipeControllerTest extends WebTestCase
         $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
 
+    public function testShowRecipePage()
+    {
+        // Arrange
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'derek',
+            'PHP_AUTH_PW' => 'pass',
+        ]);
+
+        $this->expectException(NotFoundHttpException::class);
+
+        // Act
+        $client->request('GET', '/recipe/0');
+
+        // Assert
+        $this->fail("Expected exception {NotFoundHttpException::class}");
+    }
+
     /**
-     * @param $url
-     * @param $exepctedLowercaseText
-     * @dataProvider basicPagesTextProvider
+     * @dataProvider requestDataProvider
      */
-    /*  public function testListRecipesResponseOkay($url, $exepctedLowercaseText)
-      {
-          //Arrange
-          $httpMethod = 'GET';
-          $client = static::createClient();
+    public function testRecipeRequests($url)
+    {
+        // Arrange
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'derek',
+            'PHP_AUTH_PW' => 'pass',
+        ]);
 
-          //Act
-          $client->request($httpMethod, $url);
-          $content = $client->getResponse()->getContent();
-          $statusCode = $client->getResponse()->getStatusCode();
+        // Act
+        $client->request('GET', $url);
+        $client->followRedirect();
+        // Assert
+        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+    }
 
-          //to lower case
-          $contentLowerCase = strtolower($content);
+    public function requestDataProvider()
+    {
+        return [
+            ['/recipe/' .self::ID . '/request'],
+            ['/recipe/' .self::ID . '/reject'],
+            ['/recipe/' .self::ID . '/publish'],
+        ];
+    }
+    public function recipeDataProvider()
+    {
+        return [
+          ['/recipe/', 'Drinks Index'],
+          ['/recipe/' . self::ID . '/edit', 'Edit Drink'],
+          ['/recipe/' . self::ID, 'Price Range'],
+        ];
+    }
 
-          //Assert - status code 200
-         // $this->assertSame(Response::HTTP_OK, $statusCode);
-
-          // Assert - expected content
-          $this->assertContains( $exepctedLowercaseText, $contentLowerCase
-          );
-      }
-      public function basicPagesTextProvider()
-      {
-          return [
-              ['/recipe/showRecipe/', 'Recipe Index'],
-             // ['//recipe/1/show', 'about'],
-          ];
-      }
+    /**
+     * @dataProvider recipeDataProvider
+     */
+    public function testRecipeLinksWithAdmin($url, $text)
+    {
+        // Arrange
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'derek',
+            'PHP_AUTH_PW' => 'pass',
+        ]);
+        $searchText = $text;
 
 
+        // Act
+        $client->request('GET', $url);
+        $content = $client->getResponse()->getContent();
 
-      public function testListStudentsHeadingOkay()
-      {
-          // Arrange
-  //        $crawler = $this->client->request('GET', '/student');
-          $this->client->request('GET', '/recipe');
+        // Assert
+        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+
+        // to lower case
+        $searchTextLowerCase = strtolower($searchText);
+        $contentLowerCase = strtolower($content);
+
+        // Assert
+        $this->assertContains(
+            $searchTextLowerCase,
+            $contentLowerCase
+        );
+    }
+
+    /**
+     * @dataProvider recipeDataProvider
+     */
+    public function testRecipeLinksWithUser($url, $text)
+    {
+        // Arrange
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'joe_user',
+            'PHP_AUTH_PW' => 'pass',
+        ]);
+        $searchText = $text;
 
 
-          // needle - what we are searching for (as in a haystack!)
-          $needle = 'Recipe index';
+        // Act
+        $client->request('GET', $url);
+        $content = $client->getResponse()->getContent();
 
-          // Act
-          $content = $this->client->getResponse()->getContent();
+        // Assert
+        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
 
-          // Assert
-          $this->assertContains($needle, $content);
-      }*/
+        // to lower case
+        $searchTextLowerCase = strtolower($searchText);
+        $contentLowerCase = strtolower($content);
+
+        // Assert
+        $this->assertContains(
+            $searchTextLowerCase,
+            $contentLowerCase
+        );
+    }
+
+    public function testRecipeDelete()
+    {
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'derek',
+            'PHP_AUTH_PW' => 'pass',
+        ]);
+        $crawler = $client->request('GET', '/recipe/' . self::ID);
+        $client->submit($crawler->filter('#delete')->form());
+
+        $this->assertSame(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
+
+        $post = $client->getContainer()->get('doctrine')->getRepository(Recipe::class)->find(1);
+        $this->assertNull($post);
+        $client->followRedirect();
+        $this->assertSame(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
+    }
 }

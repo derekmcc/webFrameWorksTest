@@ -1,6 +1,6 @@
 App\Tests\Controller\AdminController
  [x] Can create object
- [x] Access for admin users 
+ [ ] Access for admin users 
 
 App\Tests\Controller\DefaultController
  [x] Homepage response code okay
@@ -11,15 +11,20 @@ App\Tests\Controller\ErrorController
  [x] Error response okay
 
 App\Tests\Controller\RecipeController
- [x] Recipe public urls 
- [x] Edit recipe
- [x] New recipe
- [x] Admin home page
+ [ ] Recipe public urls 
+ [ ] Recipe members urls 
+ [ ] New recipe
+ [ ] Admin home page
+ [ ] Show recipe page
+ [ ] Recipe requests 
+ [ ] Recipe links with admin 
+ [ ] Recipe links with user 
+ [ ] Recipe delete
 
 App\Controller\Test\ReviewController
- [x] Review public urls 
- [x] New review
- [x] Edit review
+ [ ] Review public urls 
+ [ ] New review
+ [ ] Edit review
 
 App\Tests\Form\RecipeType
  [ ] Set values and submit form in one go

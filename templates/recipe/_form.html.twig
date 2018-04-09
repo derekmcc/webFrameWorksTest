@@ -8,7 +8,7 @@
         {% for review in form.vars.value.reviews %}
             <li>
                 <a href="{{ url('review_show', {'id':review.id}) }}">
-                    Rating {{ review.id }} By {{ review.author.username }}
+                    Rating {{ review.stars }} By {{ review.author.firstName }} {{ review.author.surname }}
                 </a>
             </li>
         {% else %}

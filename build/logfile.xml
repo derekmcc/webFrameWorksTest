@@ -1,55 +1,192 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="Project Test Suite" tests="16" assertions="23" errors="1" failures="0" skipped="0" time="5.667074">
-    <testsuite name="App\Tests\Controller\AdminControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\AdminControllerTest.php" tests="2" assertions="3" errors="0" failures="0" skipped="0" time="0.862415">
-      <testcase name="testCanCreateObject" class="App\Tests\Controller\AdminControllerTest" classname="App.Tests.Controller.AdminControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\AdminControllerTest.php" line="25" assertions="1" time="0.100236"/>
-      <testsuite name="App\Tests\Controller\AdminControllerTest::testAccessForAdminUsers" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.762179">
-        <testcase name="testAccessForAdminUsers with data set #0" class="App\Tests\Controller\AdminControllerTest" classname="App.Tests.Controller.AdminControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\AdminControllerTest.php" line="58" assertions="2" time="0.762179"/>
-      </testsuite>
-    </testsuite>
-    <testsuite name="App\Tests\Controller\DefaultControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\DefaultControllerTest.php" tests="3" assertions="5" errors="0" failures="0" skipped="0" time="0.189944">
-      <testcase name="testHomepageResponseCodeOkay" class="App\Tests\Controller\DefaultControllerTest" classname="App.Tests.Controller.DefaultControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\DefaultControllerTest.php" line="16" assertions="1" time="0.081785"/>
-      <testsuite name="App\Tests\Controller\DefaultControllerTest::testSecureUrls" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.065165">
-        <testcase name="testSecureUrls with data set #0" class="App\Tests\Controller\DefaultControllerTest" classname="App.Tests.Controller.DefaultControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\DefaultControllerTest.php" line="39" assertions="2" time="0.065165"/>
-      </testsuite>
-      <testsuite name="App\Tests\Controller\DefaultControllerTest::testPublicUrls" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.042994">
-        <testcase name="testPublicUrls with data set #0" class="App\Tests\Controller\DefaultControllerTest" classname="App.Tests.Controller.DefaultControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\DefaultControllerTest.php" line="60" assertions="2" time="0.042994"/>
-      </testsuite>
-    </testsuite>
-    <testsuite name="App\Tests\Controller\ErrorControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ErrorControllerTest.php" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.046247">
-      <testcase name="testErrorResponseOkay" class="App\Tests\Controller\ErrorControllerTest" classname="App.Tests.Controller.ErrorControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ErrorControllerTest.php" line="23" assertions="2" time="0.046247"/>
-    </testsuite>
-    <testsuite name="App\Tests\Controller\RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" tests="5" assertions="8" errors="0" failures="0" skipped="0" time="2.381371">
-      <testsuite name="App\Tests\Controller\RecipeControllerTest::testRecipePublicUrls" tests="2" assertions="4" errors="0" failures="0" skipped="0" time="0.314534">
-        <testcase name="testRecipePublicUrls with data set #0" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="25" assertions="2" time="0.166930"/>
-        <testcase name="testRecipePublicUrls with data set #1" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="25" assertions="2" time="0.147604"/>
-      </testsuite>
-      <testcase name="testEditRecipe" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="62" assertions="2" time="0.723680"/>
-      <testcase name="testNewRecipe" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="90" assertions="1" time="0.700052"/>
-      <testcase name="testAdminHomePage" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="118" assertions="1" time="0.643105"/>
-    </testsuite>
-    <testsuite name="App\Controller\Test\ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" tests="3" assertions="4" errors="0" failures="0" skipped="0" time="1.516816">
-      <testsuite name="App\Controller\Test\ReviewControllerTest::testReviewPublicUrls" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.105233">
-        <testcase name="testReviewPublicUrls with data set #0" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="26" assertions="1" time="0.105233"/>
-      </testsuite>
-      <testcase name="testNewReview" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="64" assertions="2" time="0.711377"/>
-      <testcase name="testEditReview" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="98" assertions="1" time="0.700206"/>
-    </testsuite>
-    <testsuite name="App\Tests\Form\RecipeTypeTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Form\RecipeTypeTest.php" tests="1" assertions="0" errors="1" failures="0" skipped="0" time="0.670148">
-      <testcase name="testSetValuesAndSubmitFormInOneGo" class="App\Tests\Form\RecipeTypeTest" classname="App.Tests.Form.RecipeTypeTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Form\RecipeTypeTest.php" line="11" assertions="0" time="0.670148">
-        <error type="InvalidArgumentException">App\Tests\Form\RecipeTypeTest::testSetValuesAndSubmitFormInOneGo
-InvalidArgumentException: Unreachable field "recipe_title"
+  <testsuite name="Project Test Suite" tests="27" assertions="28" errors="2" failures="19" skipped="0" time="22.510082">
+    <testsuite name="App\Tests\Controller\AdminControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\AdminControllerTest.php" tests="2" assertions="2" errors="0" failures="1" skipped="0" time="0.762144">
+      <testcase name="testCanCreateObject" class="App\Tests\Controller\AdminControllerTest" classname="App.Tests.Controller.AdminControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\AdminControllerTest.php" line="25" assertions="1" time="0.198031"/>
+      <testsuite name="App\Tests\Controller\AdminControllerTest::testAccessForAdminUsers" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="0.564113">
+        <testcase name="testAccessForAdminUsers with data set #0" class="App\Tests\Controller\AdminControllerTest" classname="App.Tests.Controller.AdminControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\AdminControllerTest.php" line="58" assertions="1" time="0.564113">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">App\Tests\Controller\AdminControllerTest::testAccessForAdminUsers with data set #0 ('GET', '/admin')
+Failed asserting that 302 is identical to 200.
 
-C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\vendor\symfony\dom-crawler\FormFieldRegistry.php:84
-C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\vendor\symfony\dom-crawler\FormFieldRegistry.php:120
-C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\vendor\symfony\dom-crawler\Form.php:75
-C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\vendor\symfony\browser-kit\Client.php:257
-C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Form\RecipeTypeTest.php:44
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\AdminControllerTest.php:76
+</failure>
+        </testcase>
+      </testsuite>
+    </testsuite>
+    <testsuite name="App\Tests\Controller\DefaultControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\DefaultControllerTest.php" tests="3" assertions="5" errors="0" failures="0" skipped="0" time="1.099473">
+      <testcase name="testHomepageResponseCodeOkay" class="App\Tests\Controller\DefaultControllerTest" classname="App.Tests.Controller.DefaultControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\DefaultControllerTest.php" line="16" assertions="1" time="0.392513"/>
+      <testsuite name="App\Tests\Controller\DefaultControllerTest::testSecureUrls" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.399341">
+        <testcase name="testSecureUrls with data set #0" class="App\Tests\Controller\DefaultControllerTest" classname="App.Tests.Controller.DefaultControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\DefaultControllerTest.php" line="39" assertions="2" time="0.399341"/>
+      </testsuite>
+      <testsuite name="App\Tests\Controller\DefaultControllerTest::testPublicUrls" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.307619">
+        <testcase name="testPublicUrls with data set #0" class="App\Tests\Controller\DefaultControllerTest" classname="App.Tests.Controller.DefaultControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\DefaultControllerTest.php" line="60" assertions="2" time="0.307619"/>
+      </testsuite>
+    </testsuite>
+    <testsuite name="App\Tests\Controller\ErrorControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ErrorControllerTest.php" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.313988">
+      <testcase name="testErrorResponseOkay" class="App\Tests\Controller\ErrorControllerTest" classname="App.Tests.Controller.ErrorControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ErrorControllerTest.php" line="23" assertions="2" time="0.313988"/>
+    </testsuite>
+    <testsuite name="App\Tests\Controller\RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" tests="16" assertions="15" errors="1" failures="15" skipped="0" time="13.120827">
+      <testsuite name="App\Tests\Controller\RecipeControllerTest::testRecipePublicUrls" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="5.435252">
+        <testcase name="testRecipePublicUrls with data set #0" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="29" assertions="1" time="5.435252">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">App\Tests\Controller\RecipeControllerTest::testRecipePublicUrls with data set #0 ('/recipe/')
+Failed asserting that 500 is identical to 200.
+
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php:48
+</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="App\Tests\Controller\RecipeControllerTest::testRecipeMembersUrls" tests="2" assertions="2" errors="0" failures="2" skipped="0" time="0.747658">
+        <testcase name="testRecipeMembersUrls with data set #0" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="75" assertions="1" time="0.369938">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">App\Tests\Controller\RecipeControllerTest::testRecipeMembersUrls with data set #0 ('derek', 'pass')
+Failed asserting that 302 is identical to 200.
+
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php:91
+</failure>
+        </testcase>
+        <testcase name="testRecipeMembersUrls with data set #1" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="75" assertions="1" time="0.377720">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">App\Tests\Controller\RecipeControllerTest::testRecipeMembersUrls with data set #1 ('joe_user', 'pass')
+Failed asserting that 302 is identical to 200.
+
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php:91
+</failure>
+        </testcase>
+      </testsuite>
+      <testcase name="testNewRecipe" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="132" assertions="1" time="0.372965">
+        <failure type="PHPUnit\Framework\ExpectationFailedException">App\Tests\Controller\RecipeControllerTest::testNewRecipe
+Failed asserting that 302 is identical to 200.
+
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php:154
+</failure>
+      </testcase>
+      <testcase name="testAdminHomePage" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="167" assertions="1" time="0.395857">
+        <failure type="PHPUnit\Framework\ExpectationFailedException">App\Tests\Controller\RecipeControllerTest::testAdminHomePage
+Failed asserting that 302 is identical to 200.
+
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php:179
+</failure>
+      </testcase>
+      <testcase name="testShowRecipePage" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="182" assertions="1" time="0.383245">
+        <failure type="PHPUnit\Framework\AssertionFailedError">App\Tests\Controller\RecipeControllerTest::testShowRecipePage
+Expected exception {NotFoundHttpException::class}
+
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php:196
+</failure>
+      </testcase>
+      <testsuite name="App\Tests\Controller\RecipeControllerTest::testRecipeRequests" tests="3" assertions="3" errors="0" failures="3" skipped="0" time="2.022677">
+        <testcase name="testRecipeRequests with data set #0" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="202" assertions="1" time="0.665989">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">App\Tests\Controller\RecipeControllerTest::testRecipeRequests with data set #0 ('/recipe/1/request')
+Failed asserting that 302 is identical to 200.
+
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php:214
+</failure>
+        </testcase>
+        <testcase name="testRecipeRequests with data set #1" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="202" assertions="1" time="0.664349">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">App\Tests\Controller\RecipeControllerTest::testRecipeRequests with data set #1 ('/recipe/1/reject')
+Failed asserting that 302 is identical to 200.
+
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php:214
+</failure>
+        </testcase>
+        <testcase name="testRecipeRequests with data set #2" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="202" assertions="1" time="0.692339">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">App\Tests\Controller\RecipeControllerTest::testRecipeRequests with data set #2 ('/recipe/1/publish')
+Failed asserting that 302 is identical to 200.
+
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php:214
+</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="App\Tests\Controller\RecipeControllerTest::testRecipeLinksWithAdmin" tests="3" assertions="3" errors="0" failures="3" skipped="0" time="2.144554">
+        <testcase name="testRecipeLinksWithAdmin with data set #0" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="237" assertions="1" time="0.634955">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">App\Tests\Controller\RecipeControllerTest::testRecipeLinksWithAdmin with data set #0 ('/recipe/', 'Drinks Index')
+Failed asserting that 302 is identical to 200.
+
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php:252
+</failure>
+        </testcase>
+        <testcase name="testRecipeLinksWithAdmin with data set #1" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="237" assertions="1" time="0.763201">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">App\Tests\Controller\RecipeControllerTest::testRecipeLinksWithAdmin with data set #1 ('/recipe/1/edit', 'Edit Drink')
+Failed asserting that 302 is identical to 200.
+
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php:252
+</failure>
+        </testcase>
+        <testcase name="testRecipeLinksWithAdmin with data set #2" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="237" assertions="1" time="0.746398">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">App\Tests\Controller\RecipeControllerTest::testRecipeLinksWithAdmin with data set #2 ('/recipe/1', 'Price Range')
+Failed asserting that 302 is identical to 200.
+
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php:252
+</failure>
+        </testcase>
+      </testsuite>
+      <testsuite name="App\Tests\Controller\RecipeControllerTest::testRecipeLinksWithUser" tests="3" assertions="3" errors="0" failures="3" skipped="0" time="1.171119">
+        <testcase name="testRecipeLinksWithUser with data set #0" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="268" assertions="1" time="0.411620">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">App\Tests\Controller\RecipeControllerTest::testRecipeLinksWithUser with data set #0 ('/recipe/', 'Drinks Index')
+Failed asserting that 302 is identical to 200.
+
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php:283
+</failure>
+        </testcase>
+        <testcase name="testRecipeLinksWithUser with data set #1" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="268" assertions="1" time="0.378655">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">App\Tests\Controller\RecipeControllerTest::testRecipeLinksWithUser with data set #1 ('/recipe/1/edit', 'Edit Drink')
+Failed asserting that 302 is identical to 200.
+
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php:283
+</failure>
+        </testcase>
+        <testcase name="testRecipeLinksWithUser with data set #2" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="268" assertions="1" time="0.380844">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">App\Tests\Controller\RecipeControllerTest::testRecipeLinksWithUser with data set #2 ('/recipe/1', 'Price Range')
+Failed asserting that 302 is identical to 200.
+
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php:283
+</failure>
+        </testcase>
+      </testsuite>
+      <testcase name="testRecipeDelete" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="296" assertions="0" time="0.447501">
+        <error type="InvalidArgumentException">App\Tests\Controller\RecipeControllerTest::testRecipeDelete
+InvalidArgumentException: The current node list is empty.
+
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\vendor\symfony\dom-crawler\Crawler.php:849
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php:303
 </error>
       </testcase>
     </testsuite>
-    <testsuite name="App\Test\SimpleTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\SimpleTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.000133">
-      <testcase name="testOnePlusOneEqualsTwo" class="App\Test\SimpleTest" classname="App.Test.SimpleTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\SimpleTest.php" line="9" assertions="1" time="0.000133"/>
+    <testsuite name="App\Controller\Test\ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" tests="3" assertions="3" errors="0" failures="3" skipped="0" time="6.892290">
+      <testsuite name="App\Controller\Test\ReviewControllerTest::testReviewPublicUrls" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="6.050343">
+        <testcase name="testReviewPublicUrls with data set #0" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="28" assertions="1" time="6.050343">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">App\Controller\Test\ReviewControllerTest::testReviewPublicUrls with data set #0 ('/review/')
+Failed asserting that 500 is identical to 200.
+
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php:40
+</failure>
+        </testcase>
+      </testsuite>
+      <testcase name="testNewReview" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="66" assertions="1" time="0.374608">
+        <failure type="PHPUnit\Framework\ExpectationFailedException">App\Controller\Test\ReviewControllerTest::testNewReview
+Failed asserting that 302 is identical to 200.
+
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php:80
+</failure>
+      </testcase>
+      <testcase name="testEditReview" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="100" assertions="1" time="0.467339">
+        <failure type="PHPUnit\Framework\ExpectationFailedException">App\Controller\Test\ReviewControllerTest::testEditReview
+Failed asserting that 302 is identical to 200.
+
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php:112
+</failure>
+      </testcase>
+    </testsuite>
+    <testsuite name="App\Tests\Form\RecipeTypeTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Form\RecipeTypeTest.php" tests="1" assertions="0" errors="1" failures="0" skipped="0" time="0.319160">
+      <testcase name="testSetValuesAndSubmitFormInOneGo" class="App\Tests\Form\RecipeTypeTest" classname="App.Tests.Form.RecipeTypeTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Form\RecipeTypeTest.php" line="11" assertions="0" time="0.319160">
+        <error type="InvalidArgumentException">App\Tests\Form\RecipeTypeTest::testSetValuesAndSubmitFormInOneGo
+InvalidArgumentException: The current node list is empty.
+
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\vendor\symfony\dom-crawler\Crawler.php:849
+C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Form\RecipeTypeTest.php:35
+</error>
+      </testcase>
+    </testsuite>
+    <testsuite name="App\Test\SimpleTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\SimpleTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.002200">
+      <testcase name="testOnePlusOneEqualsTwo" class="App\Test\SimpleTest" classname="App.Test.SimpleTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\SimpleTest.php" line="9" assertions="1" time="0.002200"/>
     </testsuite>
   </testsuite>
 </testsuites>

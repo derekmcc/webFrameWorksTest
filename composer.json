@@ -32,6 +32,7 @@
         "symfony/css-selector": "^4.0",
         "symfony/dotenv": "^4.0",
         "symfony/phpunit-bridge": "^4.0",
+        "dama/doctrine-test-bundle": "^4.0",
         "symfony/web-server-bundle": "^4.0"
     },
     "config": {

@@ -8,13 +8,13 @@
 {% endblock %}
 
 {% block body %}
-    <form action="{{ path('recipe_daterange') }}" method="get">
+    <form action="{{ path('recipe_date') }}" method="GET">
     <div class="input-group input-daterange">
 
         <input type="date" class="form-control" value="2012-04-05">
         <div class="input-group-addon">to</div>
         <input type="date" class="form-control" value="2012-04-19">
-
+        <input type="submit" value="dates" class="btn btn-outline-danger">
     </div>
     </form>
     {% set counter = 0 %}

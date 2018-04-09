@@ -71,7 +71,7 @@ class ReviewControllerTest extends WebTestCase
         $searchText = 'New Review';
        // $id=90;
         // Act
-        $client->request('GET', '/review/new/12');
+        $client->request('GET', '/review/new/1');
         $content = $client->getResponse()->getContent();
 
         // Assert

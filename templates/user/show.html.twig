@@ -16,6 +16,12 @@
                 <p class="lead"><b>ID: </b>{{ user.id }}</p>
             </div>
             <div class="row">
+                <p class="lead"><b>First name: </b>{{ user.firstName }}</p>
+            </div>
+            <div class="row">
+                <p class="lead"><b>Surname: </b>{{ user.surname }}</p>
+            </div>
+            <div class="row">
                 <p class="lead"><b>Username: </b>{{ user.username}}</p>
             </div>
             <div class="row">
@@ -23,15 +29,8 @@
                 <p class="lead"><b>Role: </b>{{ role }}</p>
                 {% endfor %}
             </div>
-            <div class="row">
-                <p class="lead"><b>First name: </b>{{ user.firstName }}</p>
-            </div>
-            <div class="row">
-                <p class="lead"><b>Surname: </b>{{ user.surname }}</p>
-            </div>
         </div>
     </div>
-
     <div class="row">
     {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('user_index') }}" class="btn btn-outline-info" style="margin-right: 1%">Back to User List</a>
@@ -42,4 +41,27 @@
 
     {% include 'user/_delete_form.html.twig' with {'identifier': user.id} only %}
     </div>
+    <br>
+    {% if is_granted('ROLE_ADMIN') %}
+        <hr>
+        <h1 class="display-4">Public Requests</h1>
+        <hr>
+        <h5>For Drinks</h5>
+        {% for recipe in recipes %}
+            {% if recipe.requestRecipePublic == true and recipe.isPublic == false %}
+                <div class="row">
+                    <div class="col-lg-5">
+                    <p class="lead"><a href="{{ url('recipe_show', {'id':recipe.id}) }}"> {{ recipe.title}}</a></p>
+                    </div>
+                    <div class="col-lg-4">
+                        <p class="lead"><b>Author: </b>{{ recipe.author.firstName}} {{ recipe.author.surname}}</p>
+                    </div>
+                <div class="col-sm-3">
+                    <a href="{{ path('recipe_publish_recipe', {'id': recipe.id }) }}" class="btn btn-info">Accept</a>
+                    <a href="{{ path('recipe_reject_recipe', {'id': recipe.id }) }}" class="btn btn-warning">Reject</a>
+                </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 {% endblock %}

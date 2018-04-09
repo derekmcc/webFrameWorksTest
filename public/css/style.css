@@ -31,10 +31,10 @@ td {
      top: 0;
      left: 0;
  }
-.fas.fa-star {
+.fa-star {
     color: gold;
 }
-.fas.fa-star-half {
+.fa-star-half {
     color: gold;
 }
 body#blog_search #main h1,
@@ -59,4 +59,7 @@ body#blog_search .post-metadata {
 }
 footer {
     padding: 25px;
+}
+.text-center {
+    text-align:center
 }
