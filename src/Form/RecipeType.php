@@ -33,7 +33,7 @@ class RecipeType extends AbstractType
                 'choices' => array(
                     'Under €10' => 'Under €10',
                     '€11-20' => '€11-20',
-                    '€25-30'   => '€25-30',
+                    '€21-30'   => '€21-30',
                     '€31-40'   => '€31-40',
                     'Over €40' => 'Over €40',
                     ),

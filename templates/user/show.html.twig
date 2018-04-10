@@ -63,5 +63,23 @@
                 </div>
             {% endif %}
         {% endfor %}
+        <hr>
+        <h5>For Reviews</h5>
+        {% for review in reviews %}
+            {% if review.requestReviewPublic == true and review.isPublicReview == false %}
+                <div class="row">
+                    <div class="col-lg-5">
+                        <p class="lead"><a href="{{ url('review_show', {'id':review.id}) }}"> {{ review.summary}}</a></p>
+                    </div>
+                    <div class="col-lg-4">
+                        <p class="lead"><b>Author: </b>{{ review.author.firstName}} {{ review.author.surname}}</p>
+                    </div>
+                    <div class="col-sm-3">
+                        <a href="{{ path('review_publish_review', {'id': review.id }) }}" class="btn btn-info">Accept</a>
+                        <a href="{{ path('review_reject_review', {'id': review.id }) }}" class="btn btn-warning">Reject</a>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
     {% endif %}
 {% endblock %}

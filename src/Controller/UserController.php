@@ -45,9 +45,14 @@ class UserController extends Controller
             ->getRepository(Recipe::class)
             ->findAll();
         $user = $this->getUser();
+        $reviews= $this->getDoctrine()
+            ->getRepository(Review::class)
+            ->findAll();
+        $user = $this->getUser();
         return $this->render('user/show.html.twig', [
             'user' => $user,
             'recipes' => $recipes,
+            'reviews' => $reviews,
         ]);
 
     }

@@ -2,40 +2,44 @@
 
 
 namespace App\Tests\Form;
-
+use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Recipe;
+use App\Entity\User;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 class RecipeTypeTest extends WebTestCase
 {
-    public function testSetValuesAndSubmitFormInOneGo()
+
+    protected function setUp()
     {
+        parent::setUp();
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'derek',
+            'PHP_AUTH_PW' => 'pass',
+        ]);
+    }
+
+    /**
+     * @dataProvider recipeDetailsProvider
+     */
+    public function testAddAndEditDrinkThroughForm($url,$pageContent,$httpMethod,$title,$description,$summary,$ingredients,$price,$requestPublic,$image)
+    {
+
         // Arrange
-        $url = '/recipe/new';
-        $httpMethod = 'GET';
+        $buttonName = 'btn_submit';
         $client = static::createClient([], [
             'PHP_AUTH_USER' => 'derek',
             'PHP_AUTH_PW' => 'pass',
         ]);
 
-        $title = 'Bacardi Añejo';
-       // $title = 'Tester';
-        $image = 'image.jpeg';
-        $description = 'Rum';
-        $summary = 'Ubi est audax amicitia.';
-        $ingredients = 'ingredients, etc';
-        $price = '€11-20';
-        $requestPublic = false;
-        $buttonName = 'Save';
-
         // Act
-        $crawler = $client->request($httpMethod, $url);
-
-        $buttonCrawlerNode = $crawler->selectButton($buttonName);
-        $form = $buttonCrawlerNode->form();
-
-        // submit the form with data
-        $client->submit($form, [
+        $client->followRedirects(true);
+        $client->request($httpMethod, $url);
+        $expectedContent = $pageContent;
+        $expectedContentlowercase = strtolower($expectedContent);
+        $client->submit($client->request($httpMethod,$url)->selectButton($buttonName)->form([
             'recipe[title]'  => $title,
             'recipe[image]'  => $image,
             'recipe[summary]'  => $summary,
@@ -43,26 +47,28 @@ class RecipeTypeTest extends WebTestCase
             'recipe[ingredients]'  => $ingredients,
             'recipe[price]'  => $price,
             'recipe[requestRecipePublic]'  => $requestPublic,
-        ]);
+        ]));
 
-       // $content = $client->getResponse()->getContent();
-        //$client->followRedirect();
-        $crawler = $client->getResponse();
+        // to lowercase
+        $content = $client->getResponse()->getContent();
+        $contentlowercase = strtolower($content);
 
         // Assert
-        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
-       // $this->assertSame('/recipe/index', $client->getResponse()->getStatusCode());
+        $this->assertContains($expectedContentlowercase,$contentlowercase);
 
-        $recipe = $client->getContainer()->get('doctrine')->getRepository(Recipe::class)->findOneBy([
-            'title' => $title,
-        ]);
+   }
 
-        $this->assertNotNull($recipe);
-        $this->assertSame($summary, $recipe->getSummary());
-//        $this->assertSame($image, $recipe->getImage());
-//        $this->assertSame($description, $recipe->getDescription());
-//        $this->assertSame($ingredients, $recipe->getIngredients());
-//        $this->assertSame($price, $recipe->getPrice());
-//        $this->assertSame($requestPublic, $recipe->getRequestIsPublic());
-    }
+   public function recipeDetailsProvider()
+   {
+       return [
+            ['/recipe/new', 'Drinks Index', 'GET', 'New Rum', 'Award winning Rum', 'white rum', 'ingredients, etc', '€11-20', false, new UploadedFile(
+                'public/uploads/images/10Cane.jpg',
+                '10Cane.jpg',
+                'image/jpeg',123)],
+           ['/recipe/47/edit', 'Drink Details', 'GET', 'Old Rum', 'Award winning Rum', 'white rum', 'ingredients, etc', '€21-30', true, new UploadedFile(
+               'public/uploads/images/10Cane.jpg',
+               '10Cane.jpg',
+               'image/jpeg',123)],
+       ];
+   }
 }

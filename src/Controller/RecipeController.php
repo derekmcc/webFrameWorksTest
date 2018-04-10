@@ -77,7 +77,7 @@ class RecipeController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($recipe);
             $em->flush();
-            return $this->redirectToRoute('recipe_showRecipe', ['id' => $recipe->getId()]);
+            return $this->redirectToRoute('recipe_index', ['id' => $recipe->getId()]);
         }
 
         return $this->render('recipe/new.html.twig', [
@@ -147,7 +147,7 @@ class RecipeController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('recipe_edit', ['id' => $recipe->getId()]);
+            return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId()]);
         }
         return $this->render('recipe/edit.html.twig', [
             'recipe' => $recipe,
