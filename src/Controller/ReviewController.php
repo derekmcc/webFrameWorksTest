@@ -215,10 +215,6 @@ class ReviewController extends Controller
      */
     public function downVoteReview(Review $review)
     {
-        $checkIfVoted = $review->getVotes();
-        if ($checkIfVoted = $this->getUser()){
-
-        }
         $review->setVotes($this->getUser());
 
         $downVote = $review->getDownVotes() + 1;

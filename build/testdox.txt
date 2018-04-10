@@ -11,22 +11,24 @@ App\Tests\Controller\ErrorController
  [x] Error response okay
 
 App\Tests\Controller\RecipeController
- [x] Recipe public urls 
+ [x] Recipe urls 
  [x] Recipe members urls 
- [x] New recipe
- [x] Admin home page
- [ ] Show recipe page
- [ ] Recipe requests 
- [ ] Recipe links with admin 
- [ ] Recipe links with user 
+ [x] Recipe requests to be public 
+ [x] Recipe links with admin 
+ [x] Recipe links with user 
 
 App\Controller\Test\ReviewController
  [x] Review public urls 
+ [x] Review members urls 
  [ ] New review
  [ ] Edit review
+ [x] Review requests to be public 
 
 App\Tests\Form\RecipeType
- [x] Add new drink through form 
+ [x] Add and edit drink through form 
+
+App\Tests\Form\ReviewType
+ [x] Add and edit drink through form 
 
 App\Test\Simple
  [x] One plus one equals two

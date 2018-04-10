@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class RecipeTypeTest extends WebTestCase
 {
 
+    const ID = '46';
+
     protected function setUp()
     {
         parent::setUp();
@@ -65,7 +67,7 @@ class RecipeTypeTest extends WebTestCase
                 'public/uploads/images/10Cane.jpg',
                 '10Cane.jpg',
                 'image/jpeg',123)],
-           ['/recipe/47/edit', 'Drink Details', 'GET', 'Old Rum', 'Award winning Rum', 'white rum', 'ingredients, etc', '€21-30', true, new UploadedFile(
+           ['/recipe/' . self::ID . '/edit', 'Drink Details', 'GET', 'Old Rum', 'Award winning Rum', 'white rum', 'ingredients, etc', '€21-30', true, new UploadedFile(
                'public/uploads/images/10Cane.jpg',
                '10Cane.jpg',
                'image/jpeg',123)],

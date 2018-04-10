@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ReviewControllerTest extends WebTestCase
 {
     private $client = null;
+    const ID = '103';
 
     public function setUp()
     {
@@ -24,46 +25,83 @@ class ReviewControllerTest extends WebTestCase
     }
 
     /**
-     * @dataProvider publicReviewUrls
+     * @dataProvider reviewUrlProvider
      */
-    public function testReviewPublicUrls($url)
+    public function testReviewPublicUrls($url, $content)
     {
         // Arrange
         $this->client->request('GET',$url);
         $crawler = $this->client->getResponse();
+        $searchText = $content;
 
         // Act
         $statusCode = $this->client->getResponse()->getStatusCode();
+
+        // to lower case
+        $searchTextLowerCase = strtolower($searchText);
+        $contentLowerCase = strtolower($content);
 
         // Assert
         $this->assertSame(
             Response::HTTP_OK,
             $this->client->getResponse()->getStatusCode()
         );
+
+        // Assert
+        $this->assertContains(
+            $searchTextLowerCase,
+            $contentLowerCase
+        );
     }
-//    public function testNewComment()
-//    {
-//        $client = static::createClient([], [
-//            'PHP_AUTH_USER' => 'username',
-//            'PHP_AUTH_PW' => 'pass',
-//        ]);
-//        $client->followRedirects();
-//
-//        // Find first blog post
-//        $crawler = $client->request('GET', 'review/new');
-//       // $postLink = $crawler->filter('article.post > h2 a')->link();
-//
-//        //$crawler = $client->click($postLink);
-//
-//        $form = $crawler->selectButton('Publish comment')->form([
-//            'comment[content]' => 'Hi, Symfony!',
-//        ]);
-//        $crawler = $client->submit($form);
-//
-//        $newComment = $crawler->filter('.post-comment')->first()->filter('div > p')->text();
-//
-//        $this->assertSame('Hi, Symfony!', $newComment);
-//    }
+
+    /**
+     * @dataProvider userNameAndPasswordProvider
+     */
+    public function testReviewMembersUrls($name, $pass)
+    {
+        // Arrange
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => $name,
+            'PHP_AUTH_PW' => $pass,
+        ]);
+        $crawler = $this->client->getResponse();
+        $searchText = 'Review Index';
+
+
+        // Act
+        $client->request('GET', '/review/');
+        $content = $client->getResponse()->getContent();
+
+        // Assert
+        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+
+        // to lower case
+        $searchTextLowerCase = strtolower($searchText);
+        $contentLowerCase = strtolower($content);
+
+        // Assert
+        $this->assertContains(
+            $searchTextLowerCase,
+            $contentLowerCase
+        );
+    }
+
+    public function reviewUrlProvider()
+    {
+        return array(
+            ['/review/', 'Review Index', ],
+            ['/review/' . self::ID, 'Review Details'],
+        );
+    }
+
+    public function userNameAndPasswordProvider()
+    {
+        return [
+            ['derek' , 'pass'],
+            ['joe_user', 'pass']
+        ];
+    }
+
     public function testNewReview()
     {
         // Arrange
@@ -91,13 +129,6 @@ class ReviewControllerTest extends WebTestCase
         );
     }
 
-    public function publicReviewUrls()
-    {
-        return array(
-            ['/review/']
-        );
-    }
-
     public function testEditReview()
     {
         // Arrange
@@ -111,6 +142,36 @@ class ReviewControllerTest extends WebTestCase
 
         // Assert
         $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * @dataProvider reviewRequestToBePublicDataProvider
+     */
+    public function testReviewRequestsToBePublic($url)
+    {
+        // Arrange
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'derek',
+            'PHP_AUTH_PW' => 'pass',
+        ]);
+
+        // Act
+        $client->request('GET', $url);
+        $client->followRedirect();
+
+        // Assert
+        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+    }
+
+    public function reviewRequestToBePublicDataProvider()
+    {
+        return [
+            ['/review/' .self::ID . '/request'],
+            ['/review/' .self::ID . '/reject'],
+            ['/review/' .self::ID . '/publish'],
+            ['/review/' . self::ID .'/upVote'],
+            ['/review/' . self::ID .'/downVote'],
+        ];
     }
 
 //    public function testReviewFormAdd()
@@ -194,5 +255,28 @@ class ReviewControllerTest extends WebTestCase
 //        $this->assertSame($ingredients, $recipe->getIngredients());
 //        $this->assertSame($price, $recipe->getPrice());
 //        $this->assertSame($requestPublic, $recipe->getRequestIsPublic());
+//    }
+//    public function testNewComment()
+//    {
+//        $client = static::createClient([], [
+//            'PHP_AUTH_USER' => 'username',
+//            'PHP_AUTH_PW' => 'pass',
+//        ]);
+//        $client->followRedirects();
+//
+//        // Find first blog post
+//        $crawler = $client->request('GET', 'review/new');
+//       // $postLink = $crawler->filter('article.post > h2 a')->link();
+//
+//        //$crawler = $client->click($postLink);
+//
+//        $form = $crawler->selectButton('Publish comment')->form([
+//            'comment[content]' => 'Hi, Symfony!',
+//        ]);
+//        $crawler = $client->submit($form);
+//
+//        $newComment = $crawler->filter('.post-comment')->first()->filter('div > p')->text();
+//
+//        $this->assertSame('Hi, Symfony!', $newComment);
 //    }
 }

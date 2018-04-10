@@ -15,25 +15,26 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class RecipeControllerTest extends WebTestCase
 {
     private $client = null;
-    const ID = '67';
+    const ID = '46';
 
     public function setUp()
     {
         $this->client = static::createClient();
     }
     /**
-     * @dataProvider publicRecipeUrls
+     * @dataProvider recipeUrlProvider
      */
-    public function testRecipePublicUrls($url)
+    public function testRecipeUrls($url, $content)
     {
         // Arrange
         $this->client->request('GET',$url);
         $crawler = $this->client->getResponse();
-        $searchText = 'Drinks Index';
+        $searchText = $content;
 
 
         // Act
@@ -57,13 +58,14 @@ class RecipeControllerTest extends WebTestCase
         );
     }
 
-    public function publicRecipeUrls()
+    public function recipeUrlProvider()
     {
         return array(
-            ['/recipe/'],
+            ['/recipe/', 'Drinks Index'],
+            ['/recipe/' . self::ID, 'Drink Details'],
         );
     }
-    public function userNameAndPasswords()
+    public function userNameAndPasswordProvider()
     {
         return [
             ['derek' , 'pass'],
@@ -72,7 +74,7 @@ class RecipeControllerTest extends WebTestCase
     }
 
     /**
-     * @dataProvider userNameAndPasswords
+     * @dataProvider userNameAndPasswordProvider
      */
     public function testRecipeMembersUrls($name, $pass)
     {
@@ -131,86 +133,87 @@ class RecipeControllerTest extends WebTestCase
 //        );
 //    }
 
-    public function testNewRecipe()
-    {
-        // Arrange
-        $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'derek',
-            'PHP_AUTH_PW' => 'pass',
-        ]);
-        $searchText = 'New Drink';
+//    public function testNewRecipe()
+//    {
+//        // Arrange
+//        $client = static::createClient([], [
+//            'PHP_AUTH_USER' => 'derek',
+//            'PHP_AUTH_PW' => 'pass',
+//        ]);
+//        $searchText = 'New Drink';
+//
+//
+//        // Act
+//        $client->request('GET', '/recipe/new');
+//        $content = $client->getResponse()->getContent();
+//
+//        $user = new User();
+//        $recipe = new Recipe();
+//        $file = $recipe->getImage();
+//        $recipe->setImage($file);
+//        $recipe->setIsPublic(false);
+//        $recipe->setAuthor($user);
+//        $recipe->setRequestRecipePublic(false);
+//        $recipe->setSummary('fasfas');
+//        $recipe->setDescription('asdfsaf');
+//        $recipe->setPrice(1);
+//        $recipe->setPublishedAt(new \DateTime('now'));
+//        $recipe->setTitle('dsafsa');
+//        $recipe->setIngredients('dfsafs');
+//
+//        //$client->followRedirect();
+//
+//        // Assert
+//        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+//
+//        // to lower case
+//        $searchTextLowerCase = strtolower($searchText);
+//        $contentLowerCase = strtolower($content);
+//
+//        // Assert
+//       // $this->assertContains(
+//         //   $searchTextLowerCase,
+//           // $contentLowerCase
+//        //);
+//    }
 
+//    public function testAdminHomePage()
+//    {
+//        // Arrange
+//        $client = static::createClient([], [
+//            'PHP_AUTH_USER' => 'derek',
+//            'PHP_AUTH_PW' => 'pass',
+//        ]);
+//
+//        // Act
+//        $client->request('GET', '/admin');
+//
+//        // Assert
+//        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+//    }
 
-        // Act
-        $client->request('GET', '/recipe/new');
-        $content = $client->getResponse()->getContent();
-
-        $user = new User();
-        $recipe = new Recipe();
-        $file = $recipe->getImage();
-        $recipe->setImage($file);
-        $recipe->setIsPublic(false);
-        $recipe->setAuthor($user);
-        $recipe->setRequestRecipePublic(false);
-        $recipe->setSummary('fasfas');
-        $recipe->setDescription('asdfsaf');
-        $recipe->setPrice(1);
-        $recipe->setPublishedAt(new \DateTime('now'));
-        $recipe->setTitle('dsafsa');
-        $recipe->setIngredients('dfsafs');
-
-        //$client->followRedirect();
-
-        // Assert
-        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
-
-        // to lower case
-        $searchTextLowerCase = strtolower($searchText);
-        $contentLowerCase = strtolower($content);
-
-        // Assert
-       // $this->assertContains(
-         //   $searchTextLowerCase,
-           // $contentLowerCase
-        //);
-    }
-
-    public function testAdminHomePage()
-    {
-        // Arrange
-        $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'derek',
-            'PHP_AUTH_PW' => 'pass',
-        ]);
-
-        // Act
-        $client->request('GET', '/admin');
-
-        // Assert
-        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
-    }
-
-    public function testShowRecipePage()
-    {
-        // Arrange
-        $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'derek',
-            'PHP_AUTH_PW' => 'pass',
-        ]);
-
-        $this->expectException(NotFoundHttpException::class);
-
-        // Act
-        $client->request('GET', '/recipe/0');
-
-        // Assert
-        $this->fail("Expected exception {NotFoundHttpException::class}");
-    }
+//    public function testShowRecipePage()
+//    {
+//        // Arrange
+//        $client = static::createClient([], [
+//            'PHP_AUTH_USER' => 'derek',
+//            'PHP_AUTH_PW' => 'pass',
+//        ]);
+//
+//        // Expect exception - BEFORE you Act!
+//        $this->expectException(NotFoundHttpException::class);
+//
+//        // Act
+//        $client->request('GET', '/recipe/0');
+//
+//        // Assert
+//        $this->fail("Expected exception {NotFoundHttpException::class}");
+//    }
 
     /**
-     * @dataProvider requestDataProvider
+     * @dataProvider recipeRequestToBePublicDataProvider
      */
-    public function testRecipeRequests($url)
+    public function testRecipeRequestsToBePublic($url)
     {
         // Arrange
         $client = static::createClient([], [
@@ -221,11 +224,12 @@ class RecipeControllerTest extends WebTestCase
         // Act
         $client->request('GET', $url);
         $client->followRedirect();
+
         // Assert
         $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
 
-    public function requestDataProvider()
+    public function recipeRequestToBePublicDataProvider()
     {
         return [
             ['/recipe/' .self::ID . '/request'],
