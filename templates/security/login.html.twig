@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <h1 class="display-4">Login</h1>
+    <h1 class="display-4">User Login</h1>
     <form action="{{ path('login') }}" method="post">
         <div class="form-group">
             <label for="username">Username</label>
@@ -15,7 +15,7 @@
         {% if error %}
             <div><p class="lead" style="color: #C82829"><b>{{ error.messageKey|trans(error.messageData, 'security') }}</b></div>
         {% endif %}
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button name="btn_submit" type="submit" class="btn btn-primary">Login</button>
     </form>
 
 {% endblock %}

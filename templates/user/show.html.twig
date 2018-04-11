@@ -81,5 +81,79 @@
                 </div>
             {% endif %}
         {% endfor %}
+    {% else %}
+        <hr>
+        <h3>Drinks You have Added</h3>
+        {% for recipe in recipes %}
+            {% if recipe.author.username == user.username %}
+                <div class="row">
+                    <div class="col col-lg-3">
+                        <br>
+                        <img src="/uploads/images/{{ recipe.image }}" alt="{{ recipe.title }}" width="100" height="250">
+                    </div>
+                    <div class="col col-lg-8">
+                        <div class="row"><p></p></div>
+                        <div class="row">
+                            <p class="lead"><b>Title: </b>{{ recipe.title }}</p>
+                        </div>
+                        <div class="row">
+                            <p class="lead"><b>Price Range: </b>{{ recipe.price }}</p>
+                        </div>
+                        <div class="row">
+                            <p class="lead"><b>Ingredients: </b>{{ recipe.ingredients }}</p>
+                        </div>
+                        <div class="row">
+                            {% if (recipe.isPublic) %}
+                                <p class="lead"><b>Public Drink: Yes</b></p>
+                            {% else %}
+                                <p class="lead"><b>Public Drink: No</b></p>
+                            {% endif %}
+                        </div>
+                        <div class="row">
+                            <p class="lead"><b>Description: </b>{{ recipe.description }}</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-1">
+                        <a href="{{ path('recipe_show', {'id': recipe.id}) }}" class="btn btn-outline-primary">View</a>
+                    </div>
+                </div>
+                <hr>
+            {% endif %}
+        {% endfor %}
+        <br>
+        <h3>Reviews You have Authored</h3>
+        {% for review in reviews %}
+            {% if review.author.username == user.username %}
+            <div class="row">
+                <div class="col col-lg-3">
+                    <br>
+                    <img src="/uploads/images/{{ review.image }}"width="125" height="150">
+                </div>
+                <div class="col-lg-8">
+                    <div class="row"><p></p></div>
+                    <div class="row">
+                        <p class="lead"><b>Drink Reviewed: </b>{{ review.recipe.title}}</p>
+                    </div>
+                    <div class="row">
+                        <p class="lead"><b>Price Paid: </b>€{{ review.price }}</p>
+                    </div>
+                    <div class="row">
+                        <p class="lead"><b><i class="fas fa-calendar-alt"></i>  {{ review.publishedAt ? review.publishedAt|date('Y-m-d') : '' }}</b></p>
+                    </div>
+                    <div class="row">
+                        {% if (review.isPublicReview) %}
+                            <p class="lead"><b>Public Review: Yes</b></p>
+                        {% else %}
+                            <p class="lead"><b>Public Review: No</b></p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-lg-1">
+                    <a href="{{ path('review_show', {'id': review.id}) }}" class="btn btn-outline-primary">View</a>
+                </div>
+            </div>
+            <hr>
+            {% endif %}
+        {% endfor %}
     {% endif %}
 {% endblock %}

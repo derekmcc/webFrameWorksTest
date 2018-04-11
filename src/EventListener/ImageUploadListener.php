@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use App\Entity\Recipe;
+use App\Entity\Review;
 use App\Service\FileUploader;
 use Symfony\Component\HttpFoundation\File\File;
 
@@ -42,9 +43,9 @@ class ImageUploadListener
     private function uploadFile($entity)
     {
         // upload only works for Recipe entities
-        if (!$entity instanceof Recipe) {
-            return;
-        }
+//        if (!$entity instanceof Recipe) {
+//            return;
+//        }
 
         $file = $entity->getImage();
 
@@ -59,12 +60,12 @@ class ImageUploadListener
     {
         $entity = $args->getEntity();
 
-        if (!$entity instanceof Recipe) {
-            return;
-        }
+//        if (!$entity instanceof Recipe) {
+//            return;
+//        }
 
-        if ($fileName = $entity->getBrochure()) {
-            $entity->setBrochure(new File($this->uploader->getTargetDirectory().'/'.$fileName));
+        if ($fileName = $entity->getImage()) {
+            $entity->setImage(new File($this->uploader->getTargetDirectory().'/'.$fileName));
         }
     }
 }

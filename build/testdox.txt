@@ -13,6 +13,8 @@ App\Tests\Controller\ErrorController
 App\Tests\Controller\RecipeController
  [x] Recipe urls 
  [x] Recipe members urls 
+ [x] Search for drink
+ [ ] Show recipe page
  [x] Recipe requests to be public 
  [x] Recipe links with admin 
  [x] Recipe links with user 
@@ -20,12 +22,14 @@ App\Tests\Controller\RecipeController
 App\Controller\Test\ReviewController
  [x] Review public urls 
  [x] Review members urls 
- [ ] New review
- [ ] Edit review
  [x] Review requests to be public 
 
+App\Tests\Controller\SecurityController
+ [x] User login with valid data
+ [x] Regular user cant access admin
+
 App\Tests\Form\RecipeType
- [x] Add and edit drink through form 
+ [ ] Add and edit drink through form 
 
 App\Tests\Form\ReviewType
  [x] Add and edit drink through form 

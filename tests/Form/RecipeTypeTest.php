@@ -28,7 +28,6 @@ class RecipeTypeTest extends WebTestCase
      */
     public function testAddAndEditDrinkThroughForm($url,$pageContent,$httpMethod,$title,$description,$summary,$ingredients,$price,$requestPublic,$image)
     {
-
         // Arrange
         $buttonName = 'btn_submit';
         $client = static::createClient([], [

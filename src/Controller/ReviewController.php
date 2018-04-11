@@ -118,7 +118,7 @@ class ReviewController extends Controller
             }
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('review_edit', ['id' => $review->getId()]);
+            return $this->redirectToRoute('review_show', ['id' => $review->getId()]);
         }
 
         return $this->render('review/edit.html.twig', [

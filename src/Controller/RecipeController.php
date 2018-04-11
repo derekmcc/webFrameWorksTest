@@ -117,11 +117,6 @@ class RecipeController extends Controller
      */
     public function show(Recipe $recipe)
     {
-        if (!$recipe) {
-            throw $this->createNotFoundException(
-                'No Drink found for id ' . $recipe->getId()
-            );
-        }
         return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
         ]);

@@ -4,17 +4,23 @@
 
 {% block body %}
 <form action="{{ path('recipe_search') }}" method="get">
-    <div class="form-group">
+    <div class="row">
+        <div class="col-lg-10">
         <input name="q"
                class="form-control search-field"
                placeholder="Search"
                autocomplete="off"
                autofocus>
+        </div>
+        <div class="col-lg-2">
+            <input type="submit" name="btn_submit" value="search" class="btn btn-outline-success">
+        </div>
     </div>
 </form>
 
 <div id="results">
     {% if recipes != null %}
+        <br>
         <p class="lead">Search Results</p>
         {% for recipe in recipes %}
             {% if (is_granted('IS_AUTHENTICATED_FULLY')) and (is_granted('ROLE_ADMIN')) or (recipe.isPublic == true) or (is_granted('IS_AUTHENTICATED_FULLY')) and (recipe.author.username == app.user.username) %}
@@ -30,11 +36,10 @@
                         <div class="row"><p><b>Author: </b>{{ recipe.author.firstName }} {{ recipe.author.surname }}</p></div>
                     </div>
                 </div><br><br>
-            {% else %}
-                <p class="lead">No Results Found</p>
             {% endif %}
         {% endfor %}
     {% else %}
+        <br>
         <p class="lead">No Results Found</p>
     {% endif %}
 </div>

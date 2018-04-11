@@ -60,7 +60,7 @@ class AdminControllerTest extends WebTestCase
         // Arrange
         $searchText = 'Admin Page';
         $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'username4',
+            'PHP_AUTH_USER' => 'derek',
             'PHP_AUTH_PW' => 'pass',
         ]);
 
