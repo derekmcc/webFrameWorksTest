@@ -50,30 +50,30 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=25, unique=false)
      */
     private $surname;
-//    /**
-//     * @var Recipe[]|ArrayCollection
-//     *
-//     * @ORM\OneToMany(
-//     *      targetEntity="Recipe",
-//     *      mappedBy="requestRecipePublic",
-//     *      orphanRemoval=true,
-//     *      cascade={"persist"}
-//     * )
-//     *
-//     */
-//  //  private $makeRecipesPublic;
-//
-//    /**
-//     * @var Review[]|ArrayCollection
-//     *
-//     * @ORM\OneToMany(
-//     *      targetEntity="Review",
-//     *      mappedBy="requestReviewPublic",
-//     *      orphanRemoval=true,
-//     *      cascade={"persist"}
-//     * )
-//     */
-//  //  private $makeReviewsPublic;
+    /**
+     * @var Recipe[]|ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="Recipe",
+     *      mappedBy="requestRecipePublic",
+     *      orphanRemoval=true,
+     *      cascade={"persist"}
+     * )
+     *
+     */
+  //  private $makeRecipesPublic;
+
+    /**
+     * @var Review[]|ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="Review",
+     *      mappedBy="requestReviewPublic",
+     *      orphanRemoval=true,
+     *      cascade={"persist"}
+     * )
+     */
+  //  private $makeReviewsPublic;
 
     /**
      *
@@ -242,35 +242,9 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return Review[]|ArrayCollection
+     * Added as the data fixtures wouldn't work without it for
+     * for some reason.
      */
-    public function getReviewAuthor()
-    {
-        return $this->reviewAuthor;
+    public function getImage(){
     }
-
-    /**
-     * @param Review[]|ArrayCollection $reviewAuthor
-     */
-    public function setReviewAuthor($reviewAuthor): void
-    {
-        $this->reviewAuthor = $reviewAuthor;
-    }
-
-    /**
-     * @return Recipe[]|ArrayCollection
-     */
-    public function getRecipeAuthor()
-    {
-        return $this->recipeAuthor;
-    }
-
-    /**
-     * @param Recipe[]|ArrayCollection $recipeAuthor
-     */
-    public function setRecipeAuthor($recipeAuthor): void
-    {
-        $this->recipeAuthor = $recipeAuthor;
-    }
-
 }

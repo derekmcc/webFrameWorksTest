@@ -91,8 +91,6 @@ class RecipeController extends Controller
      */
     public function search(Request $request, RecipeRepository $recipes): Response
     {
-        //dump($recipes);
-
         $query = $request->query->get('q', '');
         $foundRecipes = $recipes->findBySearchQuery($query);
 
@@ -105,12 +103,23 @@ class RecipeController extends Controller
                 'author' => $recipe->getAuthor(),
                 'summary' => $recipe->getSummary(),
                 'isPublic' => $recipe->getIsPublic(),
-               // 'url' => $this->generateUrl('recipe_search_aa'),
             ];
         }
-
         return $this->render('recipe/search.html.twig', ['recipes' => $results]);
     }
+
+    /**
+     * @Route("/date", name="date")
+     * @Method("GET")
+     */
+    public function searchDates(Request $request, RecipeRepository $recipes): Response
+    {
+        $date1 = $request->query->get('date1', '');
+        $date2 = $request->query->get('date2', '');
+        $foundRecipes = $recipes->findRecipesByDate($date1,$date2);
+        return $this->render('recipe/showDrinks.html.twig', ['recipes' => $foundRecipes]);
+    }
+
     /**
      * @Route("/{id}", name="show")
      * @Method("GET")

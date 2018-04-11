@@ -43,6 +43,7 @@ class LoadData extends Fixture
             $user->setEmail($faker->email);
             $manager->persist($user);
             $this->addReference($username, $user);
+
         }
 
         $manager->flush();

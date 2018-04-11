@@ -4,6 +4,15 @@
 
 {% block body %}
     {% set counter = 0 %}
+    <form action="{{ path('recipe_date') }}" method="GET">
+        <div class="input-group input-daterange">
+            <input name="date1" type="date" class="form-control" value="2018-04-05">
+            <div class="input-group-addon">to</div>
+            <input name="date2" type="date" class="form-control" value="2018-04-19">
+            <input type="submit" value="Search by Date" class="btn btn-outline-success">
+        </div>
+    </form>
+    <br>
     <div class="container">
         <div class="row">
             <div class="col-lg-8">

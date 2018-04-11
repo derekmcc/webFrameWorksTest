@@ -1,21 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Drinks Index{% endblock %}
-{% block javascripts %}
-    $('.input-daterange input').each(function() {
-    $(this).datepicker('clearDates');
-    });
-{% endblock %}
 
 {% block body %}
     <form action="{{ path('recipe_date') }}" method="GET">
     <div class="input-group input-daterange">
-
-        <input type="date" class="form-control" value="2012-04-05">
+        <input name="date1" type="date" class="form-control" value="2018-04-05">
         <div class="input-group-addon">to</div>
-        <input type="date" class="form-control" value="2012-04-19">
-        <input type="submit" value="dates" class="btn btn-outline-danger">
+        <input name="date2" type="date" class="form-control" value="2018-04-19">
+        <input type="submit" value="Search by Date" class="btn btn-outline-success">
     </div>
+    <br>
     </form>
     {% set counter = 0 %}
     <div class="container">
@@ -106,39 +101,6 @@
             </div>
         </div><br><br>
         {% endif %}
-
     {% endfor %}
     </div>
-    <h1>Recipe index</h1>
-    <table>
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Author</th>
-            <th>Public</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for recipe in recipes %}
-            {% if (is_granted('IS_AUTHENTICATED_FULLY')) and (is_granted('ROLE_ADMIN')) or (recipe.isPublic == true) or (is_granted('IS_AUTHENTICATED_FULLY')) and (recipe.author.username == app.user.username) %}
-            <tr>
-                <td>{{ recipe.id }}</td>
-                <td>{{ recipe.author.username }}</td>
-                <td>{{ recipe.isPublic }}</td>
-                <td>
-                {% for review in recipe.reviews %}
-                    {% if (is_granted('ROLE_ADMIN')) or (recipe.isPublic == false) %}
-                    <a href="{{ url('review_show', {'id':review.id}) }}">
-                        {{ review.id }} :: {{ review.author.username }}
-                    </a>
-                    {% endif %}
-                {% else %}
-                    (no reviews for this drink)
-                {% endfor %}</td>
-            </tr>
-            {% endif %}
-        {% endfor %}
-        </tbody>
-    </table>
-
 {% endblock %}

@@ -109,19 +109,17 @@ class RecipeRepository extends ServiceEntityRepository
         return $this->createPaginator($query, $page);
     }
 
-    public function findRecipesByDate(int $page = 1, $date1, $date2): Pagerfanta
+    public function findRecipesByDate(string $date1, string $date2, int $page = 1): Pagerfanta
     {
         $query = $this->getEntityManager()
             ->createQuery("
                 SELECT r
                 FROM App:Recipe r
-                WHERE r.date = '{$date1}'
-                AND r.date = '{$date2}'
-                OR r.isPublic = true
+                WHERE r.publishedAt BETWEEN '{$date1}' AND '{$date2}'
                 ORDER BY r.publishedAt DESC
             ")
         ;
-        return $this->createPaginator($query, $page);
+        return $this->createPaginator($query,$page);
     }
 
     private function createPaginator(Query $query, int $page): Pagerfanta
@@ -133,18 +131,16 @@ class RecipeRepository extends ServiceEntityRepository
         return $paginator;
     }
 
-    public function findRecipesByAuthorToDelete($user)
-    {
-
-        return $this->getEntityManager()
-            ->createQuery("
-                SELECT r 
-                FROM App:Recipe r
-                WHERE r.author = '{$user->getId()}'
-            ")
-        ;
-
-    }
+//    public function findRecipesByAuthorToDelete($user)
+//    {
+//        return $this->getEntityManager()
+//            ->createQuery("
+//                SELECT r
+//                FROM App:Recipe r
+//                WHERE r.author = '{$user->getId()}'
+//            ")
+//        ;
+//    }
     /*
     public function findLatest(int $page = 1): Pagerfanta
     {
@@ -171,14 +167,4 @@ class RecipeRepository extends ServiceEntityRepository
 
         return $paginator;
     }*/
-
-    public function findBySomething($value)
-    {
-        return $this->createQueryBuilder('r')
-            ->where('r.author = :value')->setParameter('value', $value)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
 }

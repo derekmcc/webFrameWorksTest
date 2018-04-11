@@ -16,6 +16,9 @@
                 <p class="lead"><b>Price Range: </b>{{ recipe.price }}</p>
             </div>
             <div class="row">
+                <p class="lead"><b>Date Added: </b>{{ recipe.publishedAt ? recipe.publishedAt|date('d-m-Y') : '' }}</p>
+            </div>
+            <div class="row">
                 <p class="lead"><b>Ingredients: </b>{{ recipe.ingredients }}</p>
             </div>
             <div class="row">
@@ -81,16 +84,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6">
-                        {% if review.author != null %}
-                            <p class="lead"><b> <i class="fas fa-user"></i>  {{ review.author.firstName}} {{ review.author.surname}}</b></p>
-                        {% else %}
-                            {{ path('recipe_delete', {'id': recipe.id}) }}
-                            <b>Author: </b>Unknown
-                        {% endif %}
-
+                        <p class="lead"><b> <i class="fas fa-user"></i>  {{ review.author.firstName}} {{ review.author.surname}}</b></p>
                     </div>
                     <div class="col-lg-6">
-                        <p class="lead"><b><i class="fas fa-calendar-alt"></i>  {{ review.publishedAt ? review.publishedAt|date('Y-m-d') : '' }}</b></p>
+                        <p class="lead"><b><i class="fas fa-calendar-alt"></i>  {{ review.publishedAt ? review.publishedAt|date('d-m-Y') : '' }}</b></p>
                     </div>
                 </div>
                 <div class="row">
