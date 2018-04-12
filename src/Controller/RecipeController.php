@@ -138,14 +138,13 @@ class RecipeController extends Controller
      */
     public function edit(Request $request, Recipe $recipe)
     {
-        //fixes issue if file not found when going to form
-        if($recipe->getImage() == null)
-        {
-            $recipe->setImage(
-                new File($this->getParameter('images_directory').'/'.$recipe->getImage())
-            );
-        }
-
+        // --Does'nt work suppose to allow non selecting of image on edit form
+//        if($recipe->getImage() == null)
+//        {
+//            $recipe->setImage(
+//                new File($this->getParameter('images_directory').'/'.$recipe->getImage())
+//            );
+//        }
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

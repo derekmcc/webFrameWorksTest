@@ -92,12 +92,12 @@ class UserControllerTest extends WebTestCase
         $expectedContent = 'User Login';
         $expectedContentlowercase = strtolower($expectedContent);
         $client->submit($client->request($httpMethod,'/user/new')->selectButton($buttonName)->form([
-            'user[username]'  => 'wilma_user',
+            'user[username]'  => 'fred_user',
             'user[plainPassword][first]'  => 'pass',
             'user[plainPassword][second]'  => 'pass',
-            'user[firstname]'  => 'Wilma',
+            'user[firstname]'  => 'Fred',
             'user[surname]'  => 'User',
-            'user[email]' => 'wilma@example.com'
+            'user[email]' => 'fred@example.com'
         ]));
 
         // to lowercase
@@ -107,6 +107,44 @@ class UserControllerTest extends WebTestCase
         // Assert
         $this->assertContains($expectedContentlowercase,$contentlowercase);
 
+    }
+
+    public function testUserDelete()
+    {
+        // Arrange
+        $url = '/user/' . self::DELETE_ID;
+        $httpMethod = 'GET';
+        $client = static::createClient();
+        $buttonName = 'btn_submit';
+        $searchText = 'Profile';
+        $linkText = 'Delete User Account';
+
+        // Act
+        $crawler = $client->request($httpMethod, $url);
+        //$link = $crawler->selectLink($linkText)->link();
+        // $client->click($link);
+        $content = $client->getResponse()->getContent();
+
+        // to lower case
+        $searchTextLowerCase = strtolower($searchText);
+        $contentLowerCase = strtolower($content);
+
+        // Assert
+        $this->assertContains($searchTextLowerCase, $contentLowerCase);
+
+        $client->followRedirects(true);
+        //$client->request('GET', '/');
+        $expectedContent = 'User Index';
+        $expectedContentlowercase = strtolower($expectedContent);
+        $client->submit($client->request($httpMethod,$url)->selectButton($buttonName)->form());
+        //$client->submit($crawler->filter('#delete')->form());
+
+        // to lowercase
+        $content = $client->getResponse()->getContent();
+        $contentlowercase = strtolower($content);
+
+        // Assert
+        $this->assertContains($expectedContentlowercase,$contentlowercase);
     }
 
 //    public function testAddNewUser()

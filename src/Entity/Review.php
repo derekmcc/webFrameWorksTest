@@ -72,16 +72,6 @@ class Review
      */
     private $votes;
 
-    public function getImage2()
-    {
-        return $this->image2;
-    }
-
-    public function setImage2($image2): void
-    {
-        $this->image2 = $image2;
-    }
-
     /**
      * @ORM\Column(type="float")
      */
@@ -90,7 +80,15 @@ class Review
     /**
      * @ORM\Column(type="string", nullable=true)
      *
-     * @Assert\Image
+     * @Assert\NotBlank(message="Please, upload the image as a jpg")
+     * @Assert\File(maxSize="10M",
+     *          mimeTypes={
+     *          "image/png",
+     *          "image/jpeg",
+     *          "image/jpg",
+     *          "image/gif"
+     *          }
+     * )
      */
     private $image;
 
@@ -103,12 +101,6 @@ class Review
      * @ORM\Column(type="integer", nullable=true)
      */
     private $downVotes = 0;
-
-    /**
-     * @var string $image
-     * @Assert\File( maxSize = "1024k", mimeTypesMessage = "Please upload a valid Image")
-     */
-    private $image2;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Recipe", inversedBy="reviews")

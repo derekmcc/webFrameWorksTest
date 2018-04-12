@@ -18,7 +18,7 @@ use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-
+use Symfony\Component\HttpFoundation\File\File;
 /**
  * @Route("/review", name="review_")
  */
@@ -67,18 +67,14 @@ class ReviewController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $review->setRequestReviewPublic(false);
-            $img = $form['image2']->getData();
-            if($img){
-                $fileLocation = $fileUploader->upload($img);
-                $review->setImage($fileLocation);
-            }elseif (!$img){
-                $review->setImage('noimage.png');
-            }
+            $file = $review->getImage();
+            $fileName = $fileUploader->upload($file);
+            $review->setImage($fileName);
             $em = $this->getDoctrine()->getManager();
             $em->persist($review);
             $em->flush();
-
-            return $this->redirectToRoute('review_edit', ['id' => $review->getId()]);
+            $recipe = $review->getRecipe();
+            return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId()]);
         }
 
         return $this->render('review/new.html.twig', [
@@ -105,19 +101,20 @@ class ReviewController extends Controller
      */
     public function edit(Request $request, Review $review, FileUploader $fileUploader)
     {
+        //fixes issue if file not found when going to form
+        if($review->getImage() == null)
+        {
+            // --Does'nt work suppose to allow non selecting of image on edit form
+//            $review->setImage(
+//                new File($this->getParameter('images_directory').'/'.$review->getImage())
+//            );
+        }
+
         $form = $this->createForm(ReviewType::class, $review);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $img = $form['image2']->getData();
-            if($img){
-                $fileLocation = $fileUploader->upload($img);
-                $review->setImage($fileLocation);
-            }elseif (!$img){
-                $review->setImage('noimage.png');
-            }
             $this->getDoctrine()->getManager()->flush();
-
             return $this->redirectToRoute('review_show', ['id' => $review->getId()]);
         }
 

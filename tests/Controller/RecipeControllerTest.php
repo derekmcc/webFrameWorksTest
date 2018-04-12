@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Created by PhpStorm.
+ * User: Derek
+ * Date: 29/03/2018
+ * Time: 19:52
+ */
 
 namespace App\Tests\Controller;
 
@@ -255,6 +260,46 @@ class RecipeControllerTest extends WebTestCase
         $this->assertContains($expectedContentlowercase,$contentlowercase);
 
     }
+
+    public function testRecipeDelete()
+    {
+        // Arrange
+        $url = '/recipe/' . self::DELETE_ID;
+        $httpMethod = 'GET';
+        $client = static::createClient();
+        $buttonName = '_method';
+        $searchText = 'Rum';
+        $linkText = 'Delete';
+
+        // Act
+        $crawler = $client->request($httpMethod, $url);
+        //$link = $crawler->selectLink($linkText)->link();
+       // $client->click($link);
+        $content = $client->getResponse()->getContent();
+
+        // to lower case
+        $searchTextLowerCase = strtolower($searchText);
+        $contentLowerCase = strtolower($content);
+
+        // Assert
+        $this->assertContains($searchTextLowerCase, $contentLowerCase);
+
+        $client->followRedirects(true);
+        //$client->request('GET', '/');
+        $expectedContent = 'Rum';
+        $expectedContentlowercase = strtolower($expectedContent);
+        $client->submit($client->request($httpMethod,$url)->selectButton($buttonName)->form());
+        //$client->submit($crawler->filter('#delete')->form());
+
+        // to lowercase
+        $content = $client->getResponse()->getContent();
+        $contentlowercase = strtolower($content);
+
+        // Assert
+        $this->assertContains($expectedContentlowercase,$contentlowercase);
+    }
+
+
 //    public function testRecipeDelete()
 //    {
 //        $client = static::createClient([], [
@@ -281,46 +326,6 @@ class RecipeControllerTest extends WebTestCase
 //        $this->assertSame(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
 //        $this->assertContains($expectedContentlowercase,$contentlowercase);
 //    }
-//    public function testUserLoginWithValidData()
-//    {
-//        // Arrange
-//        $url = '/recipe/' . self::DELETE_ID;
-//        $httpMethod = 'GET';
-//        $client = static::createClient();
-//        $buttonName = '_method';
-//        $searchText = 'Rum';
-//        $linkText = 'Delete';
-//
-//        // Act
-//        $crawler = $client->request($httpMethod, $url);
-//        //$link = $crawler->selectLink($linkText)->link();
-//       // $client->click($link);
-//        $content = $client->getResponse()->getContent();
-//
-//        // to lower case
-//        $searchTextLowerCase = strtolower($searchText);
-//        $contentLowerCase = strtolower($content);
-//
-//        // Assert
-//        $this->assertContains($searchTextLowerCase, $contentLowerCase);
-//
-//        $client->followRedirects(true);
-//        //$client->request('GET', '/');
-//        $expectedContent = 'Rum';
-//        $expectedContentlowercase = strtolower($expectedContent);
-//        $client->submit($client->request($httpMethod,$url)->selectButton($buttonName)->form());
-//        //$client->submit($crawler->filter('#delete')->form());
-//
-//        // to lowercase
-//        $content = $client->getResponse()->getContent();
-//        $contentlowercase = strtolower($content);
-//
-//        // Assert
-//        $this->assertContains($expectedContentlowercase,$contentlowercase);
-//
-//    }
-
-
 //    public function testShowRecipePage()
 //    {
 //        // Arrange

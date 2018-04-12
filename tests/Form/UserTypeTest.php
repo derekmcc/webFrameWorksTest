@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Derek
- * Date: 12/04/2018
- * Time: 18:10
- */
+
 
 namespace App\Tests\Form;
 
@@ -24,7 +19,7 @@ class UserTypeTest extends WebTestCase
     /**
      * @dataProvider userDetailsProvider
      */
-    public function testAddAndEditUserThroughForm($url,$pageContent,$httpMethod)
+    public function testEditUserDetails($url,$pageContent,$httpMethod)
     {
         // Arrange
         $buttonName = 'btn_submit';
@@ -62,4 +57,6 @@ class UserTypeTest extends WebTestCase
             ['/user/'.self::ID.'/edit','Profile', 'GET'],
         ];
     }
+
+
 }

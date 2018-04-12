@@ -18,11 +18,13 @@ App\Tests\Controller\RecipeController
  [x] Recipe links with admin 
  [x] Recipe links with user 
  [x] Search by date range
+ [ ] Recipe delete
 
 App\Controller\Test\ReviewController
  [x] Review public urls 
  [x] Review members urls 
  [x] Review requests to be public 
+ [ ] Review delete
 
 App\Tests\Controller\SecurityController
  [x] User login with valid data
@@ -31,12 +33,17 @@ App\Tests\Controller\SecurityController
 App\Tests\Controller\UserController
  [x] User urls 
  [x] Sign up for new user account
+ [ ] User delete
 
 App\Tests\Form\RecipeType
  [x] Add and edit drink through form 
 
+App\Tests\Form\ReviewType
+ [x] Add new review
+ [x] Edit user details 
+
 App\Tests\Form\UserType
- [x] Add and edit user through form 
+ [x] Edit user details 
 
 App\Test\Simple
  [x] One plus one equals two

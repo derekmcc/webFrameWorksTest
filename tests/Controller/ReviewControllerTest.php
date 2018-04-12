@@ -18,6 +18,7 @@ class ReviewControllerTest extends WebTestCase
 {
     private $client = null;
     const ID = '34';
+    const DELETE_ID = '55';
 
     public function setUp()
     {
@@ -172,6 +173,44 @@ class ReviewControllerTest extends WebTestCase
             ['/review/' . self::ID .'/upVote'],
             ['/review/' . self::ID .'/downVote'],
         ];
+    }
+
+    public function testReviewDelete()
+    {
+        // Arrange
+        $url = '/review/' . self::DELETE_ID;
+        $httpMethod = 'GET';
+        $client = static::createClient();
+        $buttonName = 'btn_submit';
+        $searchText = 'Review Details';
+        $linkText = 'Delete Review';
+
+        // Act
+        $crawler = $client->request($httpMethod, $url);
+        //$link = $crawler->selectLink($linkText)->link();
+       // $client->click($link);
+        $content = $client->getResponse()->getContent();
+
+        // to lower case
+        $searchTextLowerCase = strtolower($searchText);
+        $contentLowerCase = strtolower($content);
+
+        // Assert
+        $this->assertContains($searchTextLowerCase, $contentLowerCase);
+
+        $client->followRedirects(true);
+        //$client->request('GET', '/');
+        $expectedContent = 'Review Index';
+        $expectedContentlowercase = strtolower($expectedContent);
+        $client->submit($client->request($httpMethod,$url)->selectButton($buttonName)->form());
+        //$client->submit($crawler->filter('#delete')->form());
+
+        // to lowercase
+        $content = $client->getResponse()->getContent();
+        $contentlowercase = strtolower($content);
+
+        // Assert
+        $this->assertContains($expectedContentlowercase,$contentlowercase);
     }
 
 //    public function testReviewFormAdd()
