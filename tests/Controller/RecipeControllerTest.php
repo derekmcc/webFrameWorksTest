@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Derek
- * Date: 29/03/2018
- * Time: 19:52
- */
+
 
 namespace App\Tests\Controller;
 
@@ -21,8 +16,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class RecipeControllerTest extends WebTestCase
 {
     private $client = null;
-    const ID = '48';
-    const DELETE_ID = '25';
+    const ID = '2';
+    const DELETE_ID = '15';
 
     public function setUp()
     {
@@ -64,6 +59,7 @@ class RecipeControllerTest extends WebTestCase
     {
         return array(
             ['/recipe/', 'Drinks Index'],
+            ['/recipe/showRecipe', 'Drinks for Date Range'],
             ['/recipe/' . self::ID, 'Drink Details'],
         );
     }
@@ -133,30 +129,6 @@ class RecipeControllerTest extends WebTestCase
         $this->assertContains($expectedContentlowercase,$contentlowercase);
         //$this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
 
-    }
-
-    public function testShowRecipePage()
-    {
-        // Arrange
-        $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'derek',
-            'PHP_AUTH_PW' => 'pass',
-        ]);
-
-        // Expect exception - BEFORE you Act!
-        $this->expectException(NotFoundHttpException::class);
-
-        // Act
-        $client->request('GET', 'recipe/' . self::ID . '/edit');
-
-        $review = new Review();
-        $recipe = new Recipe();
-        $recipe->setImage(null);
-        $recipe->addReview($review);
-        $recipe->removeReview($review);
-
-        // Assert
-        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
     }
 
     /**
@@ -257,6 +229,32 @@ class RecipeControllerTest extends WebTestCase
         );
     }
 
+    public function testSearchByDateRange()
+    {
+        // Arrange
+        $buttonName = 'btn_submit';
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'derek',
+            'PHP_AUTH_PW' => 'pass',
+        ]);
+
+        // Act
+        $client->followRedirects(true);
+        $client->request('GET', '/recipe/');
+        $expectedContent = 'Drinks for Date Range';
+        $expectedContentlowercase = strtolower($expectedContent);
+        $client->submit($client->request('GET','/recipe/')->selectButton($buttonName)->form([
+            'date1'  => '2017-04-05',
+            'date2'  => '2018-04-17',
+        ]));
+        // to lowercase
+        $content = $client->getResponse()->getContent();
+        $contentlowercase = strtolower($content);
+
+        // Assert
+        $this->assertContains($expectedContentlowercase,$contentlowercase);
+
+    }
 //    public function testRecipeDelete()
 //    {
 //        $client = static::createClient([], [
@@ -321,4 +319,30 @@ class RecipeControllerTest extends WebTestCase
 //        $this->assertContains($expectedContentlowercase,$contentlowercase);
 //
 //    }
+
+
+//    public function testShowRecipePage()
+//    {
+//        // Arrange
+//        $client = static::createClient([], [
+//            'PHP_AUTH_USER' => 'derek',
+//            'PHP_AUTH_PW' => 'pass',
+//        ]);
+//
+//        // Expect exception - BEFORE you Act!
+//        $this->expectException(NotFoundHttpException::class);
+//
+//        // Act
+//        $client->request('GET', 'recipe/' . self::ID . '/edit');
+//
+//        $review = new Review();
+//        $recipe = new Recipe();
+//        $recipe->setImage(null);
+//        $recipe->addReview($review);
+//        $recipe->removeReview($review);
+//
+//        // Assert
+//        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+//    }
+
 }

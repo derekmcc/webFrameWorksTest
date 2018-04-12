@@ -14,10 +14,10 @@ App\Tests\Controller\RecipeController
  [x] Recipe urls 
  [x] Recipe members urls 
  [x] Search for drink
- [ ] Show recipe page
  [x] Recipe requests to be public 
  [x] Recipe links with admin 
  [x] Recipe links with user 
+ [x] Search by date range
 
 App\Controller\Test\ReviewController
  [x] Review public urls 
@@ -28,11 +28,15 @@ App\Tests\Controller\SecurityController
  [x] User login with valid data
  [x] Regular user cant access admin
 
-App\Tests\Form\RecipeType
- [ ] Add and edit drink through form 
+App\Tests\Controller\UserController
+ [x] User urls 
+ [x] Sign up for new user account
 
-App\Tests\Form\ReviewType
+App\Tests\Form\RecipeType
  [x] Add and edit drink through form 
+
+App\Tests\Form\UserType
+ [x] Add and edit user through form 
 
 App\Test\Simple
  [x] One plus one equals two

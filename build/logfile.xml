@@ -1,109 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="Project Test Suite" tests="38" assertions="57" errors="1" failures="2" skipped="0" time="54.708090">
-    <testsuite name="App\Tests\Controller\AdminControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\AdminControllerTest.php" tests="2" assertions="3" errors="0" failures="0" skipped="0" time="1.553164">
-      <testcase name="testCanCreateObject" class="App\Tests\Controller\AdminControllerTest" classname="App.Tests.Controller.AdminControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\AdminControllerTest.php" line="25" assertions="1" time="0.208884"/>
-      <testsuite name="App\Tests\Controller\AdminControllerTest::testAccessForAdminUsers" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="1.344280">
-        <testcase name="testAccessForAdminUsers with data set #0" class="App\Tests\Controller\AdminControllerTest" classname="App.Tests.Controller.AdminControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\AdminControllerTest.php" line="58" assertions="2" time="1.344280"/>
+  <testsuite name="Project Test Suite" tests="42" assertions="67" errors="0" failures="1" skipped="0" time="66.322504">
+    <testsuite name="App\Tests\Controller\AdminControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\AdminControllerTest.php" tests="2" assertions="3" errors="0" failures="0" skipped="0" time="1.842439">
+      <testcase name="testCanCreateObject" class="App\Tests\Controller\AdminControllerTest" classname="App.Tests.Controller.AdminControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\AdminControllerTest.php" line="20" assertions="1" time="0.257545"/>
+      <testsuite name="App\Tests\Controller\AdminControllerTest::testAccessForAdminUsers" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="1.584894">
+        <testcase name="testAccessForAdminUsers with data set #0" class="App\Tests\Controller\AdminControllerTest" classname="App.Tests.Controller.AdminControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\AdminControllerTest.php" line="53" assertions="2" time="1.584894"/>
       </testsuite>
     </testsuite>
-    <testsuite name="App\Tests\Controller\DefaultControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\DefaultControllerTest.php" tests="3" assertions="5" errors="0" failures="0" skipped="0" time="1.077934">
-      <testcase name="testHomepageResponseCodeOkay" class="App\Tests\Controller\DefaultControllerTest" classname="App.Tests.Controller.DefaultControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\DefaultControllerTest.php" line="16" assertions="1" time="0.387074"/>
-      <testsuite name="App\Tests\Controller\DefaultControllerTest::testSecureUrls" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.385657">
-        <testcase name="testSecureUrls with data set #0" class="App\Tests\Controller\DefaultControllerTest" classname="App.Tests.Controller.DefaultControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\DefaultControllerTest.php" line="39" assertions="2" time="0.385657"/>
+    <testsuite name="App\Tests\Controller\DefaultControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\DefaultControllerTest.php" tests="3" assertions="5" errors="0" failures="0" skipped="0" time="1.377418">
+      <testcase name="testHomepageResponseCodeOkay" class="App\Tests\Controller\DefaultControllerTest" classname="App.Tests.Controller.DefaultControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\DefaultControllerTest.php" line="16" assertions="1" time="0.508327"/>
+      <testsuite name="App\Tests\Controller\DefaultControllerTest::testSecureUrls" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.480605">
+        <testcase name="testSecureUrls with data set #0" class="App\Tests\Controller\DefaultControllerTest" classname="App.Tests.Controller.DefaultControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\DefaultControllerTest.php" line="39" assertions="2" time="0.480605"/>
       </testsuite>
-      <testsuite name="App\Tests\Controller\DefaultControllerTest::testPublicUrls" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.305203">
-        <testcase name="testPublicUrls with data set #0" class="App\Tests\Controller\DefaultControllerTest" classname="App.Tests.Controller.DefaultControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\DefaultControllerTest.php" line="60" assertions="2" time="0.305203"/>
-      </testsuite>
-    </testsuite>
-    <testsuite name="App\Tests\Controller\ErrorControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ErrorControllerTest.php" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.314001">
-      <testcase name="testErrorResponseOkay" class="App\Tests\Controller\ErrorControllerTest" classname="App.Tests.Controller.ErrorControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ErrorControllerTest.php" line="23" assertions="2" time="0.314001"/>
-    </testsuite>
-    <testsuite name="App\Tests\Controller\RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" tests="15" assertions="25" errors="0" failures="1" skipped="0" time="20.368861">
-      <testsuite name="App\Tests\Controller\RecipeControllerTest::testRecipeUrls" tests="2" assertions="4" errors="0" failures="0" skipped="0" time="1.411762">
-        <testcase name="testRecipeUrls with data set #0" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="34" assertions="2" time="1.010176"/>
-        <testcase name="testRecipeUrls with data set #1" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="34" assertions="2" time="0.401586"/>
-      </testsuite>
-      <testsuite name="App\Tests\Controller\RecipeControllerTest::testRecipeMembersUrls" tests="2" assertions="4" errors="0" failures="0" skipped="0" time="3.003312">
-        <testcase name="testRecipeMembersUrls with data set #0" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="81" assertions="2" time="1.245902"/>
-        <testcase name="testRecipeMembersUrls with data set #1" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="81" assertions="2" time="1.757410"/>
-      </testsuite>
-      <testcase name="testSearchForDrink" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="110" assertions="1" time="1.802271"/>
-      <testcase name="testShowRecipePage" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="138" assertions="1" time="1.561913">
-        <failure type="PHPUnit\Framework\ExpectationFailedException">App\Tests\Controller\RecipeControllerTest::testShowRecipePage
-Failed asserting that exception of type "Error" matches expected exception "Symfony\Component\HttpKernel\Exception\NotFoundHttpException". Message was: "Call to a member function contains() on null" at
-C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\src\Entity\Recipe.php:266
-C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php:155
-.
-
-</failure>
-      </testcase>
-      <testsuite name="App\Tests\Controller\RecipeControllerTest::testRecipeRequestsToBePublic" tests="3" assertions="3" errors="0" failures="0" skipped="0" time="4.461747">
-        <testcase name="testRecipeRequestsToBePublic with data set #0" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="165" assertions="1" time="1.511313"/>
-        <testcase name="testRecipeRequestsToBePublic with data set #1" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="165" assertions="1" time="1.491794"/>
-        <testcase name="testRecipeRequestsToBePublic with data set #2" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="165" assertions="1" time="1.458640"/>
-      </testsuite>
-      <testsuite name="App\Tests\Controller\RecipeControllerTest::testRecipeLinksWithAdmin" tests="3" assertions="6" errors="0" failures="0" skipped="0" time="3.831510">
-        <testcase name="testRecipeLinksWithAdmin with data set #0" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="201" assertions="2" time="1.233443"/>
-        <testcase name="testRecipeLinksWithAdmin with data set #1" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="201" assertions="2" time="1.506140"/>
-        <testcase name="testRecipeLinksWithAdmin with data set #2" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="201" assertions="2" time="1.091927"/>
-      </testsuite>
-      <testsuite name="App\Tests\Controller\RecipeControllerTest::testRecipeLinksWithUser" tests="3" assertions="6" errors="0" failures="0" skipped="0" time="4.296347">
-        <testcase name="testRecipeLinksWithUser with data set #0" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="232" assertions="2" time="1.722485"/>
-        <testcase name="testRecipeLinksWithUser with data set #1" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="232" assertions="2" time="1.485244"/>
-        <testcase name="testRecipeLinksWithUser with data set #2" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="232" assertions="2" time="1.088618"/>
+      <testsuite name="App\Tests\Controller\DefaultControllerTest::testPublicUrls" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.388486">
+        <testcase name="testPublicUrls with data set #0" class="App\Tests\Controller\DefaultControllerTest" classname="App.Tests.Controller.DefaultControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\DefaultControllerTest.php" line="60" assertions="2" time="0.388486"/>
       </testsuite>
     </testsuite>
-    <testsuite name="App\Controller\Test\ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" tests="9" assertions="13" errors="0" failures="0" skipped="0" time="11.369392">
-      <testsuite name="App\Controller\Test\ReviewControllerTest::testReviewPublicUrls" tests="2" assertions="4" errors="0" failures="0" skipped="0" time="1.106637">
-        <testcase name="testReviewPublicUrls with data set #0" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="30" assertions="2" time="0.685109"/>
-        <testcase name="testReviewPublicUrls with data set #1" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="30" assertions="2" time="0.421528"/>
+    <testsuite name="App\Tests\Controller\ErrorControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ErrorControllerTest.php" tests="1" assertions="2" errors="0" failures="0" skipped="0" time="0.365745">
+      <testcase name="testErrorResponseOkay" class="App\Tests\Controller\ErrorControllerTest" classname="App.Tests.Controller.ErrorControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ErrorControllerTest.php" line="23" assertions="2" time="0.365745"/>
+    </testsuite>
+    <testsuite name="App\Tests\Controller\RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" tests="16" assertions="27" errors="0" failures="0" skipped="0" time="23.777439">
+      <testsuite name="App\Tests\Controller\RecipeControllerTest::testRecipeUrls" tests="3" assertions="6" errors="0" failures="0" skipped="0" time="3.078954">
+        <testcase name="testRecipeUrls with data set #0" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="29" assertions="2" time="1.366933"/>
+        <testcase name="testRecipeUrls with data set #1" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="29" assertions="2" time="1.262722"/>
+        <testcase name="testRecipeUrls with data set #2" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="29" assertions="2" time="0.449299"/>
       </testsuite>
-      <testsuite name="App\Controller\Test\ReviewControllerTest::testReviewMembersUrls" tests="2" assertions="4" errors="0" failures="0" skipped="0" time="2.727294">
-        <testcase name="testReviewMembersUrls with data set #0" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="60" assertions="2" time="1.377352"/>
-        <testcase name="testReviewMembersUrls with data set #1" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="60" assertions="2" time="1.349942"/>
+      <testsuite name="App\Tests\Controller\RecipeControllerTest::testRecipeMembersUrls" tests="2" assertions="4" errors="0" failures="0" skipped="0" time="3.109912">
+        <testcase name="testRecipeMembersUrls with data set #0" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="77" assertions="2" time="1.294076"/>
+        <testcase name="testRecipeMembersUrls with data set #1" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="77" assertions="2" time="1.815836"/>
       </testsuite>
-      <testsuite name="App\Controller\Test\ReviewControllerTest::testReviewRequestsToBePublic" tests="5" assertions="5" errors="0" failures="0" skipped="0" time="7.535461">
-        <testcase name="testReviewRequestsToBePublic with data set #0" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="150" assertions="1" time="1.528663"/>
-        <testcase name="testReviewRequestsToBePublic with data set #1" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="150" assertions="1" time="1.492700"/>
-        <testcase name="testReviewRequestsToBePublic with data set #2" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="150" assertions="1" time="1.485296"/>
-        <testcase name="testReviewRequestsToBePublic with data set #3" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="150" assertions="1" time="1.515094"/>
-        <testcase name="testReviewRequestsToBePublic with data set #4" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="150" assertions="1" time="1.513708"/>
+      <testcase name="testSearchForDrink" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="106" assertions="1" time="1.805337"/>
+      <testsuite name="App\Tests\Controller\RecipeControllerTest::testRecipeRequestsToBePublic" tests="3" assertions="3" errors="0" failures="0" skipped="0" time="4.709505">
+        <testcase name="testRecipeRequestsToBePublic with data set #0" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="137" assertions="1" time="1.637026"/>
+        <testcase name="testRecipeRequestsToBePublic with data set #1" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="137" assertions="1" time="1.544579"/>
+        <testcase name="testRecipeRequestsToBePublic with data set #2" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="137" assertions="1" time="1.527900"/>
+      </testsuite>
+      <testsuite name="App\Tests\Controller\RecipeControllerTest::testRecipeLinksWithAdmin" tests="3" assertions="6" errors="0" failures="0" skipped="0" time="3.983759">
+        <testcase name="testRecipeLinksWithAdmin with data set #0" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="173" assertions="2" time="1.173712"/>
+        <testcase name="testRecipeLinksWithAdmin with data set #1" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="173" assertions="2" time="1.634461"/>
+        <testcase name="testRecipeLinksWithAdmin with data set #2" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="173" assertions="2" time="1.175586"/>
+      </testsuite>
+      <testsuite name="App\Tests\Controller\RecipeControllerTest::testRecipeLinksWithUser" tests="3" assertions="6" errors="0" failures="0" skipped="0" time="4.635422">
+        <testcase name="testRecipeLinksWithUser with data set #0" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="204" assertions="2" time="1.835275"/>
+        <testcase name="testRecipeLinksWithUser with data set #1" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="204" assertions="2" time="1.634248"/>
+        <testcase name="testRecipeLinksWithUser with data set #2" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="204" assertions="2" time="1.165899"/>
+      </testsuite>
+      <testcase name="testSearchByDateRange" class="App\Tests\Controller\RecipeControllerTest" classname="App.Tests.Controller.RecipeControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\RecipeControllerTest.php" line="232" assertions="1" time="2.454550"/>
+    </testsuite>
+    <testsuite name="App\Controller\Test\ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" tests="9" assertions="13" errors="0" failures="0" skipped="0" time="11.496819">
+      <testsuite name="App\Controller\Test\ReviewControllerTest::testReviewPublicUrls" tests="2" assertions="4" errors="0" failures="0" skipped="0" time="1.317158">
+        <testcase name="testReviewPublicUrls with data set #0" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="30" assertions="2" time="0.810558"/>
+        <testcase name="testReviewPublicUrls with data set #1" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="30" assertions="2" time="0.506600"/>
+      </testsuite>
+      <testsuite name="App\Controller\Test\ReviewControllerTest::testReviewMembersUrls" tests="2" assertions="4" errors="0" failures="0" skipped="0" time="2.629353">
+        <testcase name="testReviewMembersUrls with data set #0" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="60" assertions="2" time="1.305076"/>
+        <testcase name="testReviewMembersUrls with data set #1" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="60" assertions="2" time="1.324277"/>
+      </testsuite>
+      <testsuite name="App\Controller\Test\ReviewControllerTest::testReviewRequestsToBePublic" tests="5" assertions="5" errors="0" failures="0" skipped="0" time="7.550308">
+        <testcase name="testReviewRequestsToBePublic with data set #0" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="150" assertions="1" time="1.544128"/>
+        <testcase name="testReviewRequestsToBePublic with data set #1" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="150" assertions="1" time="1.515684"/>
+        <testcase name="testReviewRequestsToBePublic with data set #2" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="150" assertions="1" time="1.499497"/>
+        <testcase name="testReviewRequestsToBePublic with data set #3" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="150" assertions="1" time="1.468939"/>
+        <testcase name="testReviewRequestsToBePublic with data set #4" class="App\Controller\Test\ReviewControllerTest" classname="App.Controller.Test.ReviewControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\ReviewControllerTest.php" line="150" assertions="1" time="1.522060"/>
       </testsuite>
     </testsuite>
-    <testsuite name="App\Tests\Controller\SecurityControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\SecurityControllerTest.php" tests="2" assertions="5" errors="0" failures="0" skipped="0" time="5.151244">
-      <testcase name="testUserLoginWithValidData" class="App\Tests\Controller\SecurityControllerTest" classname="App.Tests.Controller.SecurityControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\SecurityControllerTest.php" line="22" assertions="2" time="2.404558"/>
-      <testcase name="testRegularUserCantAccessAdmin" class="App\Tests\Controller\SecurityControllerTest" classname="App.Tests.Controller.SecurityControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\SecurityControllerTest.php" line="63" assertions="3" time="2.746686"/>
+    <testsuite name="App\Tests\Controller\SecurityControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\SecurityControllerTest.php" tests="2" assertions="5" errors="0" failures="0" skipped="0" time="5.258854">
+      <testcase name="testUserLoginWithValidData" class="App\Tests\Controller\SecurityControllerTest" classname="App.Tests.Controller.SecurityControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\SecurityControllerTest.php" line="22" assertions="2" time="2.413714"/>
+      <testcase name="testRegularUserCantAccessAdmin" class="App\Tests\Controller\SecurityControllerTest" classname="App.Tests.Controller.SecurityControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\SecurityControllerTest.php" line="63" assertions="3" time="2.845140"/>
     </testsuite>
-    <testsuite name="App\Tests\Controller\UserControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\UserControllerTest.php" tests="1" assertions="0" errors="0" failures="1" skipped="0" time="0.004135">
-      <testcase name="Warning" assertions="0" time="0.004135">
+    <testsuite name="App\Tests\Controller\UserControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\UserControllerTest.php" tests="4" assertions="8" errors="0" failures="0" skipped="0" time="9.095899">
+      <testsuite name="App\Tests\Controller\UserControllerTest::testUserUrls" tests="3" assertions="6" errors="0" failures="0" skipped="0" time="5.343632">
+        <testcase name="testUserUrls with data set #0" class="App\Tests\Controller\UserControllerTest" classname="App.Tests.Controller.UserControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\UserControllerTest.php" line="30" assertions="2" time="1.638832"/>
+        <testcase name="testUserUrls with data set #1" class="App\Tests\Controller\UserControllerTest" classname="App.Tests.Controller.UserControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\UserControllerTest.php" line="30" assertions="2" time="1.851612"/>
+        <testcase name="testUserUrls with data set #2" class="App\Tests\Controller\UserControllerTest" classname="App.Tests.Controller.UserControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\UserControllerTest.php" line="30" assertions="2" time="1.853188"/>
+      </testsuite>
+      <testcase name="testSignUpForNewUserAccount" class="App\Tests\Controller\UserControllerTest" classname="App.Tests.Controller.UserControllerTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Controller\UserControllerTest.php" line="67" assertions="2" time="3.752267"/>
+    </testsuite>
+    <testsuite name="App\Tests\Form\RecipeTypeTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Form\RecipeTypeTest.php" tests="2" assertions="2" errors="0" failures="0" skipped="0" time="8.167363">
+      <testsuite name="App\Tests\Form\RecipeTypeTest::testAddAndEditDrinkThroughForm" tests="2" assertions="2" errors="0" failures="0" skipped="0" time="8.167363">
+        <testcase name="testAddAndEditDrinkThroughForm with data set #0" class="App\Tests\Form\RecipeTypeTest" classname="App.Tests.Form.RecipeTypeTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Form\RecipeTypeTest.php" line="29" assertions="1" time="3.973310"/>
+        <testcase name="testAddAndEditDrinkThroughForm with data set #1" class="App\Tests\Form\RecipeTypeTest" classname="App.Tests.Form.RecipeTypeTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Form\RecipeTypeTest.php" line="29" assertions="1" time="4.194053"/>
+      </testsuite>
+    </testsuite>
+    <testsuite name="App\Tests\Form\ReviewTypeTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Form\ReviewTypeTest.php" tests="1" assertions="0" errors="0" failures="1" skipped="0" time="0.004442">
+      <testcase name="Warning" assertions="0" time="0.004442">
         <warning type="PHPUnit\Framework\Warning">Warning
-No tests found in class "App\Tests\Controller\UserControllerTest".
+No tests found in class "App\Tests\Form\ReviewTypeTest".
 
 </warning>
       </testcase>
     </testsuite>
-    <testsuite name="App\Tests\Form\RecipeTypeTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Form\RecipeTypeTest.php" tests="2" assertions="1" errors="1" failures="0" skipped="0" time="7.243993">
-      <testsuite name="App\Tests\Form\RecipeTypeTest::testAddAndEditDrinkThroughForm" tests="2" assertions="1" errors="1" failures="0" skipped="0" time="7.243993">
-        <testcase name="testAddAndEditDrinkThroughForm with data set #0" class="App\Tests\Form\RecipeTypeTest" classname="App.Tests.Form.RecipeTypeTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Form\RecipeTypeTest.php" line="29" assertions="1" time="3.877594"/>
-        <testcase name="testAddAndEditDrinkThroughForm with data set #1" class="App\Tests\Form\RecipeTypeTest" classname="App.Tests.Form.RecipeTypeTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Form\RecipeTypeTest.php" line="29" assertions="0" time="3.366399">
-          <error type="InvalidArgumentException">App\Tests\Form\RecipeTypeTest::testAddAndEditDrinkThroughForm with data set #1 ('/recipe/46/edit', 'Drink Details', 'GET', 'Old Rum', 'Award winning Rum', 'white rum', 'ingredients, etc', '€21-30', true, Symfony\Component\HttpFoundation\File\UploadedFile Object (...))
-InvalidArgumentException: The current node list is empty.
-
-C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\vendor\symfony\dom-crawler\Crawler.php:849
-C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Form\RecipeTypeTest.php:50
-</error>
-        </testcase>
+    <testsuite name="App\Tests\Form\UserTypeTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Form\UserTypeTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="4.933574">
+      <testsuite name="App\Tests\Form\UserTypeTest::testAddAndEditUserThroughForm" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="4.933574">
+        <testcase name="testAddAndEditUserThroughForm with data set #0" class="App\Tests\Form\UserTypeTest" classname="App.Tests.Form.UserTypeTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Form\UserTypeTest.php" line="27" assertions="1" time="4.933574"/>
       </testsuite>
     </testsuite>
-    <testsuite name="App\Tests\Form\ReviewTypeTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Form\ReviewTypeTest.php" tests="2" assertions="2" errors="0" failures="0" skipped="0" time="7.623113">
-      <testsuite name="App\Tests\Form\ReviewTypeTest::testAddAndEditDrinkThroughForm" tests="2" assertions="2" errors="0" failures="0" skipped="0" time="7.623113">
-        <testcase name="testAddAndEditDrinkThroughForm with data set #0" class="App\Tests\Form\ReviewTypeTest" classname="App.Tests.Form.ReviewTypeTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Form\ReviewTypeTest.php" line="22" assertions="1" time="3.869853"/>
-        <testcase name="testAddAndEditDrinkThroughForm with data set #1" class="App\Tests\Form\ReviewTypeTest" classname="App.Tests.Form.ReviewTypeTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\Form\ReviewTypeTest.php" line="22" assertions="1" time="3.753260"/>
-      </testsuite>
-    </testsuite>
-    <testsuite name="App\Test\SimpleTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\SimpleTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.002252">
-      <testcase name="testOnePlusOneEqualsTwo" class="App\Test\SimpleTest" classname="App.Test.SimpleTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\SimpleTest.php" line="9" assertions="1" time="0.002252"/>
+    <testsuite name="App\Test\SimpleTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\SimpleTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.002512">
+      <testcase name="testOnePlusOneEqualsTwo" class="App\Test\SimpleTest" classname="App.Test.SimpleTest" file="C:\Users\Derek\Desktop\AssignmentTest\webFrameWorksTest\tests\SimpleTest.php" line="9" assertions="1" time="0.002512"/>
     </testsuite>
   </testsuite>
 </testsuites>

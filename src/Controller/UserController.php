@@ -31,8 +31,15 @@ class UserController extends Controller
         $users = $this->getDoctrine()
             ->getRepository(User::class)
             ->findAll();
+        $recipes = $this->getDoctrine()
+            ->getRepository(Recipe::class)
+            ->findAll();
+        $reviews = $this->getDoctrine()
+            ->getRepository(Review::class)
+            ->findAll();
 
-        return $this->render('user/index.html.twig', ['users' => $users]);
+        return $this->render('user/index.html.twig', [
+            'users' => $users]);
     }
 
     /**
@@ -94,8 +101,16 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $recipes = $this->getDoctrine()
+            ->getRepository(Recipe::class)
+            ->findAll();
+        $reviews = $this->getDoctrine()
+            ->getRepository(Review::class)
+            ->findAll();
         return $this->render('user/show.html.twig', [
             'user' => $user,
+            'reviews' => $reviews,
+            'recipes' => $recipes,
         ]);
     }
 
@@ -112,7 +127,7 @@ class UserController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_edit', ['id' => $user->getId()]);
+            return $this->redirectToRoute('user_account', ['id' => $user->getId()]);
         }
 
         return $this->render('user/edit.html.twig', [

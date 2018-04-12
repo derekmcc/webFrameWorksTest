@@ -8,7 +8,7 @@
         <input name="date1" type="date" class="form-control" value="2018-04-05">
         <div class="input-group-addon">to</div>
         <input name="date2" type="date" class="form-control" value="2018-04-19">
-        <input type="submit" value="Search by Date" class="btn btn-outline-success">
+        <input name="btn_submit" type="submit" value="Search by Date" class="btn btn-outline-success">
     </div>
     <br>
     </form>
@@ -16,7 +16,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
-                <h1 class="display-4">Drinks</h1>
+                <h1 class="display-4">Drinks for Date Range</h1>
             </div>
             <div class="col-lg-4">
                 {% if (is_granted('IS_AUTHENTICATED_FULLY'))%}
@@ -101,6 +101,10 @@
             </div>
         </div><br><br>
         {% endif %}
+    {% else %}
+        <br>
+        <div class="row"><p><b>No drinks found for this date range.</b></p></div>
     {% endfor %}
+
     </div>
 {% endblock %}
