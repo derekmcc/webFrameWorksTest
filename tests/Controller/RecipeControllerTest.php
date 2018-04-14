@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Derek
- * Date: 29/03/2018
- * Time: 19:52
- */
 
 namespace App\Tests\Controller;
 
@@ -261,71 +255,7 @@ class RecipeControllerTest extends WebTestCase
 
     }
 
-    public function testRecipeDelete()
-    {
-        // Arrange
-        $url = '/recipe/' . self::DELETE_ID;
-        $httpMethod = 'GET';
-        $client = static::createClient();
-        $buttonName = '_method';
-        $searchText = 'Rum';
-        $linkText = 'Delete';
 
-        // Act
-        $crawler = $client->request($httpMethod, $url);
-        //$link = $crawler->selectLink($linkText)->link();
-       // $client->click($link);
-        $content = $client->getResponse()->getContent();
-
-        // to lower case
-        $searchTextLowerCase = strtolower($searchText);
-        $contentLowerCase = strtolower($content);
-
-        // Assert
-        $this->assertContains($searchTextLowerCase, $contentLowerCase);
-
-        $client->followRedirects(true);
-        //$client->request('GET', '/');
-        $expectedContent = 'Rum';
-        $expectedContentlowercase = strtolower($expectedContent);
-        $client->submit($client->request($httpMethod,$url)->selectButton($buttonName)->form());
-        //$client->submit($crawler->filter('#delete')->form());
-
-        // to lowercase
-        $content = $client->getResponse()->getContent();
-        $contentlowercase = strtolower($content);
-
-        // Assert
-        $this->assertContains($expectedContentlowercase,$contentlowercase);
-    }
-
-
-//    public function testRecipeDelete()
-//    {
-//        $client = static::createClient([], [
-//            'PHP_AUTH_USER' => 'derek',
-//            'PHP_AUTH_PW' => 'pass',
-//        ]);
-//        $expectedContent = 'Rum';
-//        $expectedContentlowercase = strtolower($expectedContent);
-//
-//
-//        $client->followRedirects(true);
-//        $crawler = $client->request('GET', '/recipe/' . self::DELETE_ID);
-//        $client->submit($crawler->filter('#delete')->form());
-//
-//        $post = $client->getContainer()->get('doctrine')->getRepository(Recipe::class)->find(1);
-//        $this->assertNull($post);
-//
-//
-//        // to lowercase
-//        $content = $client->getResponse()->getContent();
-//        $contentlowercase = strtolower($content);
-//
-//        // Assert
-//        $this->assertSame(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
-//        $this->assertContains($expectedContentlowercase,$contentlowercase);
-//    }
 //    public function testShowRecipePage()
 //    {
 //        // Arrange
@@ -335,7 +265,7 @@ class RecipeControllerTest extends WebTestCase
 //        ]);
 //
 //        // Expect exception - BEFORE you Act!
-//        $this->expectException(NotFoundHttpException::class);
+//        //$this->expectException(NotFoundHttpException::class);
 //
 //        // Act
 //        $client->request('GET', 'recipe/' . self::ID . '/edit');
@@ -350,4 +280,41 @@ class RecipeControllerTest extends WebTestCase
 //        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
 //    }
 
+    /**
+     * @param $id
+     * @dataProvider recipeDeleteProvider
+     */
+    public function testRecipeDelete($id)
+    {
+        // Arrange
+        $buttonName = 'btn_delete';
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'derek',
+            'PHP_AUTH_PW' => 'pass',
+        ]);
+        $url = '/recipe/' . $id;
+        $httpMethod = 'GET';
+
+        // Act
+        $client->followRedirects(true);
+        $client->request($httpMethod, $url);
+        $expectedContent = 'Drinks Index';
+        $expectedContentlowercase = strtolower($expectedContent);
+        $client->submit($client->request($httpMethod,$url)->selectButton($buttonName)->form());
+
+        // to lowercase
+        $content = $client->getResponse()->getContent();
+        $contentlowercase = strtolower($content);
+
+        // Assert
+        $this->assertContains($expectedContentlowercase,$contentlowercase);
+    }
+
+    public function recipeDeleteProvider()
+    {
+        return array(
+            [17],
+            [19],
+        );
+    }
 }

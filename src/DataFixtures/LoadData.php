@@ -59,7 +59,7 @@ class LoadData extends Fixture
         foreach ($this->getRecipeData() as [$title, $summary, $description, $image, $author, $ingredients, $price, $public]) {
             $recipe = new Recipe();
             $recipe->setTitle($title);
-            $recipe->setSummary($this->getRandomText());
+            $recipe->setSummary($summary);
             $recipe->setDescription($description);
             $recipe->setImage($image);
             $recipe->setAuthor($author);
@@ -70,10 +70,10 @@ class LoadData extends Fixture
             $recipe->setRequestRecipePublic($faker->randomElement($this->getTrueFalse()));
             $manager->persist($recipe);
 
-            foreach (range(1, 5) as $i) {
+            foreach (range(1, $faker->randomNumber(2,false)) as $i) {
                 $review = new Review();
                 $review->setAuthor($this->getReference($faker->randomElement($this->getUsernames())));
-                $review->setSummary($this->getPhrases()[$i]);
+                $review->setSummary($faker->randomElement($this->getReviewSummaries()));
                 $review->setPublishedAt($faker->dateTimeThisMonth('now'));
                 $review->setRetailers($faker->randomElement($this->getRetailers()));
                 $review->setPrice($faker->randomFloat(2,5,60));
@@ -318,52 +318,18 @@ class LoadData extends Fixture
         ];
     }
 
-    private function getPhrases(): array
+    private function getReviewSummaries(): array
     {
         return [
             'Distilled from molassis in copper pot stills and then aged in small oak casks for on average 12 years before being bottled',
             'Produced in Venezuela, which has a rich rum history dating to 1896, the distillery is located on the northern slopes of the Andes mountains',
             'Created in 1976 in the highlands of Guatemala, where it is distilled from fresh cane juice before aging at 7544 feet at 62 °F (17 °C)',
-            'Eros diam egestas libero eu vulputate risus',
-            'In hac habitasse platea dictumst',
-            'Morbi tempus commodo mattis',
-            'Ut suscipit posuere justo at vulputate',
-            'Ut eleifend mauris et risus ultrices egestas',
-            'Aliquam sodales odio id eleifend tristique',
-            'Urna nisl sollicitudin id varius orci quam id turpis',
-            'Nulla porta lobortis ligula vel egestas',
-            'Curabitur aliquam euismod dolor non ornare',
-            'Sed varius a risus eget aliquam',
-            'Nunc viverra elit ac laoreet suscipit',
-            'Pellentesque et sapien pulvinar consectetur',
-            'Ubi est barbatus nix',
-            'Abnobas sunt hilotaes de placidus vita',
-            'Ubi est audax amicitia',
-            'Eposs sunt solems de superbus fortis',
-            'Vae humani generis',
-            'Diatrias tolerare tanquam noster caesium',
-            'Teres talis saepe tractare de camerarius flavum sensorem',
-            'Silva de secundus galatae demitto quadra',
-            'Sunt accentores vitare salvus flavum parses',
-            'Potus sensim ad ferox abnoba',
-            'Sunt seculaes transferre talis camerarius fluctuies',
-            'Era brevis ratione est',
-            'Sunt torquises imitari velox mirabilis medicinaes',
-            'Mineralis persuadere omnes finises desiderium',
-            'Bassus fatalis classiss virtualiter transferre de flavum',
+            'Excellent rum',
+            'Good rum tastes very nice',
+            'Smells good overall ok rum',
+            'Very dry rum and tastes very sweet',
+            'One of the best rums on the market'
         ];
-    }
-
-    private function getRandomText(int $maxLength = 50): string
-    {
-        $phrases = $this->getPhrases();
-        shuffle($phrases);
-
-        while (mb_strlen($text = implode('. ', $phrases).'.') > $maxLength) {
-            array_pop($phrases);
-        }
-
-        return $text;
     }
 
     private function encodePassword($user, $plainPassword):string

@@ -27,23 +27,8 @@ class UserType extends AbstractType
                 'first_options' => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password'),
             ))
-
-           // ->add('password')
-         /*   ->add(
-                'roles',
-                ChoiceType::class, [
-                    'choices' => [
-                        'ROLE_ADMIN' => 'ROLE_ADMIN',
-                        'ROLE_USER' => 'ROLE_USER',
-                        'ROLE_SUPER_ADMIN' => 'ROLE_SUPER_ADMIN'
-                    ],
-                    //'expanded' => true,
-                    'multiple' => true,
-                ]
-            )*/
         ;
     }
-
 
     public function configureOptions(OptionsResolver $resolver)
     {

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class RecipeTypeTest extends WebTestCase
 {
 
-    const ID = '5';
+    const ID = '6';
 
     protected function setUp()
     {

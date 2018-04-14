@@ -3,22 +3,289 @@
 namespace App\Test;
 
 use PHPUnit\Framework\TestCase;
-
-class SimpleTest extends TestCase
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
+class SimpleTest extends WebTestCase
 {
-    public function testOnePlusOneEqualsTwo()
-    {
-        // Arrange
-        $num1 = 1;
-        $num2 = 1; $expectedResult = 2;
 
-        // Act
-        $result = $num1 + $num2;
 
-        // Assert
-        $this->assertEquals($expectedResult, $result);
-    }
+
     /**
+     *
+
+    public function testRecipeDelete()
+    {
+    // Arrange
+    $url = '/recipe/' . self::DELETE_ID;
+    $httpMethod = 'GET';
+    $client = static::createClient();
+    $buttonName = '_method';
+    $searchText = 'Rum';
+    $linkText = 'Delete';
+
+    // Act
+    $crawler = $client->request($httpMethod, $url);
+    //$link = $crawler->selectLink($linkText)->link();
+    // $client->click($link);
+    $content = $client->getResponse()->getContent();
+
+    // to lower case
+    $searchTextLowerCase = strtolower($searchText);
+    $contentLowerCase = strtolower($content);
+
+    // Assert
+    $this->assertContains($searchTextLowerCase, $contentLowerCase);
+
+    $client->followRedirects(true);
+    //$client->request('GET', '/');
+    $expectedContent = 'Rum';
+    $expectedContentlowercase = strtolower($expectedContent);
+    $client->submit($client->request($httpMethod,$url)->selectButton($buttonName)->form());
+    //$client->submit($crawler->filter('#delete')->form());
+
+    // to lowercase
+    $content = $client->getResponse()->getContent();
+    $contentlowercase = strtolower($content);
+
+    // Assert
+    $this->assertContains($expectedContentlowercase,$contentlowercase);
+    }
+     *   public function testRecipeDelete()
+    {
+    $client = static::createClient([], [
+    'PHP_AUTH_USER' => 'derek',
+    'PHP_AUTH_PW' => 'pass',
+    ]);
+    $expectedContent = 'Rum';
+    $expectedContentlowercase = strtolower($expectedContent);
+
+
+    $client->followRedirects(true);
+    $crawler = $client->request('GET', '/recipe/' . self::DELETE_ID);
+    $client->submit($crawler->filter('#delete')->form());
+
+    $post = $client->getContainer()->get('doctrine')->getRepository(Recipe::class)->find(1);
+    $this->assertNull($post);
+
+
+    // to lowercase
+    $content = $client->getResponse()->getContent();
+    $contentlowercase = strtolower($content);
+
+    // Assert
+    $this->assertSame(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
+    $this->assertContains($expectedContentlowercase,$contentlowercase);
+    }
+    public function testReviewDelete()
+    {
+    // Arrange
+    $url = '/review/' . self::DELETE_ID;
+    $httpMethod = 'GET';
+    $client = static::createClient();
+    $buttonName = 'btn_submit';
+    $searchText = 'Review Details';
+    $linkText = 'Delete Review';
+
+    // Act
+    $crawler = $client->request($httpMethod, $url);
+    //$link = $crawler->selectLink($linkText)->link();
+    // $client->click($link);
+    $content = $client->getResponse()->getContent();
+
+    // to lower case
+    $searchTextLowerCase = strtolower($searchText);
+    $contentLowerCase = strtolower($content);
+
+    // Assert
+    $this->assertContains($searchTextLowerCase, $contentLowerCase);
+
+    $client->followRedirects(true);
+    //$client->request('GET', '/');
+    $expectedContent = 'Review Index';
+    $expectedContentlowercase = strtolower($expectedContent);
+    $client->submit($client->request($httpMethod,$url)->selectButton($buttonName)->form());
+    //$client->submit($crawler->filter('#delete')->form());
+
+    // to lowercase
+    $content = $client->getResponse()->getContent();
+    $contentlowercase = strtolower($content);
+
+    // Assert
+    $this->assertContains($expectedContentlowercase,$contentlowercase);
+    }     *    ///////////////////////////////////////////////////////////////////////////
+    //    public function testNewReview()
+    //    {
+    //        // Arrange
+    //        $client = static::createClient([], [
+    //            'PHP_AUTH_USER' => 'derek',
+    //            'PHP_AUTH_PW' => 'pass',
+    //        ]);
+    //        $searchText = 'New Review';
+    //       // $id=90;
+    //        // Act
+    //        $client->request('GET', '/review/new/1');
+    //        $content = $client->getResponse()->getContent();
+    //
+    //        // Assert
+    //        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+    //
+    //        // to lower case
+    //        $searchTextLowerCase = strtolower($searchText);
+    //        $contentLowerCase = strtolower($content);
+    //
+    //        // Assert
+    //         $this->assertContains(
+    //           $searchTextLowerCase,
+    //         $contentLowerCase
+    //        );
+    //    }
+    //
+    //    public function testEditReview()
+    //    {
+    //        // Arrange
+    //        $client = static::createClient([], [
+    //            'PHP_AUTH_USER' => 'derek',
+    //            'PHP_AUTH_PW' => 'pass',
+    //        ]);
+    //
+    //        // Act
+    //        $client->request('GET', '/review/1/edit');
+    //
+    //        // Assert
+    //        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+    //    }
+     * //    public function testAddNewUser()
+    //    {
+    //        $client = static::createClient([], [
+    //            'PHP_AUTH_USER' => 'derek',
+    //            'PHP_AUTH_PW' => 'pass',
+    //        ]);
+    //
+    //        $crawler = $client->request('GET', '/user/');
+    //
+    //        $crawler = $client->click($crawler->selectLink('Signup')->link());
+    //
+    //        $form = $crawler->selectButton('Save')->form(array(
+    //            'user[firstname]'       => 'Another Test User',
+    //            'user[username]'   => 'another_test_user',
+    //            'user[email]'      => 'test@anotheruser.com',
+    //            'user[surname]'   => 'another_test_user',
+    //            'user[password]'      => 'pass',
+    //        ));
+    //        $crawler = $client->submit($form);
+    //        $crawler = $client->followRedirect();
+    //
+    //        $this->assertGreaterThan(
+    //            0,
+    //            $crawler->filter('html:contains("Login")')->count()
+    //        );
+    //    }
+     *
+    //    public function testReviewFormAdd()
+    //    {
+    //        $recipe = new Recipe();
+    //        // Arrange
+    //       // $recipe = new Recipe();
+    //        $url = '/review/new/' . $recipe->getId();
+    //        $httpMethod = 'GET';
+    //        $client = static::createClient([], [
+    //            'PHP_AUTH_USER' => 'derek',
+    //            'PHP_AUTH_PW' => 'pass',
+    //        ]);
+    //        $user = new User();
+    //        $review = new Review();
+    //      //  $recipe = new Recipe();
+    //        $review->setAuthor($user);
+    //        $review->setSummary('Summary');
+    //        $review->setPublishedAt(new \DateTime('now'));
+    //        $review->setRetailers('Lidl, Supervalue, M&S');
+    //        $review->setPrice(35.99);
+    //        $review->setStars(4);
+    //        $review->setIsPublicReview(true);
+    //        $review->setImage('/images/image.png');
+    //        $review->setRequestReviewPublic(false);
+    //        $review->setRecipe($recipe);
+    //
+    //        // $title = 'Bacardi Añejo';
+    //        $image1 = 'image.jpeg';
+    //        $image2 = 'image.jpeg';
+    //        $summary = 'Summary';
+    //        $price = '€11-20';
+    //        $stars = 4;
+    //        $retailers = 'Lidl, Supervalue, M&S';
+    //        $buttonName = 'Save';
+    //
+    //        // Act
+    //        $crawler = $client->request($httpMethod, $url);
+    //
+    //        $buttonCrawlerNode = $crawler->selectButton($buttonName);
+    //        $form = $buttonCrawlerNode->form();
+    //
+    //        // submit the form with data
+    //        $client->submit($form, [
+    //            'review[retailers]'  => $retailers,
+    //            'review[image1]'  => $image1,
+    //            'review[image2]'  => $image2,
+    //            'review[summary]'  => $summary,
+    //            'review[price]'  => $price,
+    //            'review[stars]'  => $stars,
+    //        ]);
+    //        $user = new User();
+    //        $review = new Review();
+    //        $recipe = new Recipe();
+    //        $review->setAuthor($user);
+    //        $review->setSummary('Summary');
+    //        $review->setPublishedAt(new \DateTime('now'));
+    //        $review->setRetailers('Lidl, Supervalue, M&S');
+    //        $review->setPrice($price);
+    //        $review->setStars(4);
+    //        $review->setIsPublicReview(true);
+    //        $review->setImage($image1);
+    //        $review->setRequestReviewPublic(false);
+    //        $review->setRecipe($recipe->getId());
+    //        // $content = $client->getResponse()->getContent();
+    //        //$client->followRedirect();
+    //        $crawler = $client->getResponse();
+    //    //    echo $crawler;
+    //        // Assert
+    //        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+    //        // $this->assertSame('/recipe/index', $client->getResponse()->getStatusCode());
+    //
+    //        $recipe = $client->getContainer()->get('doctrine')->getRepository(Recipe::class)->findOneBy([
+    //            'summary' => $summary,
+    //        ]);
+    //
+    //        $this->assertNotNull($recipe);
+    //        $this->assertSame($summary, $recipe->getSummary());
+    //        $this->assertSame($image, $recipe->getImage());
+    //        $this->assertSame($description, $recipe->getDescription());
+    //        $this->assertSame($ingredients, $recipe->getIngredients());
+    //        $this->assertSame($price, $recipe->getPrice());
+    //        $this->assertSame($requestPublic, $recipe->getRequestIsPublic());
+    //    }
+    //    public function testNewComment()
+    //    {
+    //        $client = static::createClient([], [
+    //            'PHP_AUTH_USER' => 'username',
+    //            'PHP_AUTH_PW' => 'pass',
+    //        ]);
+    //        $client->followRedirects();
+    //
+    //        // Find first blog post
+    //        $crawler = $client->request('GET', 'review/new');
+    //       // $postLink = $crawler->filter('article.post > h2 a')->link();
+    //
+    //        //$crawler = $client->click($postLink);
+    //
+    //        $form = $crawler->selectButton('Publish comment')->form([
+    //            'comment[content]' => 'Hi, Symfony!',
+    //        ]);
+    //        $crawler = $client->submit($form);
+    //
+    //        $newComment = $crawler->filter('.post-comment')->first()->filter('div > p')->text();
+    //
+    //        $this->assertSame('Hi, Symfony!', $newComment);
+    //    }
      *
      *         // submit the form with data
     //        $form = $crawler->selectButton('Save')->form([

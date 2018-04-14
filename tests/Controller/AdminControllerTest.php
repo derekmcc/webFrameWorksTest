@@ -31,20 +31,20 @@ class AdminControllerTest extends WebTestCase
     /**
      * @dataProvider getUrlsForAdminUsers
      */
-//    public function testAccessDeniedForRegularUsers($httpMethod, $url)
-//    {
-//        // Arrange
-//        $client = static::createClient([], [
-//            'PHP_AUTH_USER' => 'john_user',
-//            'PHP_AUTH_PW' => 'pass',
-//        ]);
-//
-//        // Act
-//        $client->request($httpMethod, $url);
-//
-//        // Assert
-//        $this->assertSame(Response::HTTP_FORBIDDEN, $client->getResponse()->getStatusCode());
-//    }
+    public function testAccessDeniedForRegularUsers($httpMethod, $url)
+    {
+        // Arrange
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'john_user',
+            'PHP_AUTH_PW' => 'pass',
+        ]);
+
+        // Act
+        $client->request($httpMethod, $url);
+
+        // Assert
+        $this->assertSame(Response::HTTP_FORBIDDEN, $client->getResponse()->getStatusCode());
+    }
 
     /**
      * @dataProvider getUrlsForAdminUsers

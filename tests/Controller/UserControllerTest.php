@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Derek
- * Date: 09/04/2018
- * Time: 23:11
- */
+
 
 namespace App\Tests\Controller;
 
@@ -18,7 +13,8 @@ class UserControllerTest extends WebTestCase
 {
     private $client = null;
     const ID = '1';
-    const DELETE_ID = '15';
+    const DELETE_ID1 = '15';
+    const DELETE_ID2 = '16';
 
     public function setUp()
     {
@@ -92,12 +88,12 @@ class UserControllerTest extends WebTestCase
         $expectedContent = 'User Login';
         $expectedContentlowercase = strtolower($expectedContent);
         $client->submit($client->request($httpMethod,'/user/new')->selectButton($buttonName)->form([
-            'user[username]'  => 'fred_user',
+            'user[username]'  => 'bart_user',
             'user[plainPassword][first]'  => 'pass',
             'user[plainPassword][second]'  => 'pass',
-            'user[firstname]'  => 'Fred',
-            'user[surname]'  => 'User',
-            'user[email]' => 'fred@example.com'
+            'user[firstname]'  => 'Bart',
+            'user[surname]'  => 'Simpson',
+            'user[email]' => 'bart@example.com'
         ]));
 
         // to lowercase
@@ -109,69 +105,38 @@ class UserControllerTest extends WebTestCase
 
     }
 
-    public function testUserDelete()
+
+    public function userDeleteProvider()
     {
-        // Arrange
-        $url = '/user/' . self::DELETE_ID;
-        $httpMethod = 'GET';
-        $client = static::createClient();
-        $buttonName = 'btn_submit';
-        $searchText = 'Profile';
-        $linkText = 'Delete User Account';
-
-        // Act
-        $crawler = $client->request($httpMethod, $url);
-        //$link = $crawler->selectLink($linkText)->link();
-        // $client->click($link);
-        $content = $client->getResponse()->getContent();
-
-        // to lower case
-        $searchTextLowerCase = strtolower($searchText);
-        $contentLowerCase = strtolower($content);
-
-        // Assert
-        $this->assertContains($searchTextLowerCase, $contentLowerCase);
-
-        $client->followRedirects(true);
-        //$client->request('GET', '/');
-        $expectedContent = 'User Index';
-        $expectedContentlowercase = strtolower($expectedContent);
-        $client->submit($client->request($httpMethod,$url)->selectButton($buttonName)->form());
-        //$client->submit($crawler->filter('#delete')->form());
-
-        // to lowercase
-        $content = $client->getResponse()->getContent();
-        $contentlowercase = strtolower($content);
-
-        // Assert
-        $this->assertContains($expectedContentlowercase,$contentlowercase);
+        return array(
+            [self::DELETE_ID1, 'username10'],
+            [self::DELETE_ID2, 'derek'],
+        );
     }
 
-//    public function testAddNewUser()
-//    {
-//        $client = static::createClient([], [
-//            'PHP_AUTH_USER' => 'derek',
-//            'PHP_AUTH_PW' => 'pass',
-//        ]);
-//
-//        $crawler = $client->request('GET', '/user/');
-//
-//        $crawler = $client->click($crawler->selectLink('Signup')->link());
-//
-//        $form = $crawler->selectButton('Save')->form(array(
-//            'user[firstname]'       => 'Another Test User',
-//            'user[username]'   => 'another_test_user',
-//            'user[email]'      => 'test@anotheruser.com',
-//            'user[surname]'   => 'another_test_user',
-//            'user[password]'      => 'pass',
-//        ));
-//        $crawler = $client->submit($form);
-//        $crawler = $client->followRedirect();
-//
-//        $this->assertGreaterThan(
-//            0,
-//            $crawler->filter('html:contains("Login")')->count()
-//        );
-//    }
+    /**
+     * Needs to delete client so get that ID----------------
+     * @dataProvider userDeleteProvider
+     */
+    public function testUserDelete($id, $username)
+    {
+        // Arrange
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => $username,
+            'PHP_AUTH_PW' => 'pass',
+        ]);
 
+        // Act
+        //$client->followRedirects(true);
+        $client->submit($client->request('GET','/user/' . $id)->selectButton('btn_delete')->form());
+
+        // Assert
+        $this->assertSame(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
+
+        // Arrange
+        $user = $client->getContainer()->get('doctrine')->getRepository(User::class)->find($id);
+
+        // Assert
+        $this->assertNull($user);
+    }
 }
