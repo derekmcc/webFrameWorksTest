@@ -71,17 +71,26 @@ class ReviewRepository extends ServiceEntityRepository
         return $paginator;
     }
 
-    public function findReviewsByAuthorToDelete($user)
+    public function findReviewsByNumberOfVotes(string $sort)
     {
-        ;
-
-       return $this->getEntityManager()
-            ->createQuery("
-                SELECT r
-                FROM App:Review r
-                WHERE r.author = '{$user->getId()}'
-            ")
-        ;
-
+        return $this->createQueryBuilder('u')
+            ->orderBy('u.stars', $sort)
+            ->getQuery()
+            ->getResult()
+            ;
     }
+
+//    public function findReviewsByAuthorToDelete($user)
+//    {
+//        ;
+//
+//       return $this->getEntityManager()
+//            ->createQuery("
+//                SELECT r
+//                FROM App:Review r
+//                WHERE r.author = '{$user->getId()}'
+//            ")
+//        ;
+//
+//    }
 }

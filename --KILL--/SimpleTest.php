@@ -5,7 +5,7 @@ namespace App\Test;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
-class SimpleTest extends WebTestCase
+class SimpleTest
 {
 
 
@@ -13,6 +13,34 @@ class SimpleTest extends WebTestCase
     /**
      *
 
+    //    public function testShowRecipePage()
+    //    {
+    //        // Arrange
+    //        $client = static::createClient([], [
+    //            'PHP_AUTH_USER' => 'derek',
+    //            'PHP_AUTH_PW' => 'pass',
+    //        ]);
+    //
+    //        // Expect exception - BEFORE you Act!
+    //        //$this->expectException(NotFoundHttpException::class);
+    //
+    //        // Act
+    //        $client->request('GET', 'recipe/' . self::ID . '/edit');
+    //
+    //        $review = new Review();
+    //        $recipe = new Recipe();
+    //        $recipe->setImage(null);
+    //        $recipe->addReview($review);
+    //        $recipe->removeReview($review);
+    //
+    //        // Assert
+    //        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+    //    }
+     *
+     *
+     *
+     *
+     *
     public function testRecipeDelete()
     {
     // Arrange

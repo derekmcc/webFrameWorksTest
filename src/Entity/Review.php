@@ -237,10 +237,10 @@ class Review
         $this->recipe = $recipe;
     }
 
-    public function __toString()
-    {
-        return $this->id . ': ' . $this->getSummary();
-    }
+//    public function __toString()
+//    {
+//        return $this->id . ': ' . $this->getSummary();
+//    }
 
     public function __construct()
     {

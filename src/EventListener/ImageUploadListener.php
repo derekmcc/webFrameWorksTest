@@ -56,16 +56,16 @@ class ImageUploadListener
         }
     }
 
-    public function postLoad(LifecycleEventArgs $args)
-    {
-        $entity = $args->getEntity();
-
-//        if (!$entity instanceof Recipe) {
-//            return;
+//    public function postLoad(LifecycleEventArgs $args)
+//    {
+//        $entity = $args->getEntity();
+//
+////        if (!$entity instanceof Recipe) {
+////            return;
+////        }
+//
+//        if ($fileName = $entity->getImage()) {
+//            $entity->setImage(new File($this->uploader->getTargetDirectory().'/'.$fileName));
 //        }
-
-        if ($fileName = $entity->getImage()) {
-            $entity->setImage(new File($this->uploader->getTargetDirectory().'/'.$fileName));
-        }
-    }
+//    }
 }

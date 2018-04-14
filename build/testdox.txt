@@ -19,6 +19,7 @@ App\Tests\Controller\RecipeController
  [x] Recipe links with admin 
  [x] Recipe links with user 
  [x] Search by date range
+ [x] Sort by price range 
  [x] Recipe delete 
 
 App\Controller\Test\ReviewController
@@ -26,6 +27,7 @@ App\Controller\Test\ReviewController
  [x] Review members urls 
  [x] Review requests to be public 
  [x] Review delete 
+ [x] Sort by number of stars 
 
 App\Tests\Controller\UserController
  [x] User urls 
@@ -37,7 +39,7 @@ App\Tests\Form\RecipeType
 
 App\Tests\Form\ReviewType
  [x] Add new review
- [x] Edit user details 
+ [x] Edit review details 
 
 App\Tests\Form\UserType
  [x] Edit user details 

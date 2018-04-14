@@ -121,6 +121,29 @@ class RecipeController extends Controller
     }
 
     /**
+     * @Route("/price", name="price")
+     * @Method("GET")
+     */
+    public function searchByPrice(Request $request, RecipeRepository $recipes): Response
+    {
+        $priceRange = $request->query->get('sort', '');
+        if ($priceRange == 1){
+            $sort = 'Under €10';
+        } else if ($priceRange == 2) {
+            $sort = '€11-20';
+        } else if ($priceRange == 3) {
+            $sort = '€21-30';
+        } else if ($priceRange == 4) {
+            $sort = '€31-40';
+        } else if ($priceRange == 5) {
+            $sort = 'Over €40';
+        }
+
+        $foundRecipes = $recipes->findRecipesByPriceRange($sort);
+        return $this->render('recipe/showDrinks.html.twig', ['recipes' => $foundRecipes]);
+    }
+
+    /**
      * @Route("/{id}", name="show")
      * @Method("GET")
      */

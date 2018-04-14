@@ -46,6 +46,23 @@ class ReviewController extends Controller
     }
 
     /**
+     * @Route("/showReview", name="showReview")
+     *
+     * @return Response
+     */
+    public function showReview(Request $request, ReviewRepository $review)
+    {
+        $sort= $request->query->get('sort', '');
+        if ($sort == 2){
+            $sortBy = 'DESC';
+        } else {
+            $sortBy = 'ASC';
+        }
+        $reviews = $review->findReviewsByNumberOfVotes($sortBy);
+        return $this->render('review/showReviews.html.twig', ['reviews' => $reviews]);
+    }
+
+    /**
      * @Route("/new/{recipeID}",  defaults={"recipeID" = 0}, name="new")
      * @Method({"GET", "POST"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
@@ -102,13 +119,13 @@ class ReviewController extends Controller
     public function edit(Request $request, Review $review, FileUploader $fileUploader)
     {
         //fixes issue if file not found when going to form
-        if($review->getImage() == null)
-        {
-            // --Does'nt work suppose to allow non selecting of image on edit form
+//        if($review->getImage() == null)
+//        {
+//            // --Does'nt work suppose to allow non selecting of image on edit form
 //            $review->setImage(
 //                new File($this->getParameter('images_directory').'/'.$review->getImage())
 //            );
-        }
+//        }
 
         $form = $this->createForm(ReviewType::class, $review);
         $form->handleRequest($request);

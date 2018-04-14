@@ -5,11 +5,11 @@
 {% block body %}
     <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Sort by Number of Likes
+            Sort by Number of Stars
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="{{ path('review_index', {'sort': 2}) }}">Sort by Likes</a>
-            <a class="dropdown-item" href="{{ path('review_index', {'sort': 3}) }}">Sort by Dislikes</a>
+            <a class="dropdown-item" href="{{ path('review_index', {'sort': 2}) }}">Sort by # Stars, Ascending</a>
+            <a class="dropdown-item" href="{{ path('review_index', {'sort': 3}) }}">Sort by # Stars, Descending</a>
         </div>
     </div>
     <h1 class="display-4">Review Index</h1>

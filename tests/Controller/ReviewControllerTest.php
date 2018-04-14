@@ -30,6 +30,10 @@ class ReviewControllerTest extends WebTestCase
     public function testReviewPublicUrls($url, $content)
     {
         // Arrange
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'derek',
+            'PHP_AUTH_PW' => 'pass',
+        ]);
         $this->client->request('GET',$url);
         $crawler = $this->client->getResponse();
         $searchText = $content;
@@ -160,6 +164,44 @@ class ReviewControllerTest extends WebTestCase
 
         // Assert
         $this->assertContains($expectedContentlowercase,$contentlowercase);
+    }
+
+    /**
+     * @dataProvider numberOfStarsProvider
+     */
+    public function testSortByNumberOfStars($stars)
+    {
+        // Arrange
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'derek',
+            'PHP_AUTH_PW' => 'pass',
+        ]);
+
+        // Act
+        //$client->followRedirects(true);
+        $client->request('GET', '/review/showReview');
+        $expectedContent = 'Review Index';
+        $expectedContentlowercase = strtolower($expectedContent);
+
+        $crawler = $client->request('GET', '/review/showReview');
+        $link = $crawler->selectLink($stars)->link();
+        $client->click($link);
+
+        // to lowercase
+        $content = $client->getResponse()->getContent();
+        $contentlowercase = strtolower($content);
+
+        // Assert
+        $this->assertContains($expectedContentlowercase,$contentlowercase);
+
+    }
+
+    public function numberOfStarsProvider()
+    {
+        return [
+            ['Sort by # Stars, Ascending'],
+            ['Sort by # Stars, Descending'],
+        ];
     }
 
     public function reviewDeleteProvider()

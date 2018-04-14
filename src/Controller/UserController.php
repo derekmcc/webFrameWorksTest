@@ -81,7 +81,7 @@ class UserController extends Controller
 
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
-            $role = ['ROLE_SUPER_ADMIN'];
+            $role = ['ROLE_USER'];
             $user->setRoles($role);
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);

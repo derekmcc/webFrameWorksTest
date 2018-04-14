@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserTypeTest extends WebTestCase
 {
-    const ID = '1';
+    const ID = '10';
     private $client = null;
 
     public function setUp()
@@ -34,12 +34,12 @@ class UserTypeTest extends WebTestCase
         $expectedContent = $pageContent;
         $expectedContentlowercase = strtolower($expectedContent);
         $client->submit($client->request($httpMethod,$url)->selectButton($buttonName)->form([
-            'user[username]'  => 'derek',
+            'user[username]'  => 'derekM',
             'user[plainPassword][first]'  => 'pass',
             'user[plainPassword][second]'  => 'pass',
             'user[firstname]'  => 'Derek',
             'user[surname]'  => 'McCarthy',
-            'user[email]' => 'derek@example.com',
+            'user[email]' => 'derekM@example.com',
         ]));
 
         // to lowercase
@@ -48,7 +48,6 @@ class UserTypeTest extends WebTestCase
 
         // Assert
         $this->assertContains($expectedContentlowercase,$contentlowercase);
-
     }
 
     public function userDetailsProvider()

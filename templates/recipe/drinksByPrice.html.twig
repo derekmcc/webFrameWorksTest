@@ -1,0 +1,128 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Drinks Index{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-lg-8">
+            <form action="{{ path('recipe_date') }}" method="GET">
+                <div class="input-group input-daterange">
+                    <input name="date1" type="date" class="form-control" value="2018-04-05">
+                    <div class="input-group-addon">to</div>
+                    <input name="date2" type="date" class="form-control" value="2018-04-19">
+                    <input name="btn_submit" type="submit" value="Search by Date" class="btn btn-outline-success">
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-4">
+            <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropright
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{{ path('recipe_price', {'sort': 1}) }}">Drinks under €10</a>
+                    <a class="dropdown-item" href="{{ path('recipe_price', {'sort': 2}) }}">Drinks between €11-20</a>
+                    <a class="dropdown-item" href="{{ path('recipe_price', {'sort': 3}) }}">Drinks between €21-30</a>
+                    <a class="dropdown-item" href="{{ path('recipe_price', {'sort': 4}) }}">Drinks between €31-40</a>
+                    <a class="dropdown-item" href="{{ path('recipe_price', {'sort': 5}) }}">Drinks over €40</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    {% set counter = 0 %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <h1 class="display-4">Drink Results</h1>
+            </div>
+            <div class="col-lg-4">
+                {% if (is_granted('IS_AUTHENTICATED_FULLY'))%}
+                    <a href="{{ path('recipe_new') }}" class="btn btn-outline-primary">Add New Drink</a>
+                    <br>
+                {% endif %}
+            </div>
+        </div>
+        {% for recipe in recipes %}
+            {% if (is_granted('IS_AUTHENTICATED_FULLY')) and (is_granted('ROLE_ADMIN')) or (recipe.isPublic == true) or (is_granted('IS_AUTHENTICATED_FULLY')) and (recipe.author.username == app.user.username) %}
+
+                <div class="row">
+                    <div class="col col-lg-2">
+                        <img src="/uploads/images/{{ recipe.image }}" alt="{{ recipe.title }}" width="70" height="150">
+                    </div>
+                    <div class="col col-lg-6">
+                        <p></p>
+                        <div class="row"><h5><b><a href="{{ path('recipe_show', {'id': recipe.id}) }}">{{ recipe.title }}</a></b></h5></div>
+                        <div class="row"><p><b>Summary: </b>{{ recipe.summary }}</p></div>
+                        <div class="row"><p><b>Price Range: </b>{{ recipe.price }}</p></div>
+                    </div>
+                    <div class="col col-lg-4">
+                        <h6>Latest Public Reviews</h6>
+                        <h5><i class="fa fa-comments" aria-hidden="true"></i>Total Reviews {{ recipe.reviews|length }}</h5>
+                        {% for review in recipe.reviews %}
+                            {% if (is_granted('IS_AUTHENTICATED_FULLY')) and (is_granted('ROLE_ADMIN')) or (review.isPublicReview == true) or (is_granted('IS_AUTHENTICATED_FULLY')) and (review.author.username == app.user.username) %}
+                                {% if (counter != 5) %}
+                                    {% set counter = counter + 1 %}
+                                    {% if review.stars == 0 %}
+                                        0 Stars
+                                    {% elseif review.stars == 0.5 %}
+                                        <i class="fas fa-star-half"></i>
+                                    {% elseif review.stars == 1 %}
+                                        <i class="fas fa-star"></i>
+                                    {% elseif review.stars == 1.5 %}
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half"></i>
+                                    {% elseif review.stars == 2 %}
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    {% elseif review.stars == 2.5 %}
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half"></i>
+                                    {% elseif review.stars == 3 %}
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    {% elseif review.stars == 3.5 %}
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half"></i>
+                                    {% elseif review.stars == 4 %}
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    {% elseif review.stars == 4.5 %}
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half"></i>
+                                    {% elseif review.stars == 5 %}
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    {% else %}
+                                        <p>No reviews for this drink</p>
+                                    {% endif %}
+                                    <a href="{{ url('review_show', {'id':review.id}) }}">
+                                        By {{ review.author.firstName }}  {{ review.author.surname }}
+                                    </a>
+                                    <br>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        {% set counter = 0 %}
+                    </div>
+                </div><br><br>
+            {% endif %}
+        {% else %}
+            <br>
+            <div class="row"><p><b>No drinks found for this date range.</b></p></div>
+        {% endfor %}
+
+    </div>
+{% endblock %}

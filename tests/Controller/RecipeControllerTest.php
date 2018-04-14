@@ -58,7 +58,7 @@ class RecipeControllerTest extends WebTestCase
     {
         return array(
             ['/recipe/', 'Drinks Index'],
-            ['/recipe/showRecipe', 'Drinks for Date Range'],
+            ['/recipe/showRecipe', 'Drink Results'],
             ['/recipe/' . self::ID, 'Drink Details'],
         );
     }
@@ -240,7 +240,7 @@ class RecipeControllerTest extends WebTestCase
         // Act
         $client->followRedirects(true);
         $client->request('GET', '/recipe/');
-        $expectedContent = 'Drinks for Date Range';
+        $expectedContent = 'Drink Results';
         $expectedContentlowercase = strtolower($expectedContent);
         $client->submit($client->request('GET','/recipe/')->selectButton($buttonName)->form([
             'date1'  => '2017-04-05',
@@ -255,30 +255,46 @@ class RecipeControllerTest extends WebTestCase
 
     }
 
+    /**
+     * @dataProvider priceRangeProvider
+     */
+    public function testSortByPriceRange($priceRange)
+    {
+        // Arrange
+        $client = static::createClient([], [
+            'PHP_AUTH_USER' => 'derek',
+            'PHP_AUTH_PW' => 'pass',
+        ]);
 
-//    public function testShowRecipePage()
-//    {
-//        // Arrange
-//        $client = static::createClient([], [
-//            'PHP_AUTH_USER' => 'derek',
-//            'PHP_AUTH_PW' => 'pass',
-//        ]);
-//
-//        // Expect exception - BEFORE you Act!
-//        //$this->expectException(NotFoundHttpException::class);
-//
-//        // Act
-//        $client->request('GET', 'recipe/' . self::ID . '/edit');
-//
-//        $review = new Review();
-//        $recipe = new Recipe();
-//        $recipe->setImage(null);
-//        $recipe->addReview($review);
-//        $recipe->removeReview($review);
-//
-//        // Assert
-//        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
-//    }
+        // Act
+        $client->followRedirects(true);
+        $client->request('GET', '/recipe/');
+        $expectedContent = 'Drink Results';
+        $expectedContentlowercase = strtolower($expectedContent);
+
+        $crawler = $client->request('GET', '/recipe/');
+        $link = $crawler->selectLink($priceRange)->link();
+        $client->click($link);
+
+        // to lowercase
+        $content = $client->getResponse()->getContent();
+        $contentlowercase = strtolower($content);
+
+        // Assert
+        $this->assertContains($expectedContentlowercase,$contentlowercase);
+
+    }
+
+    public function priceRangeProvider()
+    {
+        return [
+            ['Drinks under €10'],
+            ['Drinks between €11-20'],
+            ['Drinks between €21-30'],
+            ['Drinks between €31-40'],
+            ['Drinks over €40'],
+        ];
+    }
 
     /**
      * @param $id

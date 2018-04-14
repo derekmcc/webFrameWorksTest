@@ -4,14 +4,32 @@
 
 {% block body %}
     {% set counter = 0 %}
-    <form action="{{ path('recipe_date') }}" method="GET">
-        <div class="input-group input-daterange">
-            <input name="date1" type="date" class="form-control" value="2018-04-05">
-            <div class="input-group-addon">to</div>
-            <input name="date2" type="date" class="form-control" value="2018-04-19">
-            <input name="btn_submit" type="submit" value="Search by Date" class="btn btn-outline-success">
+    <div class="row">
+        <div class="col-lg-8">
+        <form action="{{ path('recipe_date') }}" method="GET">
+            <div class="input-group input-daterange">
+                <input name="date1" type="date" class="form-control" value="2018-04-05">
+                <div class="input-group-addon">to</div>
+                <input name="date2" type="date" class="form-control" value="2018-04-19">
+                <input name="btn_submit" type="submit" value="Search by Date" class="btn btn-outline-success">
+            </div>
+        </form>
         </div>
-    </form>
+        <div class="col-lg-4">
+            <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropright
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{{ path('recipe_price', {'sort': 1}) }}">Drinks under €10</a>
+                    <a class="dropdown-item" href="{{ path('recipe_price', {'sort': 2}) }}">Drinks between €11-20</a>
+                    <a class="dropdown-item" href="{{ path('recipe_price', {'sort': 3}) }}">Drinks between €21-30</a>
+                    <a class="dropdown-item" href="{{ path('recipe_price', {'sort': 4}) }}">Drinks between €31-40</a>
+                    <a class="dropdown-item" href="{{ path('recipe_price', {'sort': 5}) }}">Drinks over €40</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <br>
     <div class="container">
         <div class="row">

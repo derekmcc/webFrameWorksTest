@@ -122,6 +122,19 @@ class RecipeRepository extends ServiceEntityRepository
         return $this->createPaginator($query,$page);
     }
 
+    public function findRecipesByPriceRange(string $sort, int $page = 1): Pagerfanta
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("
+                SELECT r
+                FROM App:Recipe r
+                WHERE r.price = '{$sort}'
+                ORDER BY r.publishedAt DESC
+            ")
+        ;
+        return $this->createPaginator($query,$page);
+    }
+
     private function createPaginator(Query $query, int $page): Pagerfanta
     {
         $paginator = new Pagerfanta(new DoctrineORMAdapter($query));

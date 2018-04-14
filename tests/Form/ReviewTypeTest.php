@@ -72,7 +72,7 @@ class ReviewTypeTest extends WebTestCase
     /**
      * @dataProvider reviewDetailsProvider
      */
-    public function testEditUserDetails($url,$pageContent,$httpMethod)
+    public function testEditReviewDetails($url,$pageContent,$httpMethod)
     {
         // Arrange
         $buttonName = 'btn_submit';

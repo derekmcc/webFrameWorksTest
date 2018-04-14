@@ -78,6 +78,8 @@ class LoadData extends Fixture
                 $review->setRetailers($faker->randomElement($this->getRetailers()));
                 $review->setPrice($faker->randomFloat(2,5,60));
                 $review->setStars($faker->randomElement($this->getNumberOfStars()));
+                $review->setUpVotes($faker->randomNumber(2,false));
+                $review->setDownVotes($faker->randomNumber(2,false));
                 $review->setIsPublicReview($value = (bool)random_int(0, 1));
                 $review->setImage($faker->randomElement($this->getReviewImage()));
                 $review->setRequestReviewPublic($faker->randomElement($this->getTrueFalse()));
@@ -305,7 +307,7 @@ class LoadData extends Fixture
             "Under €10",
             "€11-20",
             "€21-30",
-            "€31-35",
+            "€31-40",
             "Over €40",
         ];
     }

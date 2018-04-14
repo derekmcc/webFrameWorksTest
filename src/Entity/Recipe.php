@@ -253,26 +253,26 @@ class Recipe
         return $this->reviews;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-            ->add('title')->add('reviews')
-            ->add('image', FileType::class, array('data_class' => null));
-    }
-
-    public function addReview(Review $review): void
-    {
-        $review->setRecipe($this);
-        if (!$this->reviews->contains($review)) {
-            $this->reviews->add($review);
-        }
-    }
-
-    public function removeReview(Review $review): void
-    {
-        $review->setRecipe(null);
-        $this->reviews->removeElement($review);
-    }
+//    public function buildForm(FormBuilderInterface $builder, array $options)
+//    {
+//        $builder
+//            ->add('title')->add('reviews')
+//            ->add('image', FileType::class, array('data_class' => null));
+//    }
+//
+//    public function addReview(Review $review): void
+//    {
+//        $review->setRecipe($this);
+//        if (!$this->reviews->contains($review)) {
+//            $this->reviews->add($review);
+//        }
+//    }
+//
+//    public function removeReview(Review $review): void
+//    {
+//        $review->setRecipe(null);
+//        $this->reviews->removeElement($review);
+//    }
 
     /**
      * @return mixed
