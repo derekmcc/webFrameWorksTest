@@ -14,7 +14,7 @@ use Pagerfanta\Pagerfanta;
 use Doctrine\ORM\Query;
 
 /**
- * Start of the review repository class
+ * Start of the review repository class.
  * Class ReviewRepository
  * @package App\Repository
  * @method Review|null find($id, $lockMode = null, $lockVersion = null)
@@ -102,19 +102,5 @@ class ReviewRepository extends ServiceEntityRepository
         $paginator->setCurrentPage($page);
 
         return $paginator;
-    }
-
-    /**
-     * Query to return the reviews based on the order specified by the user
-     * @param string $sort
-     * @return mixed
-     */
-    public function findReviewsByNumberOfVotes(string $sort)
-    {
-        return $this->createQueryBuilder('u')
-            ->orderBy('u.stars', $sort)
-            ->getQuery()
-            ->getResult()
-            ;
     }
 }

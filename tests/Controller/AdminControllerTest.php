@@ -78,6 +78,6 @@ class AdminControllerTest extends WebTestCase
 
     public function getUrlsForAdminUsers()
     {
-        yield ['GET', '/admin'];
+        yield ['GET', '/myadmin'];
     }
 }

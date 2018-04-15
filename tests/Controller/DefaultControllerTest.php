@@ -99,7 +99,7 @@ class DefaultControllerTest extends WebTestCase
      */
     public function getSecureUrls()
     {
-        yield ['/admin'];
+        yield ['/myadmin'];
 
     }
 

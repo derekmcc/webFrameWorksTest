@@ -37,6 +37,7 @@ before-install:
 # Create database, schema and fixtures
 install:
   - composer install
+  - composer req sec-checker
   - ./vendor/bin/simple-phpunit install
   - cp .env.dist .env
   - php bin/console doctrine:database:create --env=test

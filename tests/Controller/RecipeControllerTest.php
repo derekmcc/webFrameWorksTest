@@ -228,12 +228,15 @@ class RecipeControllerTest extends WebTestCase
         );
     }
 
-    public function testSearchByDateRange()
+    /**
+ * @dataProvider userNameProvider
+ */
+    public function testSearchByDateRange($username)
     {
         // Arrange
         $buttonName = 'btn_submit';
         $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'derek',
+            'PHP_AUTH_USER' => $username,
             'PHP_AUTH_PW' => 'pass',
         ]);
 
@@ -255,14 +258,46 @@ class RecipeControllerTest extends WebTestCase
 
     }
 
+    public function userNameProvider()
+    {
+        return [
+            ['derek'],
+            ['john_user'],
+        ];
+    }
+
+    public function testSearchByDateRangeForPublic()
+    {
+        // Arrange
+        $buttonName = 'btn_submit';
+
+
+        // Act
+        $this->client->followRedirects(true);
+        $this->client->request('GET', '/recipe/');
+        $expectedContent = 'Drink Results';
+        $expectedContentlowercase = strtolower($expectedContent);
+        $this->client->submit($this->client->request('GET','/recipe/')->selectButton($buttonName)->form([
+            'date1'  => '2017-04-05',
+            'date2'  => '2018-04-17',
+        ]));
+        // to lowercase
+        $content = $this->client->getResponse()->getContent();
+        $contentlowercase = strtolower($content);
+
+        // Assert
+        $this->assertContains($expectedContentlowercase,$contentlowercase);
+
+    }
+
     /**
      * @dataProvider priceRangeProvider
      */
-    public function testSortByPriceRange($priceRange)
+    public function testSortByPriceRange($priceRange, $username)
     {
         // Arrange
         $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'derek',
+            'PHP_AUTH_USER' => $username,
             'PHP_AUTH_PW' => 'pass',
         ]);
 
@@ -285,7 +320,34 @@ class RecipeControllerTest extends WebTestCase
 
     }
 
-    public function priceRangeProvider()
+    /**
+     * @dataProvider priceRangePublicProvider
+     */
+    public function testSortByPriceRangeForPublic ($priceRange)
+    {
+        // Arrange
+        $client = static::createClient();
+
+        // Act
+        $client->followRedirects(true);
+        $client->request('GET', '/recipe/');
+        $expectedContent = 'Drink Results';
+        $expectedContentlowercase = strtolower($expectedContent);
+
+        $crawler = $client->request('GET', '/recipe/');
+        $link = $crawler->selectLink($priceRange)->link();
+        $client->click($link);
+
+        // to lowercase
+        $content = $client->getResponse()->getContent();
+        $contentlowercase = strtolower($content);
+
+        // Assert
+        $this->assertContains($expectedContentlowercase,$contentlowercase);
+
+    }
+
+    public function priceRangePublicProvider()
     {
         return [
             ['Drinks under €10'],
@@ -293,6 +355,17 @@ class RecipeControllerTest extends WebTestCase
             ['Drinks between €21-30'],
             ['Drinks between €31-40'],
             ['Drinks over €40'],
+        ];
+    }
+
+    public function priceRangeProvider()
+    {
+        return [
+            ['Drinks under €10','john_user'],
+            ['Drinks between €11-20', 'john_user'],
+            ['Drinks between €21-30', 'derek'],
+            ['Drinks between €31-40', 'derek'],
+            ['Drinks over €40', 'derek'],
         ];
     }
 

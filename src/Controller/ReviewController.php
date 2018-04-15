@@ -59,26 +59,6 @@ class ReviewController extends Controller
     }
 
     /**
-     * Function used to sort the reviews by the number of stars
-     *
-     * @Route("/showReview", name="showReview")
-     * @param Request $request
-     * @param ReviewRepository $review
-     * @return Response
-     */
-    public function showReview(Request $request, ReviewRepository $review)
-    {
-        $sort= $request->query->get('sort', '');
-        if ($sort == 2){
-            $sortBy = 'DESC';
-        } else {
-            $sortBy = 'ASC';
-        }
-        $reviews = $review->findReviewsByNumberOfVotes($sortBy);
-        return $this->render('review/showReviews.html.twig', ['reviews' => $reviews]);
-    }
-
-    /**
      * Function for creating a new review
      *
      * @Route("/new/{recipeID}",  defaults={"recipeID" = 0}, name="new")
@@ -266,7 +246,7 @@ class ReviewController extends Controller
     }
 
     /**
-     * Function to down-vote a review
+     * Function to down-vote a review.
      *
      * @param Review $review
      * @Route("/{id}/downVote", requirements={"id" = "\d+"}, name="downVote")

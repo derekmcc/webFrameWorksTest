@@ -145,32 +145,74 @@ class RecipeRepository extends ServiceEntityRepository
     }
 
     /**
-     * Query that finds recipes based on the date range specified by the user
+     * Query for date range for public users
      * @param string $date1
      * @param string $date2
-     * @param int $page
-     * @return Pagerfanta
+     * @return mixed
      */
-    public function findRecipesByDate(string $date1, string $date2, int $page = 1): Pagerfanta
+    public function findPublicRecipesByDate(string $date1, string $date2)
     {
         $query = $this->getEntityManager()
             ->createQuery("
                 SELECT r
                 FROM App:Recipe r
-                WHERE r.publishedAt BETWEEN '{$date1}' AND '{$date2}'
+                WHERE r.publishedAt >= '{$date1}' AND r.publishedAt <= '{$date2}'
+                AND r.isPublic = true 
                 ORDER BY r.publishedAt DESC
             ")
+            ->getResult()
         ;
-        return $this->createPaginator($query,$page);
+        return $query;
+    }
+
+    /**
+     * Query for date range for public users and the author
+     * @param string $date1
+     * @param string $date2
+     * @return mixed
+     */
+    public function findPublicAndAuthorRecipesByDate(string $date1, string $date2, $user)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("
+                SELECT r
+                FROM App:Recipe r
+                WHERE r.publishedAt >= '{$date1}' AND r.publishedAt <= '{$date2}'
+                AND r.isPublic = true 
+                OR r.author = '{$user->getId()}'
+                ORDER BY r.publishedAt DESC
+            ")
+            ->getResult()
+        ;
+        return $query;
+    }
+
+    /**
+     * Query for date range for admins
+     * @param string $date1
+     * @param string $date2
+     * @return Query
+     */
+    public function findAdminRecipesByDate(string $date1, string $date2)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("
+                SELECT r
+                FROM App:Recipe r
+                WHERE r.publishedAt >= '{$date1}' AND r.publishedAt <= '{$date2}'
+                ORDER BY r.publishedAt DESC
+            ")
+            ->getResult()
+        ;
+        return $query;
     }
 
     /**
      * Query that finds recipes between a certain price range
      * @param string $sort
-     * @param int $page
-     * @return Pagerfanta
+     * @return mixed
      */
-    public function findRecipesByPriceRange(string $sort, int $page = 1): Pagerfanta
+    public function findRecipesByPriceRange(string $sort)
     {
         $query = $this->getEntityManager()
             ->createQuery("
@@ -179,8 +221,50 @@ class RecipeRepository extends ServiceEntityRepository
                 WHERE r.price = '{$sort}'
                 ORDER BY r.publishedAt DESC
             ")
+            ->getResult()
         ;
-        return $this->createPaginator($query,$page);
+        return $query;
+    }
+
+    /**
+     * Query that finds recipes between a certain price range
+     * @param string $sort
+     * @return mixed
+     */
+    public function findPublicRecipesByPriceRange(string $sort)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("
+                SELECT r
+                FROM App:Recipe r
+                WHERE r.price = '{$sort}'
+                AND r.isPublic = true 
+                ORDER BY r.publishedAt DESC
+            ")
+            ->getResult()
+        ;
+        return $query;
+    }
+
+    /**
+     * Query that finds recipes between a certain price range
+     * @param string $sort
+     * @return mixed
+     */
+    public function findPublicAndByAuthorRecipesByPriceRange(string $sort, $user)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery("
+                SELECT r
+                FROM App:Recipe r
+                WHERE r.price = '{$sort}'
+                AND r.isPublic = true 
+                OR r.author = '{$user->getId()}'
+                ORDER BY r.publishedAt DESC
+            ")
+            ->getResult()
+        ;
+        return $query;
     }
 
     /**
