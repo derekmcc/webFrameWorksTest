@@ -1,4 +1,7 @@
 <?php
+/**
+ * Summary for user controller.
+ */
 
 namespace App\Controller;
 
@@ -17,11 +20,16 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
+ * The start of the user controller
+ *
  * @Route("/user", name="user_")
+ * @package App\Controller
  */
 class UserController extends Controller
 {
     /**
+     * Function that return the user index page
+     *
      * @Route("/", name="index")
      * @Security("has_role('ROLE_ADMIN')")
      * @return Response
@@ -43,6 +51,8 @@ class UserController extends Controller
     }
 
     /**
+     * Function for managing the users account
+     *
      * @Route("/account", name="account")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @return Response
@@ -66,9 +76,13 @@ class UserController extends Controller
     }
 
     /**
+     * Function for managing new users
+     *
      * @Route("/new", name="new")
      * @Method({"GET", "POST"})
-     *
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -96,8 +110,12 @@ class UserController extends Controller
     }
 
     /**
+     * Function for showing a users details
+     *
      * @Route("/{id}", name="show")
      * @Method("GET")
+     * @param User $user
+     * @return Response
      */
     public function show(User $user)
     {
@@ -115,9 +133,14 @@ class UserController extends Controller
     }
 
     /**
+     * Function for editing user details
+     *
      * @Route("/{id}/edit", name="edit")
      * @Method({"GET", "POST"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @param Request $request
+     * @param User $user
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function edit(Request $request, User $user)
     {
@@ -137,9 +160,14 @@ class UserController extends Controller
     }
 
     /**
+     * Function for deleting a user account
+     *
      * @Route("/{id}", name="delete")
      * @Method("DELETE")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @param Request $request
+     * @param User $user
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function delete(Request $request, User $user)
     {

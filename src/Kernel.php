@@ -1,4 +1,7 @@
 <?php
+/**
+ * Base kernel class
+ */
 
 namespace App;
 
@@ -8,22 +11,45 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
 
+/**
+ * Start of the kernel class
+ * Class Kernel
+ * @package App
+ */
 class Kernel extends BaseKernel
 {
+    /**
+     * A Kernel that provides configuration hooks
+     */
     use MicroKernelTrait;
 
+    /**
+     * Not sure of its function
+     */
     const CONFIG_EXTS = '.{php,xml,yaml,yml}';
 
+    /**
+     * Returns the cache
+     * @return string
+     */
     public function getCacheDir()
     {
         return $this->getProjectDir().'/var/cache/'.$this->environment;
     }
 
+    /**
+     * Returns the log directory
+     * @return string
+     */
     public function getLogDir()
     {
         return $this->getProjectDir().'/var/log';
     }
 
+    /**
+     * Loads the container configuration
+     * @return \Generator|iterable|\Symfony\Component\HttpKernel\Bundle\BundleInterface[]
+     */
     public function registerBundles()
     {
         $contents = require $this->getProjectDir().'/config/bundles.php';
@@ -35,6 +61,11 @@ class Kernel extends BaseKernel
         }
     }
 
+    /**
+     * Configures the container
+     * @param ContainerBuilder $container
+     * @param LoaderInterface $loader
+     */
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
     {
         // Feel free to remove the "container.autowiring.strict_mode" parameter
@@ -49,6 +80,11 @@ class Kernel extends BaseKernel
         $loader->load($confDir.'/{services}_'.$this->environment.self::CONFIG_EXTS, 'glob');
     }
 
+    /**
+     * Configures the routes
+     * @param RouteCollectionBuilder $routes
+     * @throws \Symfony\Component\Config\Exception\FileLoaderLoadException
+     */
     protected function configureRoutes(RouteCollectionBuilder $routes)
     {
         $confDir = $this->getProjectDir().'/config';

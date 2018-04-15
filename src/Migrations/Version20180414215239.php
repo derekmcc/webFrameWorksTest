@@ -1,4 +1,7 @@
 <?php declare(strict_types = 1);
+/**
+ * This is the migration class summary.
+ */
 
 namespace DoctrineMigrations;
 
@@ -6,10 +9,18 @@ use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
- * Auto-generated Migration: Please modify to your needs!
+ * Start of the migration class
+ * Class Version20180414215239
+ * @package DoctrineMigrations
  */
 class Version20180414215239 extends AbstractMigration
 {
+    /**
+     * Creates the database tables, based on entity types
+     * @param Schema $schema
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Migrations\AbortMigrationException
+     */
     public function up(Schema $schema)
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -24,6 +35,12 @@ class Version20180414215239 extends AbstractMigration
         $this->addSql('ALTER TABLE review ADD CONSTRAINT FK_794381C659D8A214 FOREIGN KEY (recipe_id) REFERENCES recipe (id)');
     }
 
+    /**
+     * Drops the database tables
+     * @param Schema $schema
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Migrations\AbortMigrationException
+     */
     public function down(Schema $schema)
     {
         // this down() migration is auto-generated, please modify it to your needs

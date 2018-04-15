@@ -1,0 +1,328 @@
+<?php
+/**
+ * recipe entity for creating recipes.
+ */
+namespace App\Entity;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
+/**
+ * Start of the recipe entity class
+ *
+ * @ORM\Entity(repositoryClass="App\Repository\RecipeRepository")
+ * Class Recipe
+ * @package App\Entity
+ */
+class Recipe
+{
+    /**
+     * Constant value to define the number of recipe items to be displayed on each page
+     */
+    const NUM_ITEMS = 10;
+
+    /**
+     * Recipe id
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     *
+     */
+    private $id;
+
+    /**
+     * Recipe title
+     * @ORM\Column(type="string")
+     */
+    private $title;
+
+    /**
+     * Recipe summary
+     * @ORM\Column(type="string")
+     */
+    private $summary;
+
+    /**
+     * Recipe description
+     * @ORM\Column(type="string")
+     */
+    private $description;
+
+    /**
+     * Recipe image
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @Assert\NotBlank(message="Please, upload the image as a jpg")
+     * @Assert\File(maxSize="10M",
+     *          mimeTypes={
+     *          "image/png",
+     *          "image/jpeg",
+     *          "image/jpg",
+     *          "image/gif"
+     *          }
+     * )
+     */
+    private $image;
+
+    /**
+     * Recipe ingredients
+     * @ORM\Column(type="string")
+     */
+    private $ingredients;
+
+    /**
+     * Recipe price
+     * @ORM\Column(type="string")
+     */
+    private $price;
+
+    /**
+     * Recipe author
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="recipeAuthor")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $author;
+
+    /**
+     * Recipe public true/false
+     * @ORM\Column(type="boolean")
+     */
+    private $isPublic;
+
+    /**
+     * Recipe reviews
+     * @var Review[]|ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="Review",
+     *      mappedBy="recipe",
+     *      orphanRemoval=true,
+     *      cascade={"persist"}
+     * )
+     * @ORM\OrderBy({"publishedAt": "DESC"})
+     */
+    private $reviews;
+
+    /**
+     * Request recipe be public
+     * @ORM\Column(type="boolean")
+     */
+    private $requestRecipePublic;
+
+    /**
+     * Recipe date of creation
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime")
+     * @Assert\DateTime
+     */
+    private $publishedAt;
+
+    /**
+     * Gets the date the recipe was published
+     * @return \DateTime
+     */
+    public function getPublishedAt(): \DateTime
+    {
+        return $this->publishedAt;
+    }
+
+    /**
+     * Sets the date the recipe was published
+     * @param \DateTime $publishedAt
+     */
+    public function setPublishedAt(\DateTime $publishedAt): void
+    {
+        $this->publishedAt = $publishedAt;
+    }
+
+    /**
+     * Gets whether the recipe is public or not, true/false
+     * @return mixed
+     */
+    public function getIsPublic()
+    {
+        return $this->isPublic;
+    }
+
+    /**
+     * Sets whether the recipe is public or not, true/false
+     * @param mixed $isPublic
+     */
+    public function setIsPublic($isPublic): void
+    {
+        $this->isPublic = $isPublic;
+    }
+
+    /**
+     * Gets the id of the recipe
+     * @return mixed
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * Gets the title/name of the recipe
+     * @return mixed
+     */
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    /**
+     * Sets the title of the recipe
+     * @param mixed $title
+     */
+    public function setTitle($title): void
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * Gets the summary of the recipe
+     * @return mixed
+     */
+    public function getSummary(): ?string
+    {
+        return $this->summary;
+    }
+
+    /**
+     * sets the summary of the recipe
+     * @param mixed $summary
+     */
+    public function setSummary($summary): void
+    {
+        $this->summary = $summary;
+    }
+
+    /**
+     * Gets the description of the recipe
+     * @return mixed
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * Sets the description of the recipe
+     * @param mixed $description
+     */
+    public function setDescription($description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * Gets the image of the recipe
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Sete the image of the recipe
+     * @param mixed $image
+     */
+    public function setImage($image): void
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * Gets the ingredients of the recipe
+     * @return mixed
+     */
+    public function getIngredients(): ?string
+    {
+        return $this->ingredients;
+    }
+
+    /**
+     * Sets the ingredients of the recipe
+     * @param mixed $ingredients
+     */
+    public function setIngredients($ingredients): void
+    {
+        $this->ingredients = $ingredients;
+    }
+
+    /**
+     * Gets the price of the recipe
+     * @return mixed
+     */
+    public function getPrice(): ?string
+    {
+        return $this->price;
+    }
+
+    /**
+     * Sets the price of the recipe
+     * @param mixed $price
+     */
+    public function setPrice($price): void
+    {
+        $this->price = $price;
+    }
+
+    /**
+     * Gets the author of the recipe
+     * @return User|null
+     */
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    /**
+     * Sets the author of the recipe
+     * @param mixed $author
+     */
+    public function setAuthor(User $author)
+    {
+        $this->author = $author;
+    }
+
+    /**
+     * Recipe constructor
+     */
+    public function __construct()
+    {
+        $this->requestRecipePublic = new ArrayCollection();
+    }
+
+    /**
+     * Gets all the reviews of the recipe
+     * @return Review[]|ArrayCollection
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
+    }
+
+    /**
+     * Gets whether the recipe has being requested to be public or not, true/false
+     * @return mixed
+     */
+    public function getRequestRecipePublic()
+    {
+        return $this->requestRecipePublic;
+    }
+
+    /**
+     * Sets whether the recipe has being requested to be public or not, true/false
+     * @param mixed $requestRecipePublic
+     */
+    public function setRequestRecipePublic($requestRecipePublic): void
+    {
+        $this->requestRecipePublic = $requestRecipePublic;
+    }
+}

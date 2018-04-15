@@ -1,4 +1,7 @@
 <?php
+/**
+ * Review form for adding/editing review items.
+ */
 
 namespace App\Form;
 
@@ -11,8 +14,18 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
+/**
+ * Start of the review type class
+ * Class ReviewType
+ * @package App\Form
+ */
 class ReviewType extends AbstractType
 {
+    /**
+     * Builds the review form for editing/adding review items
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -42,6 +55,10 @@ class ReviewType extends AbstractType
         ;
     }
 
+    /**
+     * Configures the options for this review type
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

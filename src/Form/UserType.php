@@ -1,4 +1,7 @@
 <?php
+/**
+ * User form for adding/editing user items.
+ */
 
 namespace App\Form;
 
@@ -12,9 +15,18 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
-
+/**
+ * Start of the user type class
+ * Class UserType
+ * @package App\Form
+ */
 class UserType extends AbstractType
 {
+    /**
+     * Builds the user form for editing/adding user items
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -30,6 +42,10 @@ class UserType extends AbstractType
         ;
     }
 
+    /**
+     * Configures the options for this review type
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

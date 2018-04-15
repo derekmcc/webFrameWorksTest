@@ -1,4 +1,9 @@
 <?php
+/**
+ * This is the recipe controller summary
+ */
+
+
 namespace App\Controller;
 use App\Entity\Recipe;
 use App\Form\RecipeType;
@@ -16,16 +21,24 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
+ * Class RecipeController
+ *
+ * @package App\Controller
  * @Route("/recipe", name="recipe_")
  */
 class RecipeController extends Controller
 {
     /**
+     * Function for managing the recipe index page
      *
      * @Route("/", defaults={"page": "1", "_format"="html"}, name="index")
      * @Route("/page/{page}", defaults={"_format"="html"}, requirements={"page": "[1-9]\d*"}, name="paginated")
      * @Method("GET")
      * @Cache(smaxage="10")
+     * @param int $page
+     * @param string $_format
+     * @param RecipeRepository $recipes
+     * @return Response
      */
     public function index(int $page, string $_format, RecipeRepository $recipes)
     {
@@ -41,8 +54,9 @@ class RecipeController extends Controller
         return $this->render('recipe/index.'.$_format.'.twig', ['recipes' => $latestRecipes]);
     }
     /**
-     * @Route("/showRecipe", name="showRecipe")
+     * Function that is used for returning recipes between a certain date range
      *
+     * @Route("/showRecipe", name="showRecipe")
      * @return Response
      */
     public function showRecipe()
@@ -54,9 +68,14 @@ class RecipeController extends Controller
     }
 
     /**
+     * Function for creating new recipes
+     *
      * @Route("/new", name="new")
      * @Method({"GET", "POST"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @param Request $request
+     * @param FileUploader $fileUploader
+     * @return RedirectResponse|Response
      */
     public function new(Request $request, FileUploader $fileUploader)
     {
@@ -85,9 +104,15 @@ class RecipeController extends Controller
             'form' => $form->createView(),
         ]);
     }
+
     /**
+     * Function used to return search results
+     *
      * @Route("/search", name="search")
      * @Method("GET")
+     * @param Request $request
+     * @param RecipeRepository $recipes
+     * @return Response
      */
     public function search(Request $request, RecipeRepository $recipes): Response
     {
@@ -109,8 +134,13 @@ class RecipeController extends Controller
     }
 
     /**
+     * Function used for finding recipes between a certain date range
+     *
      * @Route("/date", name="date")
      * @Method("GET")
+     * @param Request $request
+     * @param RecipeRepository $recipes
+     * @return Response
      */
     public function searchDates(Request $request, RecipeRepository $recipes): Response
     {
@@ -121,8 +151,13 @@ class RecipeController extends Controller
     }
 
     /**
+     * Function used to find recipes between a certain price range
+     *
      * @Route("/price", name="price")
      * @Method("GET")
+     * @param Request $request
+     * @param RecipeRepository $recipes
+     * @return Response
      */
     public function searchByPrice(Request $request, RecipeRepository $recipes): Response
     {
@@ -144,8 +179,12 @@ class RecipeController extends Controller
     }
 
     /**
+     * Function used to return a certain recipes details
+     *
      * @Route("/{id}", name="show")
      * @Method("GET")
+     * @param Recipe $recipe
+     * @return Response
      */
     public function show(Recipe $recipe)
     {
@@ -155,13 +194,18 @@ class RecipeController extends Controller
     }
 
     /**
+     * Function used to manage the editing of a certain recipe
+     *
      * @Route("/{id}/edit", name="edit")
      * @Method({"GET", "POST"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @param Request $request
+     * @param Recipe $recipe
+     * @return RedirectResponse|Response
      */
     public function edit(Request $request, Recipe $recipe)
     {
-        // --Does'nt work suppose to allow non selecting of image on edit form
+        // --Does'nt work - suppose to allow non selecting of image on edit form
 //        if($recipe->getImage() == null)
 //        {
 //            $recipe->setImage(
@@ -180,10 +224,16 @@ class RecipeController extends Controller
             'form' => $form->createView(),
         ]);
     }
+
     /**
+     * Function used to delete the chosen recipe
+     *
      * @Route("/{id}", name="delete")
      * @Method("DELETE")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @param Request $request
+     * @param Recipe $recipe
+     * @return RedirectResponse
      */
     public function delete(Request $request, Recipe $recipe)
     {
@@ -197,6 +247,8 @@ class RecipeController extends Controller
     }
 
     /**
+     * Function that sets a recipe to public
+     *
      * @param Recipe $recipe
      * @Route("/{id}/publish", requirements={"id" = "\d+"}, name="publish_recipe")
      * @Security("has_role('ROLE_ADMIN')")
@@ -212,6 +264,8 @@ class RecipeController extends Controller
     }
 
     /**
+     * Function that rejects a users request for a recipe to be public
+     *
      * @param Recipe $recipe
      * @Route("/{id}/reject", requirements={"id" = "\d+"}, name="reject_recipe")
      * @Security("has_role('ROLE_ADMIN')")
@@ -227,6 +281,8 @@ class RecipeController extends Controller
     }
 
     /**
+     * Function used to make a request for a recipe to be made public
+     *
      * @param Recipe $recipe
      * @Route("/{id}/request", requirements={"id" = "\d+"}, name="request_publish")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
@@ -240,6 +296,4 @@ class RecipeController extends Controller
         $em->flush();
         return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId()]);
     }
-
-
 }

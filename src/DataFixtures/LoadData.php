@@ -1,4 +1,7 @@
 <?php
+/**
+ * This is the load fixtures summary.
+ */
 
 namespace App\DataFixtures;
 
@@ -9,6 +12,12 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/**
+ * A class for loading fixture data
+ *
+ * Class LoadData
+ * @package App\DataFixtures
+ */
 class LoadData extends Fixture
 {
     /**
@@ -16,18 +25,36 @@ class LoadData extends Fixture
      */
     private $encoder;
 
+    /**
+     * Constructor
+     *
+     * LoadData constructor.
+     * @param UserPasswordEncoderInterface $encoder
+     */
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
         $this->encoder = $encoder;
     }
 
+    /**
+     * Manages the loading of all fixture data
+     *
+     * @param ObjectManager $manager
+     * @throws \Doctrine\Common\DataFixtures\BadMethodCallException
+     * @throws \Exception
+     */
     public function load(ObjectManager $manager)
     {
         $this->loadUsers($manager);
         $this->loadRecipes($manager);
-       // $this->loadReviews($manager);
     }
 
+    /**
+     * Function for loading user data
+     *
+     * @param ObjectManager $manager
+     * @throws \Doctrine\Common\DataFixtures\BadMethodCallException
+     */
     private function loadUsers(ObjectManager $manager)
     {
         foreach ($this->getUserData() as [$username, $password,$firstName, $surname, $roles]) {
@@ -38,18 +65,16 @@ class LoadData extends Fixture
             $user->setSurname($surname);
             $user->setPassword($this->encodePassword($user, $password));
             $user->setRoles($roles);
-          //  $user->setMakeRecipesPublic(false);
-          //  $user->setMakeReviewsPublic('af');
             $user->setEmail($faker->email);
             $manager->persist($user);
             $this->addReference($username, $user);
-
         }
-
         $manager->flush();
     }
 
     /**
+     * Function for loading recipe data
+     *
      * @param ObjectManager $manager
      * @throws \Exception
      */
@@ -90,6 +115,11 @@ class LoadData extends Fixture
         $manager->flush();
     }
 
+    /**
+     * Array of images for reviews
+     *
+     * @return array
+     */
     private function getReviewImage(): array
     {
         return [
@@ -110,6 +140,11 @@ class LoadData extends Fixture
         ];
     }
 
+    /**
+     * Array of list's of retailers
+     *
+     * @return array
+     */
     private function getRetailers(): array
     {
         return [
@@ -129,6 +164,11 @@ class LoadData extends Fixture
         ];
     }
 
+    /**
+     * Array of of ratings between 0-5
+     *
+     * @return array
+     */
     private function getNumberOfStars(): array
     {
         return [
@@ -146,9 +186,10 @@ class LoadData extends Fixture
         ];
     }
 
-
-    /*
+    /**
      * Used for adding a reference to a user, for the authors field in the recipe and review class
+     *
+     * @return array
      */
     private function getUsernames(): array
     {
@@ -180,6 +221,11 @@ class LoadData extends Fixture
         ];
     }
 
+    /**
+     * Array of all user roles
+     *
+     * @return array
+     */
     private function getUserRoles(): array
     {
         return [
@@ -188,6 +234,12 @@ class LoadData extends Fixture
             'ROLE_USER',
         ];
     }
+
+    /**
+     * Array of all the user data
+     *
+     * @return array
+     */
     private function getUserData(): array
     {
         $faker = \Faker\Factory::create();
@@ -220,6 +272,11 @@ class LoadData extends Fixture
         ];
     }
 
+    /**
+     * Array of all the recipe data
+     *
+     * @return array
+     */
     private function getRecipeData()
     {
         $faker = \Faker\Factory::create();
@@ -247,6 +304,11 @@ class LoadData extends Fixture
             ];
     }
 
+    /**
+     * Array of lists of ingredients
+     *
+     * @return array
+     */
     private function getIngredients(): array
     {
         return [
@@ -266,6 +328,11 @@ class LoadData extends Fixture
         ];
     }
 
+    /**
+     * Array of white rum summaries
+     *
+     * @return array
+     */
     private function getWhiteRumSummary(): array
     {
         return [
@@ -277,6 +344,11 @@ class LoadData extends Fixture
         ];
     }
 
+    /**
+     * Array of gold rum summaries
+     *
+     * @return array
+     */
     private function getGoldenRumSummary(): array
     {
         return [
@@ -289,6 +361,11 @@ class LoadData extends Fixture
         ];
     }
 
+    /**
+     * Array of spiceed rum summaries
+     *
+     * @return array
+     */
     private function getSpicedRumSummary(): array
     {
         return [
@@ -301,6 +378,11 @@ class LoadData extends Fixture
         ];
     }
 
+    /**
+     * Array of the price ranges
+     *
+     * @return array
+     */
     private function getPrices(): array
     {
         return [
@@ -312,6 +394,11 @@ class LoadData extends Fixture
         ];
     }
 
+    /**
+     * Array of boolean types
+     *
+     * @return array
+     */
     private function getTrueFalse(): array
     {
         return [
@@ -320,6 +407,11 @@ class LoadData extends Fixture
         ];
     }
 
+    /**
+     * Array of review summaries
+     *
+     * @return array
+     */
     private function getReviewSummaries(): array
     {
         return [
@@ -334,6 +426,13 @@ class LoadData extends Fixture
         ];
     }
 
+    /**
+     * Function for hashing user passwords
+     *
+     * @param $user
+     * @param $plainPassword
+     * @return string
+     */
     private function encodePassword($user, $plainPassword):string
     {
         $encodedPassword = $this->encoder->encodePassword($user, $plainPassword);

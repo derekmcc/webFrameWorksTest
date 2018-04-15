@@ -1,4 +1,7 @@
 <?php
+/**
+ * Review repository for executing queries on review items.
+ */
 
 namespace App\Repository;
 
@@ -9,7 +12,11 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use Doctrine\ORM\Query;
+
 /**
+ * Start of the review repository class
+ * Class ReviewRepository
+ * @package App\Repository
  * @method Review|null find($id, $lockMode = null, $lockVersion = null)
  * @method Review|null findOneBy(array $criteria, array $orderBy = null)
  * @method Review[]    findAll()
@@ -17,11 +24,20 @@ use Doctrine\ORM\Query;
  */
 class ReviewRepository extends ServiceEntityRepository
 {
+    /**
+     * ReviewRepository constructor
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Review::class);
     }
 
+    /**
+     * Query to return the reviews based on their date published
+     * @param int $page
+     * @return Pagerfanta
+     */
     public function findLatestReviews(int $page = 1): Pagerfanta
     {
         $query = $this->getEntityManager()
@@ -35,6 +51,11 @@ class ReviewRepository extends ServiceEntityRepository
         return $this->createPaginator($query, $page);
     }
 
+    /**
+     * Query to find reviews that are public for non logged in users
+     * @param int $page
+     * @return Pagerfanta
+     */
     public function findLatestPublicReviews(int $page = 1): Pagerfanta
     {
         $query = $this->getEntityManager()
@@ -48,6 +69,12 @@ class ReviewRepository extends ServiceEntityRepository
         return $this->createPaginator($query, $page);
     }
 
+    /**
+     * Query to find reviews based the user logged in
+     * @param int $page
+     * @param $user
+     * @return Pagerfanta
+     */
     public function findReviewsByAuthor(int $page = 1, $user): Pagerfanta
     {
         $query = $this->getEntityManager()
@@ -62,6 +89,12 @@ class ReviewRepository extends ServiceEntityRepository
         return $this->createPaginator($query, $page);
     }
 
+    /**
+     * Creates a paginator for the reviews
+     * @param Query $query
+     * @param int $page
+     * @return Pagerfanta
+     */
     private function createPaginator(Query $query, int $page): Pagerfanta
     {
         $paginator = new Pagerfanta(new DoctrineORMAdapter($query));
@@ -71,6 +104,11 @@ class ReviewRepository extends ServiceEntityRepository
         return $paginator;
     }
 
+    /**
+     * Query to return the reviews based on the order specified by the user
+     * @param string $sort
+     * @return mixed
+     */
     public function findReviewsByNumberOfVotes(string $sort)
     {
         return $this->createQueryBuilder('u')
@@ -79,18 +117,4 @@ class ReviewRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
-
-//    public function findReviewsByAuthorToDelete($user)
-//    {
-//        ;
-//
-//       return $this->getEntityManager()
-//            ->createQuery("
-//                SELECT r
-//                FROM App:Review r
-//                WHERE r.author = '{$user->getId()}'
-//            ")
-//        ;
-//
-//    }
 }

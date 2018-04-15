@@ -1,4 +1,7 @@
 <?php
+/**
+ * Recipe form for adding/editing recipe items.
+ */
 
 namespace App\Form;
 
@@ -15,8 +18,19 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+
+/**
+ * Start of the recipe type class
+ * Class RecipeType
+ * @package App\Form
+ */
 class RecipeType extends AbstractType
 {
+    /**
+     * Builds the recipe form for editing/adding recipe items
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -45,6 +59,10 @@ class RecipeType extends AbstractType
         ;
     }
 
+    /**
+     * Configures the options for this recipe type
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

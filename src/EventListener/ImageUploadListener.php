@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Derek
- * Date: 22/03/2018
- * Time: 15:09
+ * Image uploader class, used for uploading images.
  */
 
 namespace App\EventListener;
@@ -17,15 +14,32 @@ use App\Entity\Review;
 use App\Service\FileUploader;
 use Symfony\Component\HttpFoundation\File\File;
 
+/**
+ * Start of the image upload class
+ * Class ImageUploadListener
+ * @package App\EventListener
+ */
 class ImageUploadListener
 {
+    /**
+     * Variable to store uploaded file
+     * @var FileUploader
+     */
     private $uploader;
 
+    /**
+     * ImageUploadListener constructor
+     * @param FileUploader $uploader
+     */
     public function __construct(FileUploader $uploader)
     {
         $this->uploader = $uploader;
     }
 
+    /**
+     * Gets the entity uploading an image and assigns it to uploadFile
+     * @param LifecycleEventArgs $args
+     */
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -33,6 +47,10 @@ class ImageUploadListener
         $this->uploadFile($entity);
     }
 
+    /**
+     * Gets the entity uploading an image and assigns it to uploadFile
+     * @param PreUpdateEventArgs $args
+     */
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -40,6 +58,10 @@ class ImageUploadListener
         $this->uploadFile($entity);
     }
 
+    /**
+     * Uploads the the file and sets the entities image to the uploaded file
+     * @param $entity
+     */
     private function uploadFile($entity)
     {
         // upload only works for Recipe entities
@@ -55,17 +77,4 @@ class ImageUploadListener
             $entity->setImage($fileName);
         }
     }
-
-//    public function postLoad(LifecycleEventArgs $args)
-//    {
-//        $entity = $args->getEntity();
-//
-////        if (!$entity instanceof Recipe) {
-////            return;
-////        }
-//
-//        if ($fileName = $entity->getImage()) {
-//            $entity->setImage(new File($this->uploader->getTargetDirectory().'/'.$fileName));
-//        }
-//    }
 }

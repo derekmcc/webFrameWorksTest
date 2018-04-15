@@ -1,4 +1,7 @@
 <?php
+/**
+ * Summary for review controller.
+ */
 
 namespace App\Controller;
 
@@ -19,17 +22,27 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\File\File;
+
 /**
+ * The review controller class
+ *
+ * @package App\Controller
  * @Route("/review", name="review_")
  */
 class ReviewController extends Controller
 {
+
     /**
+     * Function used to return the review index page
      *
      * @Route("/", defaults={"page": "1", "_format"="html"}, name="index")
      * @Route("/page/{page}", defaults={"_format"="html"}, requirements={"page": "[1-9]\d*"}, name="paginated")
      * @Method("GET")
      * @Cache(smaxage="10")
+     * @param int $page
+     * @param string $_format
+     * @param ReviewRepository $reviews
+     * @return Response
      */
     public function index(int $page, string $_format, ReviewRepository $reviews)
     {
@@ -46,8 +59,11 @@ class ReviewController extends Controller
     }
 
     /**
-     * @Route("/showReview", name="showReview")
+     * Function used to sort the reviews by the number of stars
      *
+     * @Route("/showReview", name="showReview")
+     * @param Request $request
+     * @param ReviewRepository $review
      * @return Response
      */
     public function showReview(Request $request, ReviewRepository $review)
@@ -63,10 +79,15 @@ class ReviewController extends Controller
     }
 
     /**
+     * Function for creating a new review
+     *
      * @Route("/new/{recipeID}",  defaults={"recipeID" = 0}, name="new")
      * @Method({"GET", "POST"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
-     *
+     * @param Request $request
+     * @param FileUploader $fileUploader
+     * @param Recipe $recipeID
+     * @return RedirectResponse|Response
      */
     public function new(Request $request, FileUploader $fileUploader, Recipe $recipeID)
     {
@@ -101,8 +122,12 @@ class ReviewController extends Controller
     }
 
     /**
+     * Function used to show an individual reviews details
+     *
      * @Route("/{id}", name="show")
      * @Method("GET")
+     * @param Review $review
+     * @return Response
      */
     public function show(Review $review)
     {
@@ -112,9 +137,15 @@ class ReviewController extends Controller
     }
 
     /**
+     * Function for editing a review
+     *
      * @Route("/{id}/edit", name="edit")
      * @Method({"GET", "POST"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @param Request $request
+     * @param Review $review
+     * @param FileUploader $fileUploader
+     * @return RedirectResponse|Response
      */
     public function edit(Request $request, Review $review, FileUploader $fileUploader)
     {
@@ -142,9 +173,14 @@ class ReviewController extends Controller
     }
 
     /**
+     * Function for deleting a review
+     *
      * @Route("/{id}", name="delete")
      * @Method("DELETE")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @param Request $request
+     * @param Review $review
+     * @return RedirectResponse
      */
     public function delete(Request $request, Review $review)
     {
@@ -160,6 +196,8 @@ class ReviewController extends Controller
     }
 
     /**
+     * Function to set a review to public
+     *
      * @param Review $review
      * @Route("/{id}/publish", requirements={"id" = "\d+"}, name="publish_review")
      * @Security("has_role('ROLE_ADMIN')")
@@ -175,6 +213,8 @@ class ReviewController extends Controller
     }
 
     /**
+     * Function to reject a users request for a review to be public
+     *
      * @param Review $review
      * @Route("/{id}/reject", requirements={"id" = "\d+"}, name="reject_review")
      * @Security("has_role('ROLE_ADMIN')")
@@ -190,6 +230,8 @@ class ReviewController extends Controller
     }
 
     /**
+     * Function used to make a request for a review to be public
+     *
      * @param Review $review
      * @Route("/{id}/request", requirements={"id" = "\d+"}, name="request_publish")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
@@ -205,6 +247,8 @@ class ReviewController extends Controller
     }
 
     /**
+     * Function to up-vote a review
+     *
      * @param Review $review
      * @Route("/{id}/upVote", requirements={"id" = "\d+"}, name="upVote")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
@@ -222,6 +266,8 @@ class ReviewController extends Controller
     }
 
     /**
+     * Function to down-vote a review
+     *
      * @param Review $review
      * @Route("/{id}/downVote", requirements={"id" = "\d+"}, name="downVote")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")

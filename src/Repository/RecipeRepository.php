@@ -1,4 +1,7 @@
 <?php
+/**
+ * Recipe repository for executing queries on recipe items.
+ */
 
 namespace App\Repository;
 
@@ -10,6 +13,9 @@ use Pagerfanta\Pagerfanta;
 use Doctrine\ORM\Query;
 
 /**
+ * Start of the recipe repository class
+ * Class RecipeRepository
+ * @package App\Repository
  * @method Recipe|null find($id, $lockMode = null, $lockVersion = null)
  * @method Recipe|null findOneBy(array $criteria, array $orderBy = null)
  * @method Recipe[]    findAll()
@@ -17,12 +23,19 @@ use Doctrine\ORM\Query;
  */
 class RecipeRepository extends ServiceEntityRepository
 {
+    /**
+     * RecipeRepository constructor
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Recipe::class);
     }
+
     /**
-     * @return Recipe[]
+     * Query to search for a recipe
+     * @param string $rawQuery
+     * @return array
      */
     public function findBySearchQuery(string $rawQuery): array
     {
@@ -50,7 +63,9 @@ class RecipeRepository extends ServiceEntityRepository
     }
 
     /**
-     * Removes all non-alphanumeric characters except whitespaces.
+     * Removes all non-alphanumeric characters except whitespaces
+     * @param string $query
+     * @return string
      */
     private function sanitizeSearchQuery(string $query): string
     {
@@ -58,7 +73,9 @@ class RecipeRepository extends ServiceEntityRepository
     }
 
     /**
-     * Splits the search query into terms and removes the ones which are irrelevant.
+     * Splits the search query into terms and removes the ones which are irrelevant
+     * @param string $searchQuery
+     * @return array
      */
     private function extractSearchTerms(string $searchQuery): array
     {
@@ -69,6 +86,11 @@ class RecipeRepository extends ServiceEntityRepository
         });
     }
 
+    /**
+     * Returns the recipes based on the date they were created to the paginator
+     * @param int $page
+     * @return Pagerfanta
+     */
     public function findLatestRecipes(int $page = 1): Pagerfanta
     {
         $query = $this->getEntityManager()
@@ -82,6 +104,12 @@ class RecipeRepository extends ServiceEntityRepository
         return $this->createPaginator($query, $page);
     }
 
+    /**
+     * Returns the recipes based on the date they were created to the paginator for non logged
+     * in users
+     * @param int $page
+     * @return Pagerfanta
+     */
     public function findLatestPublicRecipes(int $page = 1): Pagerfanta
     {
         $query = $this->getEntityManager()
@@ -95,6 +123,13 @@ class RecipeRepository extends ServiceEntityRepository
         return $this->createPaginator($query, $page);
     }
 
+    /**
+     * Returns the recipes based on the date they were created to the paginator for the
+     * author of the recipe
+     * @param int $page
+     * @param $user
+     * @return Pagerfanta
+     */
     public function findRecipesByAuthor(int $page = 1, $user): Pagerfanta
     {
         $query = $this->getEntityManager()
@@ -109,6 +144,13 @@ class RecipeRepository extends ServiceEntityRepository
         return $this->createPaginator($query, $page);
     }
 
+    /**
+     * Query that finds recipes based on the date range specified by the user
+     * @param string $date1
+     * @param string $date2
+     * @param int $page
+     * @return Pagerfanta
+     */
     public function findRecipesByDate(string $date1, string $date2, int $page = 1): Pagerfanta
     {
         $query = $this->getEntityManager()
@@ -122,6 +164,12 @@ class RecipeRepository extends ServiceEntityRepository
         return $this->createPaginator($query,$page);
     }
 
+    /**
+     * Query that finds recipes between a certain price range
+     * @param string $sort
+     * @param int $page
+     * @return Pagerfanta
+     */
     public function findRecipesByPriceRange(string $sort, int $page = 1): Pagerfanta
     {
         $query = $this->getEntityManager()
@@ -135,6 +183,12 @@ class RecipeRepository extends ServiceEntityRepository
         return $this->createPaginator($query,$page);
     }
 
+    /**
+     * Creates a paginator for the recipes
+     * @param Query $query
+     * @param int $page
+     * @return Pagerfanta
+     */
     private function createPaginator(Query $query, int $page): Pagerfanta
     {
         $paginator = new Pagerfanta(new DoctrineORMAdapter($query));
@@ -143,41 +197,4 @@ class RecipeRepository extends ServiceEntityRepository
 
         return $paginator;
     }
-
-//    public function findRecipesByAuthorToDelete($user)
-//    {
-//        return $this->getEntityManager()
-//            ->createQuery("
-//                SELECT r
-//                FROM App:Recipe r
-//                WHERE r.author = '{$user->getId()}'
-//            ")
-//        ;
-//    }
-    /*
-    public function findLatest(int $page = 1): Pagerfanta
-    {
-        $query = $this->getEntityManager()
-            ->createQuery('
-                SELECT p, a, t
-                FROM App:Recipe p
-                JOIN p.author a
-                LEFT JOIN p.reviews t
-                WHERE p.publishedAt <= :now
-                ORDER BY p.publishedAt DESC
-            ')
-            ->setParameter('now', new \DateTime())
-        ;
-
-        return $this->createPaginator($query, $page);
-    }
-
-    private function createPaginator(Query $query, int $page): Pagerfanta
-    {
-        $paginator = new Pagerfanta(new DoctrineORMAdapter($query));
-        $paginator->setMaxPerPage(Recipe::NUM_ITEMS);
-        $paginator->setCurrentPage($page);
-
-        return $paginator;
-    }*/
 }

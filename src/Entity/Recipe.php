@@ -1,37 +1,57 @@
 <?php
+/**
+ * recipe entity for creating recipes.
+ */
 namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 /**
+ * Start of the recipe entity class
+ *
  * @ORM\Entity(repositoryClass="App\Repository\RecipeRepository")
+ * Class Recipe
+ * @package App\Entity
  */
 class Recipe
 {
+    /**
+     * Constant value to define the number of recipe items to be displayed on each page
+     */
     const NUM_ITEMS = 10;
 
     /**
+     * Recipe id
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      *
      */
     private $id;
+
     /**
+     * Recipe title
      * @ORM\Column(type="string")
      */
     private $title;
+
     /**
+     * Recipe summary
      * @ORM\Column(type="string")
      */
     private $summary;
+
     /**
+     * Recipe description
      * @ORM\Column(type="string")
      */
     private $description;
+
     /**
+     * Recipe image
      * @ORM\Column(type="string", nullable=true)
      *
      * @Assert\NotBlank(message="Please, upload the image as a jpg")
@@ -45,26 +65,34 @@ class Recipe
      * )
      */
     private $image;
+
     /**
+     * Recipe ingredients
      * @ORM\Column(type="string")
      */
     private $ingredients;
+
     /**
+     * Recipe price
      * @ORM\Column(type="string")
      */
     private $price;
 
     /**
-     *
+     * Recipe author
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="recipeAuthor")
      * @ORM\JoinColumn(nullable=true)
      */
     private $author;
+
     /**
+     * Recipe public true/false
      * @ORM\Column(type="boolean")
      */
     private $isPublic;
+
     /**
+     * Recipe reviews
      * @var Review[]|ArrayCollection
      *
      * @ORM\OneToMany(
@@ -78,11 +106,13 @@ class Recipe
     private $reviews;
 
     /**
+     * Request recipe be public
      * @ORM\Column(type="boolean")
      */
     private $requestRecipePublic;
 
     /**
+     * Recipe date of creation
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
@@ -91,6 +121,7 @@ class Recipe
     private $publishedAt;
 
     /**
+     * Gets the date the recipe was published
      * @return \DateTime
      */
     public function getPublishedAt(): \DateTime
@@ -99,6 +130,7 @@ class Recipe
     }
 
     /**
+     * Sets the date the recipe was published
      * @param \DateTime $publishedAt
      */
     public function setPublishedAt(\DateTime $publishedAt): void
@@ -107,6 +139,7 @@ class Recipe
     }
 
     /**
+     * Gets whether the recipe is public or not, true/false
      * @return mixed
      */
     public function getIsPublic()
@@ -115,6 +148,7 @@ class Recipe
     }
 
     /**
+     * Sets whether the recipe is public or not, true/false
      * @param mixed $isPublic
      */
     public function setIsPublic($isPublic): void
@@ -123,6 +157,7 @@ class Recipe
     }
 
     /**
+     * Gets the id of the recipe
      * @return mixed
      */
     public function getId(): int
@@ -131,6 +166,7 @@ class Recipe
     }
 
     /**
+     * Gets the title/name of the recipe
      * @return mixed
      */
     public function getTitle(): ?string
@@ -139,6 +175,7 @@ class Recipe
     }
 
     /**
+     * Sets the title of the recipe
      * @param mixed $title
      */
     public function setTitle($title): void
@@ -147,6 +184,7 @@ class Recipe
     }
 
     /**
+     * Gets the summary of the recipe
      * @return mixed
      */
     public function getSummary(): ?string
@@ -155,6 +193,7 @@ class Recipe
     }
 
     /**
+     * sets the summary of the recipe
      * @param mixed $summary
      */
     public function setSummary($summary): void
@@ -163,6 +202,7 @@ class Recipe
     }
 
     /**
+     * Gets the description of the recipe
      * @return mixed
      */
     public function getDescription(): ?string
@@ -171,6 +211,7 @@ class Recipe
     }
 
     /**
+     * Sets the description of the recipe
      * @param mixed $description
      */
     public function setDescription($description): void
@@ -179,6 +220,7 @@ class Recipe
     }
 
     /**
+     * Gets the image of the recipe
      * @return mixed
      */
     public function getImage()
@@ -187,6 +229,7 @@ class Recipe
     }
 
     /**
+     * Sete the image of the recipe
      * @param mixed $image
      */
     public function setImage($image): void
@@ -195,6 +238,7 @@ class Recipe
     }
 
     /**
+     * Gets the ingredients of the recipe
      * @return mixed
      */
     public function getIngredients(): ?string
@@ -203,6 +247,7 @@ class Recipe
     }
 
     /**
+     * Sets the ingredients of the recipe
      * @param mixed $ingredients
      */
     public function setIngredients($ingredients): void
@@ -211,6 +256,7 @@ class Recipe
     }
 
     /**
+     * Gets the price of the recipe
      * @return mixed
      */
     public function getPrice(): ?string
@@ -219,6 +265,7 @@ class Recipe
     }
 
     /**
+     * Sets the price of the recipe
      * @param mixed $price
      */
     public function setPrice($price): void
@@ -227,6 +274,7 @@ class Recipe
     }
 
     /**
+     * Gets the author of the recipe
      * @return User|null
      */
     public function getAuthor(): ?User
@@ -235,6 +283,7 @@ class Recipe
     }
 
     /**
+     * Sets the author of the recipe
      * @param mixed $author
      */
     public function setAuthor(User $author)
@@ -242,39 +291,25 @@ class Recipe
         $this->author = $author;
     }
 
+    /**
+     * Recipe constructor
+     */
     public function __construct()
     {
-        // $this->reviews = new ArrayCollection();
         $this->requestRecipePublic = new ArrayCollection();
     }
 
+    /**
+     * Gets all the reviews of the recipe
+     * @return Review[]|ArrayCollection
+     */
     public function getReviews()
     {
         return $this->reviews;
     }
 
-//    public function buildForm(FormBuilderInterface $builder, array $options)
-//    {
-//        $builder
-//            ->add('title')->add('reviews')
-//            ->add('image', FileType::class, array('data_class' => null));
-//    }
-//
-//    public function addReview(Review $review): void
-//    {
-//        $review->setRecipe($this);
-//        if (!$this->reviews->contains($review)) {
-//            $this->reviews->add($review);
-//        }
-//    }
-//
-//    public function removeReview(Review $review): void
-//    {
-//        $review->setRecipe(null);
-//        $this->reviews->removeElement($review);
-//    }
-
     /**
+     * Gets whether the recipe has being requested to be public or not, true/false
      * @return mixed
      */
     public function getRequestRecipePublic()
@@ -283,11 +318,11 @@ class Recipe
     }
 
     /**
+     * Sets whether the recipe has being requested to be public or not, true/false
      * @param mixed $requestRecipePublic
      */
     public function setRequestRecipePublic($requestRecipePublic): void
     {
         $this->requestRecipePublic = $requestRecipePublic;
     }
-
 }

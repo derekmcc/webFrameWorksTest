@@ -1,0 +1,441 @@
+<?php
+/**
+ * This is the load fixtures summary.
+ */
+
+namespace App\DataFixtures;
+
+use App\Entity\Recipe;
+use App\Entity\Review;
+use App\Entity\User;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
+/**
+ * A class for loading fixture data
+ *
+ * Class LoadData
+ * @package App\DataFixtures
+ */
+class LoadData extends Fixture
+{
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $encoder;
+
+    /**
+     * Constructor
+     *
+     * LoadData constructor.
+     * @param UserPasswordEncoderInterface $encoder
+     */
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
+    /**
+     * Manages the loading of all fixture data
+     *
+     * @param ObjectManager $manager
+     * @throws \Doctrine\Common\DataFixtures\BadMethodCallException
+     * @throws \Exception
+     */
+    public function load(ObjectManager $manager)
+    {
+        $this->loadUsers($manager);
+        $this->loadRecipes($manager);
+    }
+
+    /**
+     * Function for loading user data
+     *
+     * @param ObjectManager $manager
+     * @throws \Doctrine\Common\DataFixtures\BadMethodCallException
+     */
+    private function loadUsers(ObjectManager $manager)
+    {
+        foreach ($this->getUserData() as [$username, $password,$firstName, $surname, $roles]) {
+            $faker = \Faker\Factory::create();
+            $user = new User();
+            $user->setUsername($username);
+            $user->setFirstname($firstName);
+            $user->setSurname($surname);
+            $user->setPassword($this->encodePassword($user, $password));
+            $user->setRoles($roles);
+            $user->setEmail($faker->email);
+            $manager->persist($user);
+            $this->addReference($username, $user);
+        }
+        $manager->flush();
+    }
+
+    /**
+     * Function for loading recipe data
+     *
+     * @param ObjectManager $manager
+     * @throws \Exception
+     */
+    private function loadRecipes(ObjectManager $manager)
+    {
+        $faker = \Faker\Factory::create();
+        foreach ($this->getRecipeData() as [$title, $summary, $description, $image, $author, $ingredients, $price, $public]) {
+            $recipe = new Recipe();
+            $recipe->setTitle($title);
+            $recipe->setSummary($summary);
+            $recipe->setDescription($description);
+            $recipe->setImage($image);
+            $recipe->setAuthor($author);
+            $recipe->setIngredients($ingredients);
+            $recipe->setPrice($price);
+            $recipe->setIsPublic($public);
+            $recipe->setPublishedAt($faker->dateTimeThisMonth('now'));
+            $recipe->setRequestRecipePublic($faker->randomElement($this->getTrueFalse()));
+            $manager->persist($recipe);
+
+            foreach (range(1, $faker->randomNumber(2,false)) as $i) {
+                $review = new Review();
+                $review->setAuthor($this->getReference($faker->randomElement($this->getUsernames())));
+                $review->setSummary($faker->randomElement($this->getReviewSummaries()));
+                $review->setPublishedAt($faker->dateTimeThisMonth('now'));
+                $review->setRetailers($faker->randomElement($this->getRetailers()));
+                $review->setPrice($faker->randomFloat(2,5,60));
+                $review->setStars($faker->randomElement($this->getNumberOfStars()));
+                $review->setUpVotes($faker->randomNumber(2,false));
+                $review->setDownVotes($faker->randomNumber(2,false));
+                $review->setIsPublicReview($value = (bool)random_int(0, 1));
+                $review->setImage($faker->randomElement($this->getReviewImage()));
+                $review->setRequestReviewPublic($faker->randomElement($this->getTrueFalse()));
+                $review->setRecipe($recipe);
+                $manager->persist($review);
+            }
+        }
+        $manager->flush();
+    }
+
+    /**
+     * Array of images for reviews
+     *
+     * @return array
+     */
+    private function getReviewImage(): array
+    {
+        return [
+            "rumRev1.png",
+            "rumRev2.png",
+            "rumRev3.png",
+            "rumRev4.jpg",
+            "rumRev5.jpg",
+            "rumRev6.jpg",
+            "rumRev7.jpg",
+            "rumRev8.jpg",
+            "rumRev9.jpg",
+            "rumRev10.jpg",
+            "rumRev11.jpg",
+            "rumRev12.jpg",
+            "rumRev13.jpg",
+            "rumRev14.jpg",
+        ];
+    }
+
+    /**
+     * Array of list's of retailers
+     *
+     * @return array
+     */
+    private function getRetailers(): array
+    {
+        return [
+            "M&S, SuperValue, Dunnes Stores",
+            "Molloys Off Licence, Aldi, Centra",
+            "Spar, Lidl, Costcutter",
+            "Tescos, Supervale, Dunnes Stores",
+            "Centra, Spar, Dunnes Stores",
+            "Molloys Off Licence, M&S, Spar",
+            "Lidl, Costcutter, Tescos",
+            "Tescos, M&S, Spar",
+            "Carry Out Off Licence, M&S, Aldi",
+            "McHugh's Off Licence, Lide SuperValue",
+            "Molloys Off Licence, M&S, Spar",
+            "Carry Out Off Licence Costcutter, McHugh's Off Licence",
+            "Tescos, McHugh's Off Licence, M&S",
+        ];
+    }
+
+    /**
+     * Array of of ratings between 0-5
+     *
+     * @return array
+     */
+    private function getNumberOfStars(): array
+    {
+        return [
+            0,
+            0.5,
+            1,
+            1.5,
+            2,
+            2.5,
+            3,
+            3.5,
+            4,
+            4.5,
+            5,
+        ];
+    }
+
+    /**
+     * Used for adding a reference to a user, for the authors field in the recipe and review class
+     *
+     * @return array
+     */
+    private function getUsernames(): array
+    {
+        return [
+            'derek',
+            'john_user',
+            'admin',
+            'joe_user',
+            'username1',
+            'username2',
+            'username3',
+            'username4',
+            'username5',
+            'username6',
+            'username7',
+            'username8',
+            'username9',
+            'username10',
+            'username11',
+            'username12',
+            'username13',
+            'username14',
+            'username15',
+            'username16',
+            'username17',
+            'username18',
+            'username19',
+            'username20',
+        ];
+    }
+
+    /**
+     * Array of all user roles
+     *
+     * @return array
+     */
+    private function getUserRoles(): array
+    {
+        return [
+            'ROLE_SUPER_ADMIN',
+            'ROLE_ADMIN',
+            'ROLE_USER',
+        ];
+    }
+
+    /**
+     * Array of all the user data
+     *
+     * @return array
+     */
+    private function getUserData(): array
+    {
+        $faker = \Faker\Factory::create();
+        return [
+            ['derek', 'pass','Derek','McCarthy', ['ROLE_SUPER_ADMIN']],
+            ['john_user', 'pass', 'John', 'Doe', ['ROLE_USER']],
+            ['admin', 'pass',$faker->firstName, $faker->lastName, ['ROLE_ADMIN']],
+            ['joe_user', 'pass','Joe', 'Bloggs', ['ROLE_USER']],
+            ['jane_user', 'pass','Jane', 'Smith', ['ROLE_USER']],
+            ['username1', 'pass',$faker->firstName('male'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username2', 'pass',$faker->firstName('male'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username3', 'pass',$faker->firstName('male'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username4', 'pass',$faker->firstName('male'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username5', 'pass',$faker->firstName('male'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username6', 'pass',$faker->firstName('male'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username7', 'pass',$faker->firstName('male'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username8', 'pass',$faker->firstName('male'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username9', 'pass',$faker->firstName('male'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username10', 'pass',$faker->firstName('female'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username11', 'pass',$faker->firstName('female'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username12', 'pass',$faker->firstName('female'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username13', 'pass',$faker->firstName('female'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username14', 'pass',$faker->firstName('female'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username15', 'pass',$faker->firstName('female'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username16', 'pass',$faker->firstName('female'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username17', 'pass',$faker->firstName('female'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username18', 'pass',$faker->firstName('female'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username19', 'pass',$faker->firstName('female'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+            ['username20', 'pass',$faker->firstName('female'), $faker->lastName, [$faker->randomElement($this->getUserRoles())]],
+        ];
+    }
+
+    /**
+     * Array of all the recipe data
+     *
+     * @return array
+     */
+    private function getRecipeData()
+    {
+        $faker = \Faker\Factory::create();
+        return [
+            ['10 Cane',$faker->randomElement($this->getWhiteRumSummary()),'RumXP Award Winner. Made from select first press cane juice, aged up to 6 months in oak, this premium white rum is double distilled for an uncommonly light and smooth flavor, produced by one of the great French distillers.  ','10Cane.jpg',$this->getReference($faker->randomElement($this->getUsernames())),$faker->randomElement($this->getIngredients()),$faker->randomElement($this->getPrices()),$faker->randomElement($this->getTrueFalse())],
+            ['4 Spirits Silver',$faker->randomElement($this->getWhiteRumSummary()),'From Adair Village in Oregon, this clear spirit brings aromas of sourdough and banana with a whiff of cherry/almond and a complex juicy fruit bouquet.','4Spirits.jpg',$this->getReference($faker->randomElement($this->getUsernames())),$faker->randomElement($this->getIngredients()),$faker->randomElement($this->getPrices()),$faker->randomElement($this->getTrueFalse())],
+            ['Angostura White Reserva',$faker->randomElement($this->getWhiteRumSummary()),"Aged three years for exceptional flavor, this rum adds richness to cocktails with notes of subtle vanilla, oak and delicate pound cake.",'Angostura.jpg',$this->getReference($faker->randomElement($this->getUsernames())),$faker->randomElement($this->getIngredients()),$faker->randomElement($this->getPrices()),$faker->randomElement($this->getTrueFalse())],
+            ['Bacardi Havana Club Blanco',$faker->randomElement($this->getWhiteRumSummary()),"Based on the original recipe created by the Arechabala family in Cuba in 1934, Havana Club Blanco from Puerto Rico is produced by Bacardi.",'BacardiHavanaClubBlanco.jpg',$this->getReference($faker->randomElement($this->getUsernames())),$faker->randomElement($this->getIngredients()),$faker->randomElement($this->getPrices()), $faker->randomElement($this->getTrueFalse())],
+            ['Banks Five Island',$faker->randomElement($this->getWhiteRumSummary()),"From master blender Arnaud de Trabuc, a unique blend of more than twenty white spirits aged three to twenty years featuring light Trinidadian rum",'Banks5Island.jpg',$this->getReference($faker->randomElement($this->getUsernames())),$faker->randomElement($this->getIngredients()),$faker->randomElement($this->getPrices()), $faker->randomElement($this->getTrueFalse())],
+            ['1 Barrel',$faker->randomElement($this->getGoldenRumSummary()),"Bright golden color and distinct aroma of sweet butterscotch with a hint of maple syrup, mellows out on the rocks or with a splash of water",'1Barrel.jpg',$this->getReference($faker->randomElement($this->getUsernames())),$faker->randomElement($this->getIngredients()),$faker->randomElement($this->getPrices()), $faker->randomElement($this->getTrueFalse())],
+            ['Abuelo Anejo',$faker->randomElement($this->getGoldenRumSummary()),"A delightful blend of quality rums aged for three years in charred oak barrels for rich, dry, oak flavor. A great value.  ",'AbueloAnjeo.jpg',$this->getReference($faker->randomElement($this->getUsernames())),$faker->randomElement($this->getIngredients()),$faker->randomElement($this->getPrices()), $faker->randomElement($this->getTrueFalse())],
+            ['Angostura 5 Superior Gold',$faker->randomElement($this->getGoldenRumSummary()),"Aged for a minimum of five years in first fill bourbon casks, it presents hints of white oak, vanilla, baking spices and cacao in a medium-bodied viscosity, before a medium finish.",'Angostura5.jpg',$this->getReference($faker->randomElement($this->getUsernames())),$faker->randomElement($this->getIngredients()),$faker->randomElement($this->getPrices()), $faker->randomElement($this->getTrueFalse())],
+            ['Neptune Three Year Aged Gold Barbados Rum',$faker->randomElement($this->getGoldenRumSummary()),"From Foursquare Distillery, Neptune Three Year Aged Gold Barbados Rum presents authentic column and pot still spirits aged in toasted oak.",'Neptune3yr.jpg',$this->getReference($faker->randomElement($this->getUsernames())),$faker->randomElement($this->getIngredients()),$faker->randomElement($this->getPrices()), $faker->randomElement($this->getTrueFalse())],
+            ['Big 5 Gold',$faker->randomElement($this->getGoldenRumSummary()),"Modeled in the light bodied Cuban style of aged rums, Big 5 Gold Rum is a fine example of a modern spirit finished by craft distillers in artisan copper pot stills. ",'Big5Gold.jpg',$this->getReference($faker->randomElement($this->getUsernames())),$faker->randomElement($this->getIngredients()),$faker->randomElement($this->getPrices()), $faker->randomElement($this->getTrueFalse())],
+            ['Koloa Gold',$faker->randomElement($this->getGoldenRumSummary())," Koloa Gold offers aromas of rich, slightly sweet notes of cane and caramel. The palate is accented with toasted wood and gently warming through the finish.",'KoloaGold.jpg',$this->getReference($faker->randomElement($this->getUsernames())),$faker->randomElement($this->getIngredients()),$faker->randomElement($this->getPrices()), $faker->randomElement($this->getTrueFalse())],
+            ['J.Wray Gold',$faker->randomElement($this->getGoldenRumSummary()),"J.Wray Gold rum from Jamaica was designed to deliver big rum flavor and a mellow wood profile at an affordable price.",'JWrayGold.jpg',$this->getReference($faker->randomElement($this->getUsernames())),$faker->randomElement($this->getIngredients()),$faker->randomElement($this->getPrices()), $faker->randomElement($this->getTrueFalse())],
+            ['Admiral Nelson Cherry',$faker->randomElement($this->getSpicedRumSummary()),"Aromas of cherry and creamy vanilla, like a chocolate cherry liquor bon bon. The palate leads with syrupy sweet cherry flavor over creamy vanilla base.",'AdmiralNelsonCherry.jpg',$this->getReference($faker->randomElement($this->getUsernames())),$faker->randomElement($this->getIngredients()),$faker->randomElement($this->getPrices()), $faker->randomElement($this->getTrueFalse())],
+            ['Admiral Nelson Coconut',$faker->randomElement($this->getSpicedRumSummary()),"Like a day at the beach, this clear rum leads with aromas of tropical coconut tanning lotion, coconut husk and baked macaroon.",'AdmiralNelsonCoconut.jpg',$this->getReference($faker->randomElement($this->getUsernames())),$faker->randomElement($this->getIngredients()),$faker->randomElement($this->getPrices()), $faker->randomElement($this->getTrueFalse())],
+            ['Admiral Nelson Spiced',$faker->randomElement($this->getSpicedRumSummary()),"Aromas of heavy vanilla over green cardamom with a hint of cinnamon. On the palate big vanilla overwhelms a blend of baking spices.",'AdmiralNelsonSpiced.jpg',$this->getReference($faker->randomElement($this->getUsernames())),$faker->randomElement($this->getIngredients()),$faker->randomElement($this->getPrices()), $faker->randomElement($this->getTrueFalse())],
+            ['Arehucas Ron Miel',$faker->randomElement($this->getSpicedRumSummary()),"This luscious and viscous honey flavored rum liqueur from the Canary Islands offers hints of citrus and brandied cherry that balance the bold honey flavors nicely.",'ArehucasRonMiel.jpg',$this->getReference($faker->randomElement($this->getUsernames())),$faker->randomElement($this->getIngredients()),$faker->randomElement($this->getPrices()), $faker->randomElement($this->getTrueFalse())],
+            ['Bacardi Oakheart',$faker->randomElement($this->getSpicedRumSummary()),"A delicious combination of white and gold rums produce medium golden amber spirit blended with select flavors and spices like maple, cinnamon, nutmeg.",'rum_bac37.jpg',$this->getReference($faker->randomElement($this->getUsernames())),$faker->randomElement($this->getIngredients()),$faker->randomElement($this->getPrices()), $faker->randomElement($this->getTrueFalse())],
+            ['Bacardi Pineapple Fusion',$faker->randomElement($this->getSpicedRumSummary()),"A fusion of pineapple and coconut rums offers tropical aromas of pineapple grilled in butter over fresh coconut and vanilla. ",'rum_bac58.jpg',$this->getReference($faker->randomElement($this->getUsernames())),$faker->randomElement($this->getIngredients()),$faker->randomElement($this->getPrices()), $faker->randomElement($this->getTrueFalse())],
+            ['Bacardi Superior',$faker->randomElement($this->getWhiteRumSummary()),"An iconic standard of white rums aged at least one year in American white oak, featuring components of heavier and lighter spirits well blended.",'rum_bac92.jpg',$this->getReference($faker->randomElement($this->getUsernames())),$faker->randomElement($this->getIngredients()),$faker->randomElement($this->getPrices()), $faker->randomElement($this->getTrueFalse())],
+            ['Bacardi Añejo',$faker->randomElement($this->getGoldenRumSummary()),"A medium dark, light bodied rum aged three years presents caramel, wood, spices and dried fruits.",'bacardi-anejo.jpg',$this->getReference($faker->randomElement($this->getUsernames())),$faker->randomElement($this->getIngredients()),$faker->randomElement($this->getPrices()), $faker->randomElement($this->getTrueFalse())],
+            ];
+    }
+
+    /**
+     * Array of lists of ingredients
+     *
+     * @return array
+     */
+    private function getIngredients(): array
+    {
+        return [
+            "Molasses, Yeast, Water",
+            "Yeast, Black peppercorns, Cloves",
+            "Water, Yeast, Cloves",
+            "Vanilla, Black peppercorns, Cloves",
+            "Cloves, Vanilla, Water, Yeast",
+            "Black peppercorns, Cinnamon, Water, Yeast",
+            "Cinnamon, Vanilla, Black peppercorns",
+            "Maple, Cinnamon, Nutmeg",
+            "Honey, Vanilla, Caramel",
+            "Yeast, Cinnamon, Nutmeg",
+            "Water, Yeast, Nutmeg",
+            "Vanilla, Honey, Cloves",
+            "Honey, Vanilla, Water, Yeast",
+        ];
+    }
+
+    /**
+     * Array of white rum summaries
+     *
+     * @return array
+     */
+    private function getWhiteRumSummary(): array
+    {
+        return [
+            "A White Rum with an abv of 40",
+            "A White Rum with an abv of 41",
+            "A White Rum with an abv of 70",
+            "A White Rum with an abv of 80",
+            "A White Rum with an abv of 45",
+        ];
+    }
+
+    /**
+     * Array of gold rum summaries
+     *
+     * @return array
+     */
+    private function getGoldenRumSummary(): array
+    {
+        return [
+            "A Golden Rum with an abv of 38",
+            "A Golden Rum with an abv of 40",
+            "A Golden Rum with an abv of 41",
+            "A Golden Rum with an abv of 43",
+            "A Golden Rum with an abv of 45",
+            "A Golden Rum with an abv of 70",
+        ];
+    }
+
+    /**
+     * Array of spiceed rum summaries
+     *
+     * @return array
+     */
+    private function getSpicedRumSummary(): array
+    {
+        return [
+            "A Spiced Rum with an abv of 38",
+            "A Spiced Rum with an abv of 40",
+            "A Spiced Rum with an abv of 41",
+            "A Spiced Rum with an abv of 43",
+            "A Spiced Rum with an abv of 45",
+            "A Spiced Rum with an abv of 70",
+        ];
+    }
+
+    /**
+     * Array of the price ranges
+     *
+     * @return array
+     */
+    private function getPrices(): array
+    {
+        return [
+            "Under €10",
+            "€11-20",
+            "€21-30",
+            "€31-40",
+            "Over €40",
+        ];
+    }
+
+    /**
+     * Array of boolean types
+     *
+     * @return array
+     */
+    private function getTrueFalse(): array
+    {
+        return [
+            true,
+            false,
+        ];
+    }
+
+    /**
+     * Array of review summaries
+     *
+     * @return array
+     */
+    private function getReviewSummaries(): array
+    {
+        return [
+            'Distilled from molassis in copper pot stills and then aged in small oak casks for on average 12 years before being bottled',
+            'Produced in Venezuela, which has a rich rum history dating to 1896, the distillery is located on the northern slopes of the Andes mountains',
+            'Created in 1976 in the highlands of Guatemala, where it is distilled from fresh cane juice before aging at 7544 feet at 62 °F (17 °C)',
+            'Excellent rum',
+            'Good rum tastes very nice',
+            'Smells good overall ok rum',
+            'Very dry rum and tastes very sweet',
+            'One of the best rums on the market'
+        ];
+    }
+
+    /**
+     * Function for hashing user passwords
+     *
+     * @param $user
+     * @param $plainPassword
+     * @return string
+     */
+    private function encodePassword($user, $plainPassword):string
+    {
+        $encodedPassword = $this->encoder->encodePassword($user, $plainPassword);
+        return $encodedPassword;
+    }
+}
