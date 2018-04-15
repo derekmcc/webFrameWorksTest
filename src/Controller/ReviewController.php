@@ -1,6 +1,7 @@
 <?php
 /**
- * Summary for review controller.
+ * Summary for review controller - class.
+ *
  */
 
 namespace App\Controller;

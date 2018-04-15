@@ -146,7 +146,16 @@ class RecipeController extends Controller
     {
         $date1 = $request->query->get('date1', '');
         $date2 = $request->query->get('date2', '');
-        $foundRecipes = $recipes->findRecipesByDate($date1,$date2);
+
+        $user = $this->getUser();
+
+        if ($user == null) {
+            $foundRecipes = $recipes->findPublicRecipesByDate($date1,$date2);
+        } elseif ($this->isGranted('ROLE_ADMIN')) {
+            $foundRecipes = $recipes->findAdminRecipesByDate($date1,$date2);
+        } else {
+            $foundRecipes = $recipes->findPublicAndAuthorRecipesByDate($date1,$date2,$user);
+        }
         return $this->render('recipe/showDrinks.html.twig', ['recipes' => $foundRecipes]);
     }
 
@@ -174,7 +183,15 @@ class RecipeController extends Controller
             $sort = 'Over €40';
         }
 
-        $foundRecipes = $recipes->findRecipesByPriceRange($sort);
+        $user = $this->getUser();
+
+        if ($user == null) {
+            $foundRecipes = $recipes->findRecipesByPriceRange($sort);
+        } elseif ($this->isGranted('ROLE_ADMIN')) {
+            $foundRecipes = $recipes->findPublicRecipesByPriceRange($sort);
+        } else {
+            $foundRecipes = $recipes->findPublicAndByAuthorRecipesByPriceRange($sort, $user);
+        }
         return $this->render('recipe/showDrinks.html.twig', ['recipes' => $foundRecipes]);
     }
 

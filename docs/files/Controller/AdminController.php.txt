@@ -20,7 +20,7 @@ class AdminController extends Controller
     /**
      * Function for the admin index
      *
-     * @Route("/admin", name="admin")
+     * @Route("/myadmin", name="myadmin")
      * @Security("has_role('ROLE_ADMIN')")
      * @return \Symfony\Component\HttpFoundation\Response
      */

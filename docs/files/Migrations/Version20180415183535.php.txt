@@ -54,3 +54,4 @@ class Version20180415183535 extends AbstractMigration
         $this->addSql('DROP TABLE app_users');
     }
 }
+

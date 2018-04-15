@@ -169,6 +169,7 @@ class RecipeRepository extends ServiceEntityRepository
      * Query for date range for public users and the author
      * @param string $date1
      * @param string $date2
+     * @param $user
      * @return mixed
      */
     public function findPublicAndAuthorRecipesByDate(string $date1, string $date2, $user)
@@ -249,6 +250,7 @@ class RecipeRepository extends ServiceEntityRepository
     /**
      * Query that finds recipes between a certain price range
      * @param string $sort
+     * @param $user
      * @return mixed
      */
     public function findPublicAndByAuthorRecipesByPriceRange(string $sort, $user)
